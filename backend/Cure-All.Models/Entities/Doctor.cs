@@ -22,7 +22,7 @@ namespace Cure_All.Models.Entities
         public string WorkAddress { get; set; }
 
         [ForeignKey(nameof(User))]
-        public Guid UserId { get; set; }
+        public string UserId { get; set; }
 
         public User User { get; set; }
 

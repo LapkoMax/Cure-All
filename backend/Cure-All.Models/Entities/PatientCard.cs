@@ -17,5 +17,7 @@ namespace Cure_All.Models.Entities
         public Guid PatientId { get; set; }
 
         public Patient Patient {get; set;}
+
+        public ICollection<PatientIllneses> PatientIllneses { get; set; }
     }
 }
