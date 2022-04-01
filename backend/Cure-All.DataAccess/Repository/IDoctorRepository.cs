@@ -1,4 +1,5 @@
-﻿using Cure_All.Models.Entities;
+﻿using Cure_All.BusinessLogic.RequestFeatures;
+using Cure_All.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace Cure_All.DataAccess.Repository
 {
     public interface IDoctorRepository
     {
-        Task<IEnumerable<Doctor>> GetAllDoctorsAsync(bool trackChanges = false);
+        Task<IEnumerable<Doctor>> GetAllDoctorsAsync(DoctorParameters doctorParameters, bool trackChanges = false);
 
         Task<Doctor> GetDoctorByDoctorIdAsync(Guid doctorId, bool trackChanges = false);
 

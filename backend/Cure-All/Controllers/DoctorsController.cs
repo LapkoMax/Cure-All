@@ -1,12 +1,16 @@
 ﻿using AutoMapper;
+using Cure_All.BusinessLogic.RequestFeatures;
 using Cure_All.DataAccess.Repository;
+using Cure_All.MediatRCommands.Doctor;
 using Cure_All.Models.DTO;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Cure_All.Controllers
@@ -18,44 +22,39 @@ namespace Cure_All.Controllers
     {
         private readonly IRepositoryManager _repositoryManager;
         private readonly IMapper _mapper;
+        private readonly IMediator _mediator;
 
-        public DoctorsController(IRepositoryManager repositoryManager, IMapper mapper)
+        public DoctorsController(IRepositoryManager repositoryManager, IMapper mapper, IMediator mediator)
         {
             _repositoryManager = repositoryManager;
             _mapper = mapper;
+            _mediator = mediator;
         }
 
         [HttpGet]
-        public async Task<IEnumerable<DoctorDto>> GetDoctors()
+        public async Task<IEnumerable<DoctorDto>> GetDoctors([FromQuery] DoctorParameters doctorParameters)
         {
-            var doctorEntities = await _repositoryManager.Doctor.GetAllDoctorsAsync();
-
-            var doctorsToReturn = _mapper.Map<IEnumerable<DoctorDto>>(doctorEntities);
-            return doctorsToReturn;
+            return await _mediator.Send(new GetDoctorsCommand { doctorParameters = doctorParameters }, CancellationToken.None);
         }
 
         [HttpGet("{doctorId}")]
         public async Task<ActionResult<DoctorDto>> GetDoctor(Guid doctorId)
         {
-            var doctorEntity = await _repositoryManager.Doctor.GetDoctorByDoctorIdAsync(doctorId);
-
-            if (doctorEntity == null)
+            var doctor = await _mediator.Send(new GetDoctorCommand { doctorId = doctorId }, CancellationToken.None);
+            
+            if (doctor == null)
                 return NotFound();
-
-            var doctorToReturn = _mapper.Map<DoctorDto>(doctorEntity);
-            return Ok(doctorToReturn);
+            return Ok(doctor);
         }
 
         [HttpGet("byUser/{userId}")]
         public async Task<ActionResult<DoctorDto>> GetDoctorFromUser(string userId)
         {
-            var doctorEntity = await _repositoryManager.Doctor.GetDoctorByUserIdAsync(userId);
+            var doctor = await _mediator.Send(new GetDoctorFromUserCommand { userId = userId }, CancellationToken.None);
 
-            if (doctorEntity == null)
+            if (doctor == null)
                 return NotFound();
-
-            var doctorToReturn = _mapper.Map<DoctorDto>(doctorEntity);
-            return Ok(doctorToReturn);
+            return Ok(doctor);
         }
     }
 }

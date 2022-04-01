@@ -1,4 +1,6 @@
-﻿using Cure_All.Models.Entities;
+﻿using Cure_All.BusinessLogic.RequestFeatures;
+using Cure_All.BusinessLogic.RequestFeatures.Extensions;
+using Cure_All.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -24,9 +26,13 @@ namespace Cure_All.DataAccess.Repository.Impl
             DataContext.Doctors.Include(doc => doc.User).Where(expression).AsNoTracking() :
             DataContext.Doctors.Include(doc => doc.User).Where(expression);
 
-        public async Task<IEnumerable<Doctor>> GetAllDoctorsAsync(bool trackChanges = false)
+        public async Task<IEnumerable<Doctor>> GetAllDoctorsAsync(DoctorParameters doctorParameters, bool trackChanges = false)
         {
-            return await FindAll(trackChanges).ToListAsync();
+            return (await FindAll(trackChanges)
+                .Search(doctorParameters.FullNameSearchTerm, doctorParameters.SpecialitySearchTerm)
+                .Sort(doctorParameters.OrderBy)
+                .ToListAsync())
+                .FilterDoctors(doctorParameters.MinExperienceYears);
         }
 
         public async Task<Doctor> GetDoctorByDoctorIdAsync(Guid doctorId, bool trackChanges = false)
