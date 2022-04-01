@@ -1,3 +1,4 @@
+using Cure_All.BusinessLogic.AutoMapper;
 using Cure_All.DataAccess;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -31,6 +32,7 @@ namespace Cure_All
             services.AddDbContext<DataContext>(opts =>
                 opts.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
                 b => b.MigrationsAssembly("Cure-All.DataAccess")));
+            services.AddAutoMapper(typeof(MappingProfile));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

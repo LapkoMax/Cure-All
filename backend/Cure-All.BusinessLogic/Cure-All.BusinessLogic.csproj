@@ -5,4 +5,12 @@
     <RootNamespace>Cure_All.BusinessLogic</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="11.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cure-All.Models\Cure-All.Models.csproj" />
+  </ItemGroup>
+
 </Project>

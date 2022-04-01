@@ -1,19 +1,17 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cure_All.Models.Entities
+namespace Cure_All.Models.DTO
 {
-    public class User : IdentityUser
+    public class PatientDto
     {
-        [Required]
+        public Guid Id { get; set; }
+
         public string FirstName { get; set; }
 
-        [Required]
         public string LastName { get; set; }
 
         public DateTime DateOfBurth { get; set; }
@@ -23,7 +21,5 @@ namespace Cure_All.Models.Entities
         public string Country { get; set; }
 
         public string City { get; set; }
-
-        public string Type { get; set; }
     }
 }

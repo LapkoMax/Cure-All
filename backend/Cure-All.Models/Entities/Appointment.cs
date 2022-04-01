@@ -35,7 +35,5 @@ namespace Cure_All.Models.Entities
         public DateTime? EndDate { get; set; }
 
         public bool Completed { get; set; }
-
-        public ICollection<Illness> Illnesses { get; set; }
     }
 }

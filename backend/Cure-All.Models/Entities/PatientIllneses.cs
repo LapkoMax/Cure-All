@@ -16,7 +16,7 @@ namespace Cure_All.Models.Entities
         [ForeignKey(nameof(PatientCard))]
         public Guid PatientCardId { get; set; }
 
-        public Patient Patient { get; set; }
+        public PatientCard PatientCard { get; set; }
 
         [ForeignKey(nameof(Illness))]
         public Guid IllnessId { get; set; }

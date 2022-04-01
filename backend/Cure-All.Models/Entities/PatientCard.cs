@@ -19,5 +19,7 @@ namespace Cure_All.Models.Entities
         public Patient Patient {get; set;}
 
         public ICollection<PatientIllneses> PatientIllneses { get; set; }
+
+        public ICollection<Appointment> Appointments { get; set; }
     }
 }

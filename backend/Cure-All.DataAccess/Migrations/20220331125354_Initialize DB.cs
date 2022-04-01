@@ -26,7 +26,7 @@ namespace Cure_All.DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    FirsName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DateOfBurth = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ZipCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -274,7 +274,6 @@ namespace Cure_All.DataAccess.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     PatientCardId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    PatientId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     IllnessId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
@@ -292,12 +291,6 @@ namespace Cure_All.DataAccess.Migrations
                         principalTable: "PatientCards",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_PatientIllneses_Patients_PatientId",
-                        column: x => x.PatientId,
-                        principalTable: "Patients",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.InsertData(
@@ -305,19 +298,19 @@ namespace Cure_All.DataAccess.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "bd70f5f5-5ee3-4f84-92a9-2677f943a90e", "2f142afd-4757-4e6d-9fe5-2a2e251ef538", "Admin", "ADMIN" },
-                    { "4804449b-83a4-4796-8355-88f317323715", "284f469c-0a77-45d2-8d7e-be6b440f7ba4", "Doctor", "DOCTOR" },
-                    { "01453c60-8d7a-4078-a9c5-94b297b7ad97", "24718914-7f4f-4d51-b880-722b760bcd91", "Patient", "PATIENT" }
+                    { "bd70f5f5-5ee3-4f84-92a9-2677f943a90e", "fd9d56fe-cdea-4d60-871a-c767ff75f3dd", "Admin", "ADMIN" },
+                    { "4804449b-83a4-4796-8355-88f317323715", "1d70333a-bb9e-4089-a1ae-1c5dae650f96", "Doctor", "DOCTOR" },
+                    { "01453c60-8d7a-4078-a9c5-94b297b7ad97", "4ae11009-af25-4fb1-8fb1-11123095e5d5", "Patient", "PATIENT" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "City", "ConcurrencyStamp", "Country", "DateOfBurth", "Email", "EmailConfirmed", "FirsName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "Type", "UserName", "ZipCode" },
+                columns: new[] { "Id", "AccessFailedCount", "City", "ConcurrencyStamp", "Country", "DateOfBurth", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "Type", "UserName", "ZipCode" },
                 values: new object[,]
                 {
-                    { "73cdd0ca-72f5-4eab-97b1-5f08535814e5", 0, null, "c67575be-5f2f-4d06-8bc1-3dfc5114ba4d", null, new DateTime(2022, 3, 31, 14, 34, 37, 420, DateTimeKind.Local).AddTicks(5524), "admin@test.com", false, "Admin", "Admin", false, null, null, null, "9CBA73C31AC15D21512382CE6B21E83F8B9FDDD31196FF4F54559A8E29ADD1E3BC4038C86C9BEE7512D0D8EA72EC9480580DC677A9F172B46366ECB5198615CC", null, false, "57b13e5e-78a9-4654-a27c-5557561d1ab5", false, null, "AdminTest", null },
-                    { "15bb0fef-2480-41ae-8b04-feedb9ee7f16", 0, null, "0da49a84-5d63-42ce-9c7f-f5484365f945", null, new DateTime(2022, 3, 31, 14, 34, 37, 421, DateTimeKind.Local).AddTicks(6953), "doctor@test.com", false, "Doctor", "Doctor", false, null, null, null, "9CBA73C31AC15D21512382CE6B21E83F8B9FDDD31196FF4F54559A8E29ADD1E3BC4038C86C9BEE7512D0D8EA72EC9480580DC677A9F172B46366ECB5198615CC", null, false, "42827c2c-4ae7-4517-baad-adb088b8c56c", false, "Doctor", "DoctorTest", null },
-                    { "3476e580-dc43-4425-9509-4743484780d3", 0, null, "ac31dcc8-d3c4-46af-977a-7a460af22c92", null, new DateTime(2022, 3, 31, 14, 34, 37, 421, DateTimeKind.Local).AddTicks(7297), "patient@test.com", false, "Patient", "Patient", false, null, null, null, "9CBA73C31AC15D21512382CE6B21E83F8B9FDDD31196FF4F54559A8E29ADD1E3BC4038C86C9BEE7512D0D8EA72EC9480580DC677A9F172B46366ECB5198615CC", null, false, "58acfc0f-6288-41a7-9492-45a200b395a5", false, "Patient", "PatientTest", null }
+                    { "73cdd0ca-72f5-4eab-97b1-5f08535814e5", 0, null, "e79f7f9b-6dba-4d17-bcce-e37fe3f44366", null, new DateTime(2022, 3, 31, 15, 53, 54, 141, DateTimeKind.Local).AddTicks(4452), "admin@test.com", false, "Admin", "Admin", false, null, null, null, "9CBA73C31AC15D21512382CE6B21E83F8B9FDDD31196FF4F54559A8E29ADD1E3BC4038C86C9BEE7512D0D8EA72EC9480580DC677A9F172B46366ECB5198615CC", null, false, "319862fc-d93e-4d79-8045-9b3cb674e807", false, null, "AdminTest", null },
+                    { "15bb0fef-2480-41ae-8b04-feedb9ee7f16", 0, null, "96093e41-4d75-4d52-82c4-87d843e22168", null, new DateTime(2022, 3, 31, 15, 53, 54, 142, DateTimeKind.Local).AddTicks(4870), "doctor@test.com", false, "Doctor", "Doctor", false, null, null, null, "9CBA73C31AC15D21512382CE6B21E83F8B9FDDD31196FF4F54559A8E29ADD1E3BC4038C86C9BEE7512D0D8EA72EC9480580DC677A9F172B46366ECB5198615CC", null, false, "2316e3b3-ccd6-4183-b235-9b73704c4800", false, "Doctor", "DoctorTest", null },
+                    { "3476e580-dc43-4425-9509-4743484780d3", 0, null, "9f5a2ebd-9761-4b6e-915e-bcd025dde1aa", null, new DateTime(2022, 3, 31, 15, 53, 54, 142, DateTimeKind.Local).AddTicks(5196), "patient@test.com", false, "Patient", "Patient", false, null, null, null, "9CBA73C31AC15D21512382CE6B21E83F8B9FDDD31196FF4F54559A8E29ADD1E3BC4038C86C9BEE7512D0D8EA72EC9480580DC677A9F172B46366ECB5198615CC", null, false, "92155b05-273b-42ad-9d53-b232a1e14166", false, "Patient", "PatientTest", null }
                 });
 
             migrationBuilder.InsertData(
@@ -333,7 +326,7 @@ namespace Cure_All.DataAccess.Migrations
             migrationBuilder.InsertData(
                 table: "Doctors",
                 columns: new[] { "Id", "LicenseNo", "Speciality", "UserId", "WorkAddress", "WorkStart" },
-                values: new object[] { new Guid("7d66e4b1-32dc-43c3-a373-ac3b6115261e"), "123456", "TestSpeciality", "15bb0fef-2480-41ae-8b04-feedb9ee7f16", "TestAddress", new DateTime(2022, 3, 31, 14, 34, 37, 423, DateTimeKind.Local).AddTicks(4481) });
+                values: new object[] { new Guid("7d66e4b1-32dc-43c3-a373-ac3b6115261e"), "123456", "TestSpeciality", "15bb0fef-2480-41ae-8b04-feedb9ee7f16", "TestAddress", new DateTime(2022, 3, 31, 15, 53, 54, 144, DateTimeKind.Local).AddTicks(2816) });
 
             migrationBuilder.InsertData(
                 table: "Patients",
@@ -419,11 +412,6 @@ namespace Cure_All.DataAccess.Migrations
                 name: "IX_PatientIllneses_PatientCardId",
                 table: "PatientIllneses",
                 column: "PatientCardId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PatientIllneses_PatientId",
-                table: "PatientIllneses",
-                column: "PatientId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Patients_UserId",

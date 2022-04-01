@@ -92,7 +92,7 @@ namespace Cure_All.DataAccess.Migrations
                             Speciality = "TestSpeciality",
                             UserId = "15bb0fef-2480-41ae-8b04-feedb9ee7f16",
                             WorkAddress = "TestAddress",
-                            WorkStart = new DateTime(2022, 3, 31, 14, 34, 37, 423, DateTimeKind.Local).AddTicks(4481)
+                            WorkStart = new DateTime(2022, 3, 31, 15, 53, 54, 144, DateTimeKind.Local).AddTicks(2816)
                         });
                 });
 
@@ -173,16 +173,11 @@ namespace Cure_All.DataAccess.Migrations
                     b.Property<Guid>("PatientCardId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("PatientId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
                     b.HasIndex("IllnessId");
 
                     b.HasIndex("PatientCardId");
-
-                    b.HasIndex("PatientId");
 
                     b.ToTable("PatientIllneses");
                 });
@@ -215,7 +210,7 @@ namespace Cure_All.DataAccess.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("FirsName")
+                    b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -279,16 +274,16 @@ namespace Cure_All.DataAccess.Migrations
                         {
                             Id = "73cdd0ca-72f5-4eab-97b1-5f08535814e5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c67575be-5f2f-4d06-8bc1-3dfc5114ba4d",
-                            DateOfBurth = new DateTime(2022, 3, 31, 14, 34, 37, 420, DateTimeKind.Local).AddTicks(5524),
+                            ConcurrencyStamp = "e79f7f9b-6dba-4d17-bcce-e37fe3f44366",
+                            DateOfBurth = new DateTime(2022, 3, 31, 15, 53, 54, 141, DateTimeKind.Local).AddTicks(4452),
                             Email = "admin@test.com",
                             EmailConfirmed = false,
-                            FirsName = "Admin",
+                            FirstName = "Admin",
                             LastName = "Admin",
                             LockoutEnabled = false,
                             PasswordHash = "9CBA73C31AC15D21512382CE6B21E83F8B9FDDD31196FF4F54559A8E29ADD1E3BC4038C86C9BEE7512D0D8EA72EC9480580DC677A9F172B46366ECB5198615CC",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "57b13e5e-78a9-4654-a27c-5557561d1ab5",
+                            SecurityStamp = "319862fc-d93e-4d79-8045-9b3cb674e807",
                             TwoFactorEnabled = false,
                             UserName = "AdminTest"
                         },
@@ -296,16 +291,16 @@ namespace Cure_All.DataAccess.Migrations
                         {
                             Id = "15bb0fef-2480-41ae-8b04-feedb9ee7f16",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0da49a84-5d63-42ce-9c7f-f5484365f945",
-                            DateOfBurth = new DateTime(2022, 3, 31, 14, 34, 37, 421, DateTimeKind.Local).AddTicks(6953),
+                            ConcurrencyStamp = "96093e41-4d75-4d52-82c4-87d843e22168",
+                            DateOfBurth = new DateTime(2022, 3, 31, 15, 53, 54, 142, DateTimeKind.Local).AddTicks(4870),
                             Email = "doctor@test.com",
                             EmailConfirmed = false,
-                            FirsName = "Doctor",
+                            FirstName = "Doctor",
                             LastName = "Doctor",
                             LockoutEnabled = false,
                             PasswordHash = "9CBA73C31AC15D21512382CE6B21E83F8B9FDDD31196FF4F54559A8E29ADD1E3BC4038C86C9BEE7512D0D8EA72EC9480580DC677A9F172B46366ECB5198615CC",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "42827c2c-4ae7-4517-baad-adb088b8c56c",
+                            SecurityStamp = "2316e3b3-ccd6-4183-b235-9b73704c4800",
                             TwoFactorEnabled = false,
                             Type = "Doctor",
                             UserName = "DoctorTest"
@@ -314,16 +309,16 @@ namespace Cure_All.DataAccess.Migrations
                         {
                             Id = "3476e580-dc43-4425-9509-4743484780d3",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ac31dcc8-d3c4-46af-977a-7a460af22c92",
-                            DateOfBurth = new DateTime(2022, 3, 31, 14, 34, 37, 421, DateTimeKind.Local).AddTicks(7297),
+                            ConcurrencyStamp = "9f5a2ebd-9761-4b6e-915e-bcd025dde1aa",
+                            DateOfBurth = new DateTime(2022, 3, 31, 15, 53, 54, 142, DateTimeKind.Local).AddTicks(5196),
                             Email = "patient@test.com",
                             EmailConfirmed = false,
-                            FirsName = "Patient",
+                            FirstName = "Patient",
                             LastName = "Patient",
                             LockoutEnabled = false,
                             PasswordHash = "9CBA73C31AC15D21512382CE6B21E83F8B9FDDD31196FF4F54559A8E29ADD1E3BC4038C86C9BEE7512D0D8EA72EC9480580DC677A9F172B46366ECB5198615CC",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "58acfc0f-6288-41a7-9492-45a200b395a5",
+                            SecurityStamp = "92155b05-273b-42ad-9d53-b232a1e14166",
                             TwoFactorEnabled = false,
                             Type = "Patient",
                             UserName = "PatientTest"
@@ -360,21 +355,21 @@ namespace Cure_All.DataAccess.Migrations
                         new
                         {
                             Id = "bd70f5f5-5ee3-4f84-92a9-2677f943a90e",
-                            ConcurrencyStamp = "2f142afd-4757-4e6d-9fe5-2a2e251ef538",
+                            ConcurrencyStamp = "fd9d56fe-cdea-4d60-871a-c767ff75f3dd",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "4804449b-83a4-4796-8355-88f317323715",
-                            ConcurrencyStamp = "284f469c-0a77-45d2-8d7e-be6b440f7ba4",
+                            ConcurrencyStamp = "1d70333a-bb9e-4089-a1ae-1c5dae650f96",
                             Name = "Doctor",
                             NormalizedName = "DOCTOR"
                         },
                         new
                         {
                             Id = "01453c60-8d7a-4078-a9c5-94b297b7ad97",
-                            ConcurrencyStamp = "24718914-7f4f-4d51-b880-722b760bcd91",
+                            ConcurrencyStamp = "4ae11009-af25-4fb1-8fb1-11123095e5d5",
                             Name = "Patient",
                             NormalizedName = "PATIENT"
                         });
@@ -514,7 +509,7 @@ namespace Cure_All.DataAccess.Migrations
                         .HasForeignKey("IllnessId");
 
                     b.HasOne("Cure_All.Models.Entities.PatientCard", "PatientCard")
-                        .WithMany()
+                        .WithMany("Appointments")
                         .HasForeignKey("PatientCardId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -570,19 +565,15 @@ namespace Cure_All.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Cure_All.Models.Entities.PatientCard", null)
+                    b.HasOne("Cure_All.Models.Entities.PatientCard", "PatientCard")
                         .WithMany("PatientIllneses")
                         .HasForeignKey("PatientCardId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Cure_All.Models.Entities.Patient", "Patient")
-                        .WithMany()
-                        .HasForeignKey("PatientId");
-
                     b.Navigation("Illness");
 
-                    b.Navigation("Patient");
+                    b.Navigation("PatientCard");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -653,6 +644,8 @@ namespace Cure_All.DataAccess.Migrations
 
             modelBuilder.Entity("Cure_All.Models.Entities.PatientCard", b =>
                 {
+                    b.Navigation("Appointments");
+
                     b.Navigation("PatientIllneses");
                 });
 #pragma warning restore 612, 618
