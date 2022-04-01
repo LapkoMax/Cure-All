@@ -54,6 +54,20 @@ namespace Cure_All.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Illnesses",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Symptoms = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Illnesses", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -99,8 +113,8 @@ namespace Cure_All.DataAccess.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    ProviderKey = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
@@ -144,8 +158,8 @@ namespace Cure_All.DataAccess.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -218,21 +232,6 @@ namespace Cure_All.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Illnesses",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Symptoms = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AppointmentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Illnesses", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Appointments",
                 columns: table => new
                 {
@@ -298,9 +297,9 @@ namespace Cure_All.DataAccess.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "bd70f5f5-5ee3-4f84-92a9-2677f943a90e", "fd9d56fe-cdea-4d60-871a-c767ff75f3dd", "Admin", "ADMIN" },
-                    { "4804449b-83a4-4796-8355-88f317323715", "1d70333a-bb9e-4089-a1ae-1c5dae650f96", "Doctor", "DOCTOR" },
-                    { "01453c60-8d7a-4078-a9c5-94b297b7ad97", "4ae11009-af25-4fb1-8fb1-11123095e5d5", "Patient", "PATIENT" }
+                    { "bd70f5f5-5ee3-4f84-92a9-2677f943a90e", "2c69589e-1144-4de3-a2ff-4bf30ef27608", "Admin", "ADMIN" },
+                    { "4804449b-83a4-4796-8355-88f317323715", "fda6882a-9945-4632-ae95-60d651431bca", "Doctor", "DOCTOR" },
+                    { "01453c60-8d7a-4078-a9c5-94b297b7ad97", "a4582f09-0c99-442d-be18-ee49981cb50d", "Patient", "PATIENT" }
                 });
 
             migrationBuilder.InsertData(
@@ -308,9 +307,9 @@ namespace Cure_All.DataAccess.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "City", "ConcurrencyStamp", "Country", "DateOfBurth", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "Type", "UserName", "ZipCode" },
                 values: new object[,]
                 {
-                    { "73cdd0ca-72f5-4eab-97b1-5f08535814e5", 0, null, "e79f7f9b-6dba-4d17-bcce-e37fe3f44366", null, new DateTime(2022, 3, 31, 15, 53, 54, 141, DateTimeKind.Local).AddTicks(4452), "admin@test.com", false, "Admin", "Admin", false, null, null, null, "9CBA73C31AC15D21512382CE6B21E83F8B9FDDD31196FF4F54559A8E29ADD1E3BC4038C86C9BEE7512D0D8EA72EC9480580DC677A9F172B46366ECB5198615CC", null, false, "319862fc-d93e-4d79-8045-9b3cb674e807", false, null, "AdminTest", null },
-                    { "15bb0fef-2480-41ae-8b04-feedb9ee7f16", 0, null, "96093e41-4d75-4d52-82c4-87d843e22168", null, new DateTime(2022, 3, 31, 15, 53, 54, 142, DateTimeKind.Local).AddTicks(4870), "doctor@test.com", false, "Doctor", "Doctor", false, null, null, null, "9CBA73C31AC15D21512382CE6B21E83F8B9FDDD31196FF4F54559A8E29ADD1E3BC4038C86C9BEE7512D0D8EA72EC9480580DC677A9F172B46366ECB5198615CC", null, false, "2316e3b3-ccd6-4183-b235-9b73704c4800", false, "Doctor", "DoctorTest", null },
-                    { "3476e580-dc43-4425-9509-4743484780d3", 0, null, "9f5a2ebd-9761-4b6e-915e-bcd025dde1aa", null, new DateTime(2022, 3, 31, 15, 53, 54, 142, DateTimeKind.Local).AddTicks(5196), "patient@test.com", false, "Patient", "Patient", false, null, null, null, "9CBA73C31AC15D21512382CE6B21E83F8B9FDDD31196FF4F54559A8E29ADD1E3BC4038C86C9BEE7512D0D8EA72EC9480580DC677A9F172B46366ECB5198615CC", null, false, "92155b05-273b-42ad-9d53-b232a1e14166", false, "Patient", "PatientTest", null }
+                    { "73cdd0ca-72f5-4eab-97b1-5f08535814e5", 0, null, "6adab0fe-14b3-4d8c-8105-928b5773e021", null, new DateTime(2022, 4, 1, 13, 17, 51, 70, DateTimeKind.Local).AddTicks(2815), "admin@test.com", false, "Admin", "Admin", false, null, null, null, null, null, false, "aa18ab81-1110-46e8-91bd-ffd8a98697ef", false, null, "AdminTest", null },
+                    { "15bb0fef-2480-41ae-8b04-feedb9ee7f16", 0, null, "fd851893-05ed-432a-b427-689b94349e75", null, new DateTime(2022, 4, 1, 13, 17, 51, 71, DateTimeKind.Local).AddTicks(2676), "doctor@test.com", false, "Doctor", "Doctor", false, null, null, null, null, null, false, "a73f592e-c38c-44a1-9226-ec3a00158d0e", false, "Doctor", "DoctorTest", null },
+                    { "3476e580-dc43-4425-9509-4743484780d3", 0, null, "18d8aa60-83ee-4921-838a-3eeb7850237c", null, new DateTime(2022, 4, 1, 13, 17, 51, 71, DateTimeKind.Local).AddTicks(3006), "patient@test.com", false, "Patient", "Patient", false, null, null, null, null, null, false, "03e32eb7-33b0-4810-ac6d-e0e9891f479a", false, "Patient", "PatientTest", null }
                 });
 
             migrationBuilder.InsertData(
@@ -326,7 +325,7 @@ namespace Cure_All.DataAccess.Migrations
             migrationBuilder.InsertData(
                 table: "Doctors",
                 columns: new[] { "Id", "LicenseNo", "Speciality", "UserId", "WorkAddress", "WorkStart" },
-                values: new object[] { new Guid("7d66e4b1-32dc-43c3-a373-ac3b6115261e"), "123456", "TestSpeciality", "15bb0fef-2480-41ae-8b04-feedb9ee7f16", "TestAddress", new DateTime(2022, 3, 31, 15, 53, 54, 144, DateTimeKind.Local).AddTicks(2816) });
+                values: new object[] { new Guid("7d66e4b1-32dc-43c3-a373-ac3b6115261e"), "123456", "TestSpeciality", "15bb0fef-2480-41ae-8b04-feedb9ee7f16", "TestAddress", new DateTime(2022, 4, 1, 13, 17, 51, 72, DateTimeKind.Local).AddTicks(9605) });
 
             migrationBuilder.InsertData(
                 table: "Patients",
@@ -393,11 +392,6 @@ namespace Cure_All.DataAccess.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Illnesses_AppointmentId",
-                table: "Illnesses",
-                column: "AppointmentId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_PatientCards_PatientId",
                 table: "PatientCards",
                 column: "PatientId",
@@ -417,25 +411,12 @@ namespace Cure_All.DataAccess.Migrations
                 name: "IX_Patients_UserId",
                 table: "Patients",
                 column: "UserId");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Illnesses_Appointments_AppointmentId",
-                table: "Illnesses",
-                column: "AppointmentId",
-                principalTable: "Appointments",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Appointments_Doctors_DoctorId",
-                table: "Appointments");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Appointments_Illnesses_IllnessId",
-                table: "Appointments");
+            migrationBuilder.DropTable(
+                name: "Appointments");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
@@ -456,16 +437,13 @@ namespace Cure_All.DataAccess.Migrations
                 name: "PatientIllneses");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles");
-
-            migrationBuilder.DropTable(
                 name: "Doctors");
 
             migrationBuilder.DropTable(
-                name: "Illnesses");
+                name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Appointments");
+                name: "Illnesses");
 
             migrationBuilder.DropTable(
                 name: "PatientCards");

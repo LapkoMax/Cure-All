@@ -92,7 +92,7 @@ namespace Cure_All.DataAccess.Migrations
                             Speciality = "TestSpeciality",
                             UserId = "15bb0fef-2480-41ae-8b04-feedb9ee7f16",
                             WorkAddress = "TestAddress",
-                            WorkStart = new DateTime(2022, 3, 31, 15, 53, 54, 144, DateTimeKind.Local).AddTicks(2816)
+                            WorkStart = new DateTime(2022, 4, 1, 13, 17, 51, 72, DateTimeKind.Local).AddTicks(9605)
                         });
                 });
 
@@ -100,9 +100,6 @@ namespace Cure_All.DataAccess.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("AppointmentId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
@@ -115,8 +112,6 @@ namespace Cure_All.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AppointmentId");
 
                     b.ToTable("Illnesses");
                 });
@@ -274,16 +269,15 @@ namespace Cure_All.DataAccess.Migrations
                         {
                             Id = "73cdd0ca-72f5-4eab-97b1-5f08535814e5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e79f7f9b-6dba-4d17-bcce-e37fe3f44366",
-                            DateOfBurth = new DateTime(2022, 3, 31, 15, 53, 54, 141, DateTimeKind.Local).AddTicks(4452),
+                            ConcurrencyStamp = "6adab0fe-14b3-4d8c-8105-928b5773e021",
+                            DateOfBurth = new DateTime(2022, 4, 1, 13, 17, 51, 70, DateTimeKind.Local).AddTicks(2815),
                             Email = "admin@test.com",
                             EmailConfirmed = false,
                             FirstName = "Admin",
                             LastName = "Admin",
                             LockoutEnabled = false,
-                            PasswordHash = "9CBA73C31AC15D21512382CE6B21E83F8B9FDDD31196FF4F54559A8E29ADD1E3BC4038C86C9BEE7512D0D8EA72EC9480580DC677A9F172B46366ECB5198615CC",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "319862fc-d93e-4d79-8045-9b3cb674e807",
+                            SecurityStamp = "aa18ab81-1110-46e8-91bd-ffd8a98697ef",
                             TwoFactorEnabled = false,
                             UserName = "AdminTest"
                         },
@@ -291,16 +285,15 @@ namespace Cure_All.DataAccess.Migrations
                         {
                             Id = "15bb0fef-2480-41ae-8b04-feedb9ee7f16",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "96093e41-4d75-4d52-82c4-87d843e22168",
-                            DateOfBurth = new DateTime(2022, 3, 31, 15, 53, 54, 142, DateTimeKind.Local).AddTicks(4870),
+                            ConcurrencyStamp = "fd851893-05ed-432a-b427-689b94349e75",
+                            DateOfBurth = new DateTime(2022, 4, 1, 13, 17, 51, 71, DateTimeKind.Local).AddTicks(2676),
                             Email = "doctor@test.com",
                             EmailConfirmed = false,
                             FirstName = "Doctor",
                             LastName = "Doctor",
                             LockoutEnabled = false,
-                            PasswordHash = "9CBA73C31AC15D21512382CE6B21E83F8B9FDDD31196FF4F54559A8E29ADD1E3BC4038C86C9BEE7512D0D8EA72EC9480580DC677A9F172B46366ECB5198615CC",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "2316e3b3-ccd6-4183-b235-9b73704c4800",
+                            SecurityStamp = "a73f592e-c38c-44a1-9226-ec3a00158d0e",
                             TwoFactorEnabled = false,
                             Type = "Doctor",
                             UserName = "DoctorTest"
@@ -309,16 +302,15 @@ namespace Cure_All.DataAccess.Migrations
                         {
                             Id = "3476e580-dc43-4425-9509-4743484780d3",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9f5a2ebd-9761-4b6e-915e-bcd025dde1aa",
-                            DateOfBurth = new DateTime(2022, 3, 31, 15, 53, 54, 142, DateTimeKind.Local).AddTicks(5196),
+                            ConcurrencyStamp = "18d8aa60-83ee-4921-838a-3eeb7850237c",
+                            DateOfBurth = new DateTime(2022, 4, 1, 13, 17, 51, 71, DateTimeKind.Local).AddTicks(3006),
                             Email = "patient@test.com",
                             EmailConfirmed = false,
                             FirstName = "Patient",
                             LastName = "Patient",
                             LockoutEnabled = false,
-                            PasswordHash = "9CBA73C31AC15D21512382CE6B21E83F8B9FDDD31196FF4F54559A8E29ADD1E3BC4038C86C9BEE7512D0D8EA72EC9480580DC677A9F172B46366ECB5198615CC",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "92155b05-273b-42ad-9d53-b232a1e14166",
+                            SecurityStamp = "03e32eb7-33b0-4810-ac6d-e0e9891f479a",
                             TwoFactorEnabled = false,
                             Type = "Patient",
                             UserName = "PatientTest"
@@ -355,21 +347,21 @@ namespace Cure_All.DataAccess.Migrations
                         new
                         {
                             Id = "bd70f5f5-5ee3-4f84-92a9-2677f943a90e",
-                            ConcurrencyStamp = "fd9d56fe-cdea-4d60-871a-c767ff75f3dd",
+                            ConcurrencyStamp = "2c69589e-1144-4de3-a2ff-4bf30ef27608",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "4804449b-83a4-4796-8355-88f317323715",
-                            ConcurrencyStamp = "1d70333a-bb9e-4089-a1ae-1c5dae650f96",
+                            ConcurrencyStamp = "fda6882a-9945-4632-ae95-60d651431bca",
                             Name = "Doctor",
                             NormalizedName = "DOCTOR"
                         },
                         new
                         {
                             Id = "01453c60-8d7a-4078-a9c5-94b297b7ad97",
-                            ConcurrencyStamp = "4ae11009-af25-4fb1-8fb1-11123095e5d5",
+                            ConcurrencyStamp = "a4582f09-0c99-442d-be18-ee49981cb50d",
                             Name = "Patient",
                             NormalizedName = "PATIENT"
                         });
@@ -426,10 +418,12 @@ namespace Cure_All.DataAccess.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -483,10 +477,12 @@ namespace Cure_All.DataAccess.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -528,13 +524,6 @@ namespace Cure_All.DataAccess.Migrations
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Cure_All.Models.Entities.Illness", b =>
-                {
-                    b.HasOne("Cure_All.Models.Entities.Appointment", null)
-                        .WithMany("Illnesses")
-                        .HasForeignKey("AppointmentId");
                 });
 
             modelBuilder.Entity("Cure_All.Models.Entities.Patient", b =>
@@ -625,11 +614,6 @@ namespace Cure_All.DataAccess.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Cure_All.Models.Entities.Appointment", b =>
-                {
-                    b.Navigation("Illnesses");
                 });
 
             modelBuilder.Entity("Cure_All.Models.Entities.Doctor", b =>

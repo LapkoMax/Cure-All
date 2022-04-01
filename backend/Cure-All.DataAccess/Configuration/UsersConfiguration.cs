@@ -1,4 +1,5 @@
-﻿using Cure_All.Models.Entities;
+﻿using Cure_All.Models.DTO;
+using Cure_All.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -22,8 +23,7 @@ namespace Cure_All.DataAccess.Configuration
                     LastName = "Admin",
                     DateOfBurth = DateTime.Now,
                     UserName = "AdminTest",
-                    Email = "admin@test.com",
-                    PasswordHash = "9CBA73C31AC15D21512382CE6B21E83F8B9FDDD31196FF4F54559A8E29ADD1E3BC4038C86C9BEE7512D0D8EA72EC9480580DC677A9F172B46366ECB5198615CC" //Password123!
+                    Email = "admin@test.com"
                 },
                 new User
                 {
@@ -33,8 +33,7 @@ namespace Cure_All.DataAccess.Configuration
                     DateOfBurth = DateTime.Now,
                     Type = "Doctor",
                     UserName = "DoctorTest",
-                    Email = "doctor@test.com",
-                    PasswordHash = "9CBA73C31AC15D21512382CE6B21E83F8B9FDDD31196FF4F54559A8E29ADD1E3BC4038C86C9BEE7512D0D8EA72EC9480580DC677A9F172B46366ECB5198615CC" //Password123!
+                    Email = "doctor@test.com"
                 },
                 new User
                 {
@@ -44,8 +43,7 @@ namespace Cure_All.DataAccess.Configuration
                     DateOfBurth = DateTime.Now,
                     Type = "Patient",
                     UserName = "PatientTest",
-                    Email = "patient@test.com",
-                    PasswordHash = "9CBA73C31AC15D21512382CE6B21E83F8B9FDDD31196FF4F54559A8E29ADD1E3BC4038C86C9BEE7512D0D8EA72EC9480580DC677A9F172B46366ECB5198615CC" //Password123!
+                    Email = "patient@test.com"
                 }
             );
         }

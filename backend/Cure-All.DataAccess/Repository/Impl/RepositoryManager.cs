@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Cure_All.DataAccess.Repository.Impl
 {
-    class RepositoryManager : IRepositoryManager
+    public class RepositoryManager : IRepositoryManager
     {
         private DataContext _dataContext;
 
@@ -21,6 +21,11 @@ namespace Cure_All.DataAccess.Repository.Impl
         private IPatientIllnesesRepository _patientIllnesesRepository;
 
         private IAppointmentRepository _appointmentRepository;
+
+        public RepositoryManager(DataContext dataContext)
+        {
+            _dataContext = dataContext;
+        }
 
         public IDoctorRepository Doctor 
         {

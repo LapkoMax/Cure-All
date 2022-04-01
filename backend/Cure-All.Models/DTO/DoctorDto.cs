@@ -10,6 +10,8 @@ namespace Cure_All.Models.DTO
     {
         public Guid Id { get; set; }
 
+        public string UserId { get; set; }
+
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
@@ -17,6 +19,8 @@ namespace Cure_All.Models.DTO
         public string Speciality { get; set; }
 
         public string LicenseNo { get; set; }
+
+        public DateTime WorkStart { get; set; }
 
         public int YearsOfExperience { get; set; }
 
