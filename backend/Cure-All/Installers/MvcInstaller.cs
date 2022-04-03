@@ -16,6 +16,7 @@ namespace Cure_All.Installers
         {
             services.AddAutoMapper(typeof(MappingProfile));
             services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddCors();
             services.AddControllers();
         }
     }

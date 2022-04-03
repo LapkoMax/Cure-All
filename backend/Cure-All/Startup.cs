@@ -41,6 +41,8 @@ namespace Cure_All
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.UseCors(builder => builder.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod().AllowCredentials());
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

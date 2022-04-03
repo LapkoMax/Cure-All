@@ -17,7 +17,7 @@ namespace Cure_All.Controllers
 {
     [Route("api/doctors")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class DoctorsController : ControllerBase
     {
         private readonly IRepositoryManager _repositoryManager;
