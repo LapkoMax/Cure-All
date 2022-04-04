@@ -1,10 +1,11 @@
-import "./App.css";
+/** @jsxImportSource @emotion/react */
+import { appContainer } from "./AppStyles";
 import { Header } from "./Components/General/Header";
 import { HomePage } from "./Components/HomePage";
 
 function App() {
   return (
-    <div className="App">
+    <div css={appContainer}>
       <Header />
       <HomePage />
     </div>
