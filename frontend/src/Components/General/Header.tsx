@@ -1,4 +1,5 @@
 /** @jsxImportSource @emotion/react */
+import { Link } from "react-router-dom";
 import {
   headerContainer,
   searchInput,
@@ -10,14 +11,14 @@ import { UserIcon } from "./Icons";
 export const Header = () => {
   return (
     <div css={headerContainer}>
-      <a href="./" css={titleAnchor}>
+      <Link to="/" css={titleAnchor}>
         Cure-All
-      </a>
+      </Link>
       <input type="text" placeholder="Search for doctor..." css={searchInput} />
-      <a href="./signin" css={signInAnchor}>
+      <Link to="signin" css={signInAnchor}>
         <UserIcon />
         <span>Sign In</span>
-      </a>
+      </Link>
     </div>
   );
 };

@@ -14,7 +14,16 @@ export interface DoctorData {
   city: string;
 }
 
-export const getDoctors = async (): Promise<DoctorData[]> => {
+export interface DoctorParameters {
+  orderBy?: string;
+  minExperienceYears?: number;
+  fullNameSearchTerm?: string;
+  specialitySearchTerm?: string;
+}
+
+export const getDoctors = async (
+  parameters?: DoctorParameters,
+): Promise<DoctorData[]> => {
   let doctors: DoctorData[] = [];
 
   let headers = new Headers();
@@ -24,7 +33,19 @@ export const getDoctors = async (): Promise<DoctorData[]> => {
   //headers.append('Authorization', 'Basic ' + base64.encode(username + ":" +  password));
   headers.append("Origin", "http://localhost:5000");
 
-  const response = await fetch("http://localhost:5000/api/doctors", {
+  var query =
+    parameters === undefined
+      ? ""
+      : "?" +
+        JSON.stringify(parameters)
+          .replaceAll("{", "")
+          .replaceAll("}", "")
+          .replaceAll(":", "=")
+          .replaceAll('"', "");
+
+  console.log("http://localhost:5000/api/doctors" + query);
+
+  const response = await fetch("http://localhost:5000/api/doctors" + query, {
     mode: "cors",
     //credentials: "include",
     method: "GET",

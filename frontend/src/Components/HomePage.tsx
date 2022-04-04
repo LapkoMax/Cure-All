@@ -9,11 +9,13 @@ import { titleContainer } from "../Styles/HomePageStyles";
 
 export const HomePage = () => {
   const [doctors, setDoctors] = useState<DoctorData[]>();
+  const [doctorsLoaded, setDoctorsLoaded] = useState(false);
 
   useEffect(() => {
     const doGetDoctors = async () => {
       let resut = await getDoctors();
       setDoctors(resut);
+      setDoctorsLoaded(true);
     };
     doGetDoctors();
   }, []);
@@ -24,7 +26,7 @@ export const HomePage = () => {
         <PageTitle>Doctors</PageTitle>
         <PrimaryButton>Create new doctor</PrimaryButton>
       </div>
-      <DoctorList data={doctors} />
+      {!doctorsLoaded ? <div>Loading...</div> : <DoctorList data={doctors} />}
     </Page>
   );
 };
