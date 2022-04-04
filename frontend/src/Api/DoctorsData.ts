@@ -21,17 +21,17 @@ export interface DoctorParameters {
   specialitySearchTerm?: string;
 }
 
+let headers = new Headers();
+
+headers.append("Content-Type", "application/json");
+headers.append("Accept", "application/json");
+//headers.append('Authorization', 'Basic ' + base64.encode(username + ":" +  password));
+headers.append("Origin", "http://localhost:5000");
+
 export const getDoctors = async (
   parameters?: DoctorParameters,
 ): Promise<DoctorData[]> => {
   let doctors: DoctorData[] = [];
-
-  let headers = new Headers();
-
-  headers.append("Content-Type", "application/json");
-  headers.append("Accept", "application/json");
-  //headers.append('Authorization', 'Basic ' + base64.encode(username + ":" +  password));
-  headers.append("Origin", "http://localhost:5000");
 
   var query =
     parameters === undefined
@@ -43,14 +43,36 @@ export const getDoctors = async (
           .replaceAll(":", "=")
           .replaceAll('"', "");
 
-  console.log("http://localhost:5000/api/doctors" + query);
-
   const response = await fetch("http://localhost:5000/api/doctors" + query, {
     mode: "cors",
     //credentials: "include",
     method: "GET",
     headers: headers,
   });
+
   doctors = await response.json();
+
   return doctors;
+};
+
+export const getDoctor = async (
+  doctorId?: string,
+): Promise<DoctorData | null> => {
+  let doctor = null;
+
+  if (doctorId === undefined) return doctor;
+
+  const response = await fetch(
+    "http://localhost:5000/api/doctors/" + doctorId,
+    {
+      mode: "cors",
+      //credentials: "include",
+      method: "GET",
+      headers: headers,
+    },
+  );
+
+  doctor = await response.json();
+
+  return doctor;
 };

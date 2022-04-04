@@ -1,4 +1,5 @@
 /** @jsxImportSource @emotion/react */
+import { Link } from "react-router-dom";
 import { DoctorData } from "../../Api/DoctorsData";
 import {
   doctorContainer,
@@ -13,10 +14,10 @@ interface Props {
 
 export const Doctor = ({ doctor }: Props) => (
   <div css={doctorContainer}>
-    <div css={doctorTitle}>
+    <Link to={`/doctors/${doctor.id}`} css={doctorTitle}>
       {doctor.firstName} {doctor.lastName}
-    </div>
-    <div css={doctorSpeciality}>Speciality: {doctor.speciality}</div>
-    <div css={doctorExp}>Years of experience: {doctor.yearsOfExperience}</div>
+      <div css={doctorSpeciality}>Speciality: {doctor.speciality}</div>
+      <div css={doctorExp}>Years of experience: {doctor.yearsOfExperience}</div>
+    </Link>
   </div>
 );

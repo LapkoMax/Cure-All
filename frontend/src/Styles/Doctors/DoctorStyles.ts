@@ -6,6 +6,8 @@ export const doctorContainer = css`
 `;
 
 export const doctorTitle = css`
+  text-decoration: none;
+  color: ${gray2};
   padding: 10px 0px;
   font-size: 19px;
 `;
