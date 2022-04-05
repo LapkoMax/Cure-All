@@ -17,6 +17,7 @@ export const SearchPage = () => {
   const searchTerm = searchParams.get("fullNameSearchTerm") || "";
   const dispatch = useDispatch();
   const doctors = useSelector((state: AppState) => state.doctors.doctors);
+  const userToken = useSelector((state: AppState) => state.identity.token);
   const doctorsLoading = useSelector(
     (state: AppState) => state.doctors.loading,
   );
@@ -24,7 +25,7 @@ export const SearchPage = () => {
   useEffect(() => {
     const doSearch = async (fullNameSearchTerm: string) => {
       dispatch(gettingDoctorsAction());
-      const results = await getDoctors({
+      const results = await getDoctors(userToken, {
         fullNameSearchTerm: fullNameSearchTerm,
       });
       dispatch(gotDoctorsAction(results));

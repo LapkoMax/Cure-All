@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { primary1, primary2 } from "./Colors";
+import { gray5, primary1, primary2 } from "./Colors";
 import { mainFontFamily, mainFontSize } from "./Fonts";
 
 export const PrimaryButton = styled.button`
@@ -22,4 +22,10 @@ export const PrimaryButton = styled.button`
     opacity: 0.5;
     cursor: not-allowed;
   }
+`;
+
+export const FormButtonContainer = styled.div`
+  margin: 30px 0px 0px 0px;
+  padding: 20px 0px 0px 0px;
+  border-top: 1px solid ${gray5};
 `;

@@ -27,6 +27,11 @@ namespace Cure_All.DataAccess.Repository.Impl
             _jwtSettings = jwtSettings;
         }
 
+        public async Task<User> GetUserAsync(string userLogin)
+        {
+            return userLogin.Contains("@") ? await _userManager.FindByEmailAsync(userLogin) : await _userManager.FindByNameAsync(userLogin);
+        }
+
         public async Task<AuthenticationResultDto> RegisterAsync(UserRegistrationDto registrationDto)
         {
             var existingUser = await _userManager.FindByEmailAsync(registrationDto.Email);

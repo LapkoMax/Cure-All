@@ -51,6 +51,15 @@ export const signInAnchor = css`
     outline-color: #e3e2e2;
   }
   span {
-    margin-left: 7px;
+    margin-left: 5px;
   }
+`;
+
+export const helloUserLabel = css`
+  font-family: "Segoe UI", "Helvetica Neue", sansserif;
+  font-size: 16px;
+  padding: 5px 10px;
+  background-color: transparent;
+  color: #5c5a5a;
+  text-decoration: none;
 `;

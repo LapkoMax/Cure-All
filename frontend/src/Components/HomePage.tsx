@@ -16,6 +16,7 @@ import {
 export const HomePage = () => {
   const dispatch = useDispatch();
   const doctors = useSelector((state: AppState) => state.doctors.doctors);
+  const userToken = useSelector((state: AppState) => state.identity.token);
   const doctorsLoading = useSelector(
     (state: AppState) => state.doctors.loading,
   );
@@ -23,7 +24,7 @@ export const HomePage = () => {
   useEffect(() => {
     const doGetDoctors = async () => {
       dispatch(gettingDoctorsAction());
-      let results = await getDoctors();
+      let results = await getDoctors(userToken);
       dispatch(gotDoctorsAction(results));
     };
     doGetDoctors();

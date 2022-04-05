@@ -1,7 +1,9 @@
-﻿using Cure_All.BusinessLogic.Extensions;
+﻿using AutoMapper;
+using Cure_All.BusinessLogic.Extensions;
 using Cure_All.DataAccess.Repository;
 using Cure_All.Models.DTO;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -16,10 +18,26 @@ namespace Cure_All.Controllers
     public class IdentityController : ControllerBase
     {
         private readonly IIdentityService _identityService;
+        private readonly IMapper _mapper;
 
-        public IdentityController(IIdentityService identityService)
+        public IdentityController(IIdentityService identityService, IMapper mapper)
         {
             _identityService = identityService;
+            _mapper = mapper;
+        }
+
+        [HttpGet("/userByLogin")]
+        [Authorize]
+        public async Task<ActionResult<UserDto>> GetUserByLogin(string userLogin)
+        {
+            var user = await _identityService.GetUserAsync(userLogin);
+
+            if (user == null)
+                return NotFound();
+            else if (user.Id != HttpContext.GetUserId()) 
+                return BadRequest(new { errors = new string[]{ "Authorization error!" } });
+
+            return Ok(_mapper.Map<UserDto>(user));
         }
 
         [HttpPost("/register")]
@@ -34,7 +52,7 @@ namespace Cure_All.Controllers
         }
 
         [HttpPost("/login")]
-        public async Task<IActionResult> Register(UserLoginDto loginDto)
+        public async Task<IActionResult> Login(UserLoginDto loginDto)
         {
             var authResult = await _identityService.LoginAsync(loginDto);
 

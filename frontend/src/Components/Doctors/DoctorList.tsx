@@ -7,12 +7,12 @@ import {
 } from "../../Styles/Doctors/DoctorListStyles";
 
 interface Props {
-  data: DoctorData[] | undefined;
+  data: DoctorData[];
 }
 
 export const DoctorList = ({ data }: Props) => (
   <ul css={doctorList}>
-    {data?.map((doctor) => (
+    {data.map((doctor) => (
       <li key={doctor.id} css={doctorComponent}>
         <Doctor doctor={doctor} />
       </li>

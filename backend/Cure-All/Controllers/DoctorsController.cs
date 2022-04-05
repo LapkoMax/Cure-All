@@ -5,6 +5,7 @@ using Cure_All.MediatRCommands.Doctor;
 using Cure_All.Models.DTO;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -17,17 +18,13 @@ namespace Cure_All.Controllers
 {
     [Route("api/doctors")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class DoctorsController : ControllerBase
     {
-        private readonly IRepositoryManager _repositoryManager;
-        private readonly IMapper _mapper;
         private readonly IMediator _mediator;
 
-        public DoctorsController(IRepositoryManager repositoryManager, IMapper mapper, IMediator mediator)
+        public DoctorsController(IMediator mediator)
         {
-            _repositoryManager = repositoryManager;
-            _mapper = mapper;
             _mediator = mediator;
         }
 

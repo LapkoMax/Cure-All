@@ -1,4 +1,5 @@
 ﻿using Cure_All.Models.DTO;
+using Cure_All.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace Cure_All.DataAccess.Repository
 {
     public interface IIdentityService
     {
+        Task<User> GetUserAsync(string userLogin);
+
         Task<AuthenticationResultDto> RegisterAsync(UserRegistrationDto registrationDto);
 
         Task<AuthenticationResultDto> LoginAsync(UserLoginDto loginDto);

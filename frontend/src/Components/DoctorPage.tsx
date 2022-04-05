@@ -19,14 +19,16 @@ export const DoctorPage = () => {
   const dispatch = useDispatch();
   const doctor = useSelector((state: AppState) => state.doctors.doctor);
   const doctorLoading = useSelector((state: AppState) => state.doctors.loading);
+  const userToken = useSelector((state: AppState) => state.identity.token);
 
   useEffect(() => {
     const doGetDoctor = async (doctorId?: string) => {
       dispatch(gettingDoctorAction());
-      let doctor = await getDoctor(doctorId);
+      let doctor = await getDoctor(userToken, doctorId);
       dispatch(gotDoctorAction(doctor));
     };
     doGetDoctor(doctorId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

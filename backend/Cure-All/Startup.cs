@@ -38,10 +38,10 @@ namespace Cure_All
 
             app.UseRouting();
 
+            app.UseCors(builder => builder.AllowAnyMethod().AllowAnyHeader().SetIsOriginAllowed(origin => true));
+
             app.UseAuthentication();
             app.UseAuthorization();
-
-            app.UseCors(builder => builder.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod().AllowCredentials());
 
             app.UseEndpoints(endpoints =>
             {

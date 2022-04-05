@@ -29,6 +29,7 @@ namespace Cure_All.BusinessLogic.AutoMapper
                 .ForMember(doc => doc.Country, opt => opt.MapFrom(x => x.User.Country))
                 .ForMember(doc => doc.City, opt => opt.MapFrom(x => x.User.City));
             CreateMap<UserRegistrationDto, User>();
+            CreateMap<User, UserDto>();
         }
     }
 }
