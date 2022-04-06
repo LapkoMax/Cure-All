@@ -3,7 +3,7 @@ export interface DoctorData {
   userId: string;
   firstName: string;
   lastName: string;
-  speciality: string;
+  specialization: string;
   licenseNo: string;
   workStart: Date;
   yearsOfExperience: number;
@@ -12,6 +12,16 @@ export interface DoctorData {
   zipCode: string;
   country: string;
   city: string;
+}
+
+export interface ResponseDoctor {
+  data: DoctorData | null;
+  responseStatus: number;
+}
+
+export interface ResponseDoctors {
+  data: DoctorData[];
+  responseStatus: number;
 }
 
 export interface DoctorParameters {
@@ -37,7 +47,7 @@ const getHeaders = (token?: string): Headers => {
 export const getDoctors = async (
   token?: string,
   parameters?: DoctorParameters,
-): Promise<DoctorData[]> => {
+): Promise<ResponseDoctors> => {
   let doctors: DoctorData[] = [];
 
   var query =
@@ -58,19 +68,22 @@ export const getDoctors = async (
     headers: headers,
   });
 
-  if (response.status === 401) return [];
+  if (response.status === 401) return { data: doctors, responseStatus: 401 };
+  else if (response.status !== 200)
+    return { data: doctors, responseStatus: response.status };
 
   doctors = await response.json();
-  return doctors;
+
+  return { data: doctors, responseStatus: 200 };
 };
 
 export const getDoctor = async (
   token?: string,
   doctorId?: string,
-): Promise<DoctorData | null> => {
+): Promise<ResponseDoctor> => {
   let doctor = null;
 
-  if (doctorId === undefined) return doctor;
+  if (doctorId === undefined) return { data: doctor, responseStatus: 404 };
 
   let headers = getHeaders(token);
 
@@ -83,9 +96,9 @@ export const getDoctor = async (
     },
   );
 
-  if (response.status === 401) return null;
+  if (response.status === 401) return { data: doctor, responseStatus: 401 };
 
   doctor = await response.json();
 
-  return doctor;
+  return { data: doctor, responseStatus: 200 };
 };

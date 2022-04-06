@@ -12,7 +12,7 @@ export const doctorTitle = css`
   font-size: 19px;
 `;
 
-export const doctorSpeciality = css`
+export const doctorSpecialzation = css`
   padding-bottom: 10px;
   font-size: 15px;
   color: ${gray2};

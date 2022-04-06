@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { loginUser, LoginUserForm } from "../Api/IdentityData";
 import {
   loggingUserAction,
   loginedUserAction,
 } from "../Store/ActionCreators/IdentityActionCreators";
+import { AppState } from "../Store/Reducers/RootReducer";
 import { FormButtonContainer, PrimaryButton } from "../Styles/Common/Buttons";
 import {
   FieldContainer,
@@ -19,6 +20,7 @@ import { Page } from "./General/Page";
 
 export const SignInPage = () => {
   const dispatch = useDispatch();
+  const returnUrl = useSelector((state: AppState) => state.identity.returnUrl);
   const navigate = useNavigate();
   const {
     register,
@@ -33,7 +35,7 @@ export const SignInPage = () => {
     const result = await loginUser(data);
     if (result.success) {
       dispatch(loginedUserAction(result));
-      navigate("/");
+      navigate(returnUrl === "" ? "/" : returnUrl);
     } else setLoginErrors(result.errors);
   };
 

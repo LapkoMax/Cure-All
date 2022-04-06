@@ -16,6 +16,8 @@ namespace Cure_All.DataAccess.Repository.Impl
 
         private IPatientCardRepository _patientCardRepository;
 
+        private ISpecializationRepository _specializationRepository;
+
         private IIllnessRepository _illnessRepository;
 
         private IPatientIllnesesRepository _patientIllnesesRepository;
@@ -54,6 +56,16 @@ namespace Cure_All.DataAccess.Repository.Impl
                 if (_patientCardRepository == null)
                     _patientCardRepository = new PatientCardRepository(_dataContext);
                 return _patientCardRepository;
+            }
+        }
+
+        public ISpecializationRepository Specialization
+        {
+            get
+            {
+                if (_specializationRepository == null)
+                    _specializationRepository = new SpecializationRepository(_dataContext);
+                return _specializationRepository;
             }
         }
 

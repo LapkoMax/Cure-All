@@ -18,7 +18,7 @@ namespace Cure_All.DataAccess.Configuration
                 new Doctor
                 {
                     Id = new Guid("7d66e4b1-32dc-43c3-a373-ac3b6115261e"),
-                    Speciality = "TestSpeciality",
+                    SpecializationId = new Guid("ae8e0c0f-2a06-4b14-bcc2-156fbc321dce"),
                     LicenseNo = "123456",
                     WorkStart = DateTime.Now,
                     WorkAddress = "TestAddress",

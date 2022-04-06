@@ -25,7 +25,7 @@ namespace Cure_All.BusinessLogic.RequestFeatures.Extensions
             if (!string.IsNullOrEmpty(specialirySearchTerm))
             {
                 var lowerCaseTerm = specialirySearchTerm.Trim().ToLower();
-                doctors = doctors.Where(doc => doc.Speciality.Contains(lowerCaseTerm));
+                doctors = doctors.Where(doc => doc.Specialization.Name.Contains(lowerCaseTerm));
             }
 
             return doctors;

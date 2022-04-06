@@ -21,6 +21,7 @@ namespace Cure_All.DataAccess
             builder.ApplyConfiguration(new UsersConfiguration());
             builder.ApplyConfiguration(new RolesConfiguration());
             builder.ApplyConfiguration(new UserRolesConfiguration());
+            builder.ApplyConfiguration(new SpecializationConfiguration());
             builder.ApplyConfiguration(new DoctorsConfiguration());
             builder.ApplyConfiguration(new PatientsConfiguration());
         }
@@ -28,6 +29,8 @@ namespace Cure_All.DataAccess
         public DbSet<Patient> Patients { get; set; }
 
         public DbSet<Doctor> Doctors { get; set; }
+
+        public DbSet<Specialization> Specializations { get; set; }
 
         public DbSet<Illness> Illnesses { get; set; }
 

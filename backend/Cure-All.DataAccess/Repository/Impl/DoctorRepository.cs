@@ -18,13 +18,13 @@ namespace Cure_All.DataAccess.Repository.Impl
 
         public override IQueryable<Doctor> FindAll(bool trackChanges = false) =>
             !trackChanges ?
-            DataContext.Doctors.Include(doc => doc.User).AsNoTracking() :
-            DataContext.Doctors.Include(doc => doc.User);
+            DataContext.Doctors.Include(doc => doc.User).Include(doc => doc.Specialization).AsNoTracking() :
+            DataContext.Doctors.Include(doc => doc.User).Include(doc => doc.Specialization);
 
         public override IQueryable<Doctor> FindByCondition(Expression<Func<Doctor, bool>> expression, bool trackChanges = false) =>
             !trackChanges ?
-            DataContext.Doctors.Include(doc => doc.User).Where(expression).AsNoTracking() :
-            DataContext.Doctors.Include(doc => doc.User).Where(expression);
+            DataContext.Doctors.Include(doc => doc.User).Include(doc => doc.Specialization).Where(expression).AsNoTracking() :
+            DataContext.Doctors.Include(doc => doc.User).Include(doc => doc.Specialization).Where(expression);
 
         public async Task<IEnumerable<Doctor>> GetAllDoctorsAsync(DoctorParameters doctorParameters, bool trackChanges = false)
         {

@@ -17,12 +17,14 @@ type IdentityActions =
 
 export interface IdentityState {
   readonly loading: boolean;
+  readonly returnUrl: string;
   readonly token?: string;
   readonly user?: UserData | null;
 }
 
 const initialIdentityState: IdentityState = {
   loading: false,
+  returnUrl: "",
   token: "",
   user: null,
 };
@@ -51,6 +53,7 @@ export const identityReducer = (
     case SIGNOUTUSER: {
       return {
         ...state,
+        returnUrl: action.returnUrl,
         token: "",
         user: null,
       };

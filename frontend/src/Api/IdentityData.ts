@@ -59,6 +59,6 @@ export const loginUser = async (user: LoginUserForm): Promise<AuthResult> => {
 
   if (userResult.errors !== undefined)
     return { success: false, errors: userResult.errors };
-
+  console.log(result.token);
   return { success: true, token: result.token, user: userResult };
 };

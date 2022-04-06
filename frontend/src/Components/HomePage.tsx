@@ -12,9 +12,12 @@ import {
   gettingDoctorsAction,
   gotDoctorsAction,
 } from "../Store/ActionCreators/DoctorActionCreators";
+import { signOutUserAction } from "../Store/ActionCreators/IdentityActionCreators";
+import { useLocation } from "react-router-dom";
 
 export const HomePage = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
   const doctors = useSelector((state: AppState) => state.doctors.doctors);
   const userToken = useSelector((state: AppState) => state.identity.token);
   const doctorsLoading = useSelector(
@@ -24,8 +27,10 @@ export const HomePage = () => {
   useEffect(() => {
     const doGetDoctors = async () => {
       dispatch(gettingDoctorsAction());
-      let results = await getDoctors(userToken);
-      dispatch(gotDoctorsAction(results));
+      let result = await getDoctors(userToken);
+      if (result.responseStatus === 401)
+        dispatch(signOutUserAction(location.pathname));
+      dispatch(gotDoctorsAction(result.data));
     };
     doGetDoctors();
     // eslint-disable-next-line react-hooks/exhaustive-deps

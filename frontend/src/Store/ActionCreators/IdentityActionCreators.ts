@@ -17,7 +17,8 @@ export const loginedUserAction = (authResult: AuthResult) =>
     user: authResult.user,
   } as const);
 
-export const signOutUserAction = () =>
+export const signOutUserAction = (returnUrl: string) =>
   ({
     type: SIGNOUTUSER,
+    returnUrl: returnUrl,
   } as const);

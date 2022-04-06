@@ -4,7 +4,7 @@ import { DoctorData } from "../../Api/DoctorsData";
 import {
   doctorContainer,
   doctorExp,
-  doctorSpeciality,
+  doctorSpecialzation,
   doctorTitle,
 } from "../../Styles/Doctors/DoctorStyles";
 
@@ -16,7 +16,7 @@ export const Doctor = ({ doctor }: Props) => (
   <div css={doctorContainer}>
     <Link to={`/doctors/${doctor.id}`} css={doctorTitle}>
       {doctor.firstName} {doctor.lastName}
-      <div css={doctorSpeciality}>Speciality: {doctor.speciality}</div>
+      <div css={doctorSpecialzation}>Speciality: {doctor.specialization}</div>
       <div css={doctorExp}>Years of experience: {doctor.yearsOfExperience}</div>
     </Link>
   </div>

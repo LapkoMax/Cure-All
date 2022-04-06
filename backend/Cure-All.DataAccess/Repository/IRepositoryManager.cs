@@ -14,6 +14,8 @@ namespace Cure_All.DataAccess.Repository
 
         IPatientCardRepository PatientCard { get; }
 
+        ISpecializationRepository Specialization { get; }
+
         IIllnessRepository Illness { get; }
 
         IPatientIllnesesRepository PatientIllneses { get; }

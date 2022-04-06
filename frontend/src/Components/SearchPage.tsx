@@ -1,12 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useSearchParams } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 import { getDoctors } from "../Api/DoctorsData";
 import {
   gettingDoctorsAction,
   gotDoctorsAction,
 } from "../Store/ActionCreators/DoctorActionCreators";
+import { signOutUserAction } from "../Store/ActionCreators/IdentityActionCreators";
 import { AppState } from "../Store/Reducers/RootReducer";
 import { forSearch } from "../Styles/SearchPageStyles";
 import { DoctorList } from "./Doctors/DoctorList";
@@ -16,6 +17,7 @@ export const SearchPage = () => {
   const [searchParams] = useSearchParams();
   const searchTerm = searchParams.get("fullNameSearchTerm") || "";
   const dispatch = useDispatch();
+  const location = useLocation();
   const doctors = useSelector((state: AppState) => state.doctors.doctors);
   const userToken = useSelector((state: AppState) => state.identity.token);
   const doctorsLoading = useSelector(
@@ -25,10 +27,12 @@ export const SearchPage = () => {
   useEffect(() => {
     const doSearch = async (fullNameSearchTerm: string) => {
       dispatch(gettingDoctorsAction());
-      const results = await getDoctors(userToken, {
+      const result = await getDoctors(userToken, {
         fullNameSearchTerm: fullNameSearchTerm,
       });
-      dispatch(gotDoctorsAction(results));
+      if (result.responseStatus === 401)
+        dispatch(signOutUserAction(location.pathname + location.search));
+      dispatch(gotDoctorsAction(result.data));
     };
     doSearch(searchTerm);
     // eslint-disable-next-line react-hooks/exhaustive-deps

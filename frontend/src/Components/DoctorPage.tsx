@@ -1,22 +1,25 @@
 /** @jsxImportSource @emotion/react */
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { getDoctor } from "../Api/DoctorsData";
 import {
   gettingDoctorAction,
   gotDoctorAction,
 } from "../Store/ActionCreators/DoctorActionCreators";
+import { signOutUserAction } from "../Store/ActionCreators/IdentityActionCreators";
 import { AppState } from "../Store/Reducers/RootReducer";
 import {
   doctorContainer,
   doctorTitle,
 } from "../Styles/Doctors/DoctorPageStyles";
+import { doctorExp, doctorSpecialzation } from "../Styles/Doctors/DoctorStyles";
 import { Page } from "./General/Page";
 
 export const DoctorPage = () => {
   const { doctorId } = useParams();
   const dispatch = useDispatch();
+  const location = useLocation();
   const doctor = useSelector((state: AppState) => state.doctors.doctor);
   const doctorLoading = useSelector((state: AppState) => state.doctors.loading);
   const userToken = useSelector((state: AppState) => state.identity.token);
@@ -24,8 +27,10 @@ export const DoctorPage = () => {
   useEffect(() => {
     const doGetDoctor = async (doctorId?: string) => {
       dispatch(gettingDoctorAction());
-      let doctor = await getDoctor(userToken, doctorId);
-      dispatch(gotDoctorAction(doctor));
+      let result = await getDoctor(userToken, doctorId);
+      if (result.responseStatus === 401)
+        dispatch(signOutUserAction(location.pathname));
+      dispatch(gotDoctorAction(result.data));
     };
     doGetDoctor(doctorId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -42,6 +47,12 @@ export const DoctorPage = () => {
               {doctor === null
                 ? ""
                 : `${doctor?.firstName} ${doctor?.lastName}`}
+            </div>
+            <div css={doctorSpecialzation}>
+              Speciality: {doctor?.specialization}
+            </div>
+            <div css={doctorExp}>
+              Years of experience: {doctor?.yearsOfExperience}
             </div>
           </div>
         </Page>

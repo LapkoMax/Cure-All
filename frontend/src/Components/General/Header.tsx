@@ -70,7 +70,7 @@ export const Header = () => {
           <Link
             to=""
             onClick={() => {
-              dispatch(signOutUserAction());
+              dispatch(signOutUserAction(window.location.href));
             }}
             css={signInAnchor}
             className="col-4 row d-flex justify-content-end"

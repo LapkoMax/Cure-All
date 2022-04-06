@@ -13,7 +13,10 @@ namespace Cure_All.Models.Entities
         [Key]
         public Guid Id { get; set; }
 
-        public string Speciality { get; set; }
+        [ForeignKey(nameof(Specialization))]
+        public Guid SpecializationId { get; set; }
+
+        public Specialization Specialization { get; set; }
 
         public string LicenseNo { get; set; }
 
