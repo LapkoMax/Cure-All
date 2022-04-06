@@ -16,6 +16,8 @@ namespace Cure_All.Models.DTO
 
         public string LastName { get; set; }
 
+        public string UserName { get; set; }
+
         public string Specialization { get; set; }
 
         public string LicenseNo { get; set; }

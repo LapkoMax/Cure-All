@@ -1,7 +1,9 @@
+/** @jsxImportSource @emotion/react */
 import { useState } from "react";
+import { FormLabel } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { loginUser, LoginUserForm } from "../Api/IdentityData";
 import {
   loggingUserAction,
@@ -16,6 +18,7 @@ import {
   FieldLabel,
   Fieldset,
 } from "../Styles/Common/FieldStyles";
+import { registerLink } from "../Styles/SignInPageStyles";
 import { Page } from "./General/Page";
 
 export const SignInPage = () => {
@@ -44,7 +47,7 @@ export const SignInPage = () => {
       <form onSubmit={handleSubmit(submitForm)}>
         <Fieldset disabled={isSubmitting}>
           <FieldContainer title="Input your username or email">
-            <FieldLabel htmlFor="login">Login</FieldLabel>
+            <FieldLabel htmlFor="login">Username or Email</FieldLabel>
             <FieldInput
               id="login"
               {...register("login", { required: "Login is required!" })}
@@ -65,8 +68,23 @@ export const SignInPage = () => {
           </FieldContainer>
           {loginErrors &&
             loginErrors.map((error) => <FieldError>{error}</FieldError>)}
-          <FormButtonContainer>
-            <PrimaryButton type="submit">Login</PrimaryButton>
+          <FormButtonContainer className="row d-flex justify-content-center">
+            <FormLabel className="col-9 row d-flex justify-content-center">
+              Do not have an account?
+            </FormLabel>
+            <Link
+              to="/register"
+              css={registerLink}
+              className="col-3 row d-flex justify-content-center"
+            >
+              Register
+            </Link>
+            <PrimaryButton
+              type="submit"
+              className="col-5 row d-flex justify-content-center"
+            >
+              Login
+            </PrimaryButton>
           </FormButtonContainer>
         </Fieldset>
       </form>

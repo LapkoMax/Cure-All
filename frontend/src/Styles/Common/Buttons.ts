@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { gray5, primary1, primary2 } from "./Colors";
+import { gray1, gray2, gray5, gray6, primary1, primary2 } from "./Colors";
 import { mainFontFamily, mainFontSize } from "./Fonts";
 
 export const PrimaryButton = styled.button`
@@ -17,6 +17,28 @@ export const PrimaryButton = styled.button`
   }
   :focus {
     outline-color: ${primary2};
+  }
+  :disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+`;
+
+export const SecondaryButton = styled.button`
+  background-color: ${gray1};
+  border-color: ${gray2};
+  border-style: solid;
+  border-radius: 5px;
+  font-family: ${mainFontFamily};
+  font-size: ${mainFontSize};
+  padding: 5px 10px;
+  color: white;
+  cursor: pointer;
+  :hover {
+    background-color: ${gray5};
+  }
+  :focus {
+    outline-color: ${gray6};
   }
   :disabled {
     opacity: 0.5;

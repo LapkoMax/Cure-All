@@ -3,6 +3,7 @@ export interface DoctorData {
   userId: string;
   firstName: string;
   lastName: string;
+  userName: string;
   specialization: string;
   licenseNo: string;
   workStart: Date;

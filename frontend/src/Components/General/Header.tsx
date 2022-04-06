@@ -2,7 +2,12 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 import { signOutUserAction } from "../../Store/ActionCreators/IdentityActionCreators";
 import { AppState } from "../../Store/Reducers/RootReducer";
 import {
@@ -20,6 +25,7 @@ type FormData = {
 
 export const Header = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
   const user = useSelector((state: AppState) => state.identity.user);
   const { register, handleSubmit } = useForm<FormData>();
   const [searchParams] = useSearchParams();
@@ -27,7 +33,11 @@ export const Header = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user === null && !window.location.href.toString().includes("signin")) {
+    if (
+      user === null &&
+      !window.location.href.toString().includes("signin") &&
+      !window.location.href.toString().includes("register")
+    ) {
       navigate("signin");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -70,7 +80,7 @@ export const Header = () => {
           <Link
             to=""
             onClick={() => {
-              dispatch(signOutUserAction(window.location.href));
+              dispatch(signOutUserAction(location.pathname));
             }}
             css={signInAnchor}
             className="col-4 row d-flex justify-content-end"

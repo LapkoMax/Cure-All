@@ -10,6 +10,25 @@ export interface LoginUserForm {
   password: string;
 }
 
+export interface RegisterDoctorForm {
+  firstName: string;
+  lastName: string;
+  dateOfBurth: Date;
+  zipCode: string;
+  country: string;
+  city: string;
+  specializationId: string;
+  licenseNo: string;
+  workStart: Date;
+  workAddress: string;
+  userName: string;
+  email: string;
+  phoneNumber: string;
+  type: string;
+  password: string;
+  confirmPassword: string;
+}
+
 export interface AuthResult {
   success: boolean;
   errors?: string[];
@@ -29,6 +48,31 @@ const getHeaders = (): Headers => {
   return headers;
 };
 
+const addUserToAuthResult = async (
+  userName: string,
+  token: string,
+): Promise<AuthResult> => {
+  let headers = getHeaders();
+
+  headers.append("Authorization", "bearer " + token);
+
+  const userResponse = await fetch(
+    "http://localhost:5000/userByLogin?userLogin=" + userName,
+    {
+      mode: "cors",
+      method: "GET",
+      headers: headers,
+    },
+  );
+
+  let userResult = await userResponse.json();
+
+  if (userResult.errors !== undefined)
+    return { success: false, errors: userResult.errors };
+
+  return { success: true, token: token, user: userResult };
+};
+
 export const loginUser = async (user: LoginUserForm): Promise<AuthResult> => {
   let headers = getHeaders();
 
@@ -44,21 +88,28 @@ export const loginUser = async (user: LoginUserForm): Promise<AuthResult> => {
   if (result.errors !== undefined)
     return { success: false, errors: result.errors };
 
-  headers.append("Authorization", "bearer " + result.token);
+  return await addUserToAuthResult(user.login, result.token);
+};
 
-  const userResponse = await fetch(
-    "http://localhost:5000/userByLogin?userLogin=" + user.login,
-    {
-      mode: "cors",
-      method: "GET",
-      headers: headers,
-    },
-  );
+export const registerDoctor = async (
+  doctor: RegisterDoctorForm,
+): Promise<AuthResult> => {
+  doctor.type = "Doctor";
+  console.log(doctor);
 
-  let userResult = await userResponse.json();
+  let headers = getHeaders();
 
-  if (userResult.errors !== undefined)
-    return { success: false, errors: userResult.errors };
-  console.log(result.token);
-  return { success: true, token: result.token, user: userResult };
+  const response = await fetch("http://localhost:5000/registerDoctor", {
+    mode: "cors",
+    method: "POST",
+    body: JSON.stringify(doctor),
+    headers: headers,
+  });
+
+  let result = await response.json();
+
+  if (result.errors !== undefined)
+    return { success: false, errors: result.errors };
+
+  return await addUserToAuthResult(doctor.userName, result.token);
 };

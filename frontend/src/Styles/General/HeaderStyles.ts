@@ -40,15 +40,15 @@ export const searchInput = css`
 `;
 
 export const signInAnchor = css`
-  font-family: "Segoe UI", "Helvetica Neue", sansserif;
-  font-size: 16px;
+  font-family: ${mainFontFamily};
+  font-size: ${mainFontSize};
   padding: 5px 10px;
   background-color: transparent;
-  color: #5c5a5a;
+  color: ${gray2};
   text-decoration: none;
   cursor: pointer;
   :focus {
-    outline-color: #e3e2e2;
+    outline-color: ${gray5};
   }
   span {
     margin-left: 5px;
@@ -56,10 +56,10 @@ export const signInAnchor = css`
 `;
 
 export const helloUserLabel = css`
-  font-family: "Segoe UI", "Helvetica Neue", sansserif;
-  font-size: 16px;
+  font-family: ${mainFontFamily};
+  font-size: ${mainFontSize};
   padding: 5px 10px;
   background-color: transparent;
-  color: #5c5a5a;
+  color: ${gray2};
   text-decoration: none;
 `;

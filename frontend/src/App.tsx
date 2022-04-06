@@ -8,6 +8,7 @@ import { DoctorPage } from "./Components/DoctorPage";
 import { Header } from "./Components/General/Header";
 import { HomePage } from "./Components/HomePage";
 import { NotFoundPage } from "./Components/NotFoundPage";
+import { RegistrationPage } from "./Components/RegistrationPage";
 import { SearchPage } from "./Components/SearchPage";
 import { SignInPage } from "./Components/SignInPage";
 import { configureStore } from "./Store/Store";
@@ -26,6 +27,7 @@ function App() {
             <Routes>
               <Route path="" element={<HomePage />} />
               <Route path="signin" element={<SignInPage />} />
+              <Route path="register" element={<RegistrationPage />} />
               <Route path="search" element={<SearchPage />} />
               <Route path="doctors/:doctorId" element={<DoctorPage />} />
               <Route path="*" element={<NotFoundPage />} />

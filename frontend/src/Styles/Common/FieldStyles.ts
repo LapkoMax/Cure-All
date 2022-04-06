@@ -13,6 +13,16 @@ export const Fieldset = styled.fieldset`
   box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.16);
 `;
 
+export const RegistrationFieldset = styled.fieldset`
+  margin: 10px auto 0 auto;
+  padding: 30px;
+  width: 700px;
+  background-color: ${gray6};
+  border-radius: 4px;
+  border: 1px solid ${gray5};
+  box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.16);
+`;
+
 export const FieldContainer = styled.div`
   margin-bottom: 10px;
 `;
@@ -44,14 +54,23 @@ export const FieldInput = styled.input`
   ${baseFieldCSS}
 `;
 
+export const FieldSelect = styled.select`
+  ${baseFieldCSS}
+`;
+
+export const FieldOption = styled.option`
+  ${baseFieldCSS}
+`;
+
 export const FieldTextArea = styled.textarea`
   ${baseFieldCSS}
   height: 100px;
 `;
 
 export const FieldError = styled.div`
-  font-size: 12px;
+  font-size: 14px;
   color: red;
+  height: 30px;
 `;
 
 export const SubmissionSuccess = styled.div`
