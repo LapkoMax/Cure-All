@@ -3,6 +3,7 @@ import { ButtonGroup } from "react-bootstrap";
 import { PrimaryButton } from "../Styles/Common/Buttons";
 import { Page } from "./General/Page";
 import { RegistrationDoctor } from "./RegistrationDoctor";
+import { RegistrationPatient } from "./RegistrationPatient";
 
 export const RegistrationPage = () => {
   const [userType, setUserType] = useState("");
@@ -29,6 +30,7 @@ export const RegistrationPage = () => {
         </PrimaryButton>
       </ButtonGroup>
       {userType === "Doctor" && <RegistrationDoctor />}
+      {userType === "Patient" && <RegistrationPatient />}
     </Page>
   );
 };

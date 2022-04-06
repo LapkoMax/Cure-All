@@ -2,6 +2,7 @@
 using Cure_All.BusinessLogic.Extensions;
 using Cure_All.DataAccess.Repository;
 using Cure_All.MediatRCommands.Doctor;
+using Cure_All.MediatRCommands.Patient;
 using Cure_All.Models.DTO;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -76,16 +77,25 @@ namespace Cure_All.Controllers
             return Ok(new { Token = authResult.Token });
         }
 
-        //[HttpPost("/registerPatient")]
-        //public async Task<IActionResult> RegisterPatient(UserRegistrationDto registrationDto)
-        //{
-        //    var authResult = await _identityService.RegisterAsync(registrationDto);
+        [HttpPost("/registerPatient")]
+        public async Task<IActionResult> RegisterPatient(PatientForCreationDto registrationDto)
+        {
+            var authResult = await _identityService.RegisterAsync(registrationDto);
 
-        //    if (!authResult.Success)
-        //        return BadRequest(new { Errors = authResult.ErrorMessages });
+            if (!authResult.Success)
+                return BadRequest(new { Errors = authResult.ErrorMessages });
 
-        //    return Ok(new { Token = authResult.Token });
-        //}
+            var user = await _identityService.GetUserAsync(registrationDto.UserName);
+
+            var newPatientId = await _mediator.Send(new CreatePatientCommand { patient = registrationDto, userId = user.Id }, CancellationToken.None);
+
+            var newPatient = await _mediator.Send(new GetPatientCommand { patientId = newPatientId }, CancellationToken.None);
+
+            if(newPatient.UserName != registrationDto.UserName)
+                return BadRequest(new { Errors = new string[] { "Something went wrong!" } });
+
+            return Ok(new { Token = authResult.Token });
+        }
 
         [HttpPost("/login")]
         public async Task<IActionResult> Login(UserLoginDto loginDto)

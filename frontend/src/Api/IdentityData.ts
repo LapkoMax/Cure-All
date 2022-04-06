@@ -29,6 +29,21 @@ export interface RegisterDoctorForm {
   confirmPassword: string;
 }
 
+export interface RegisterPatientForm {
+  firstName: string;
+  lastName: string;
+  dateOfBurth: Date;
+  zipCode: string;
+  country: string;
+  city: string;
+  userName: string;
+  email: string;
+  phoneNumber: string;
+  type: string;
+  password: string;
+  confirmPassword: string;
+}
+
 export interface AuthResult {
   success: boolean;
   errors?: string[];
@@ -95,7 +110,6 @@ export const registerDoctor = async (
   doctor: RegisterDoctorForm,
 ): Promise<AuthResult> => {
   doctor.type = "Doctor";
-  console.log(doctor);
 
   let headers = getHeaders();
 
@@ -112,4 +126,26 @@ export const registerDoctor = async (
     return { success: false, errors: result.errors };
 
   return await addUserToAuthResult(doctor.userName, result.token);
+};
+
+export const registerPatient = async (
+  patient: RegisterPatientForm,
+): Promise<AuthResult> => {
+  patient.type = "Patient";
+
+  let headers = getHeaders();
+
+  const response = await fetch("http://localhost:5000/registerPatient", {
+    mode: "cors",
+    method: "POST",
+    body: JSON.stringify(patient),
+    headers: headers,
+  });
+
+  let result = await response.json();
+
+  if (result.errors !== undefined)
+    return { success: false, errors: result.errors };
+
+  return await addUserToAuthResult(patient.userName, result.token);
 };

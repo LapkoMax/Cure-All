@@ -25,12 +25,14 @@ namespace Cure_All.BusinessLogic.AutoMapper
                 .ForMember(doc => doc.YearsOfExperience, opt => opt.MapFrom(x => (int)(DateTime.Now.Subtract(x.WorkStart).Days / 365)));
             CreateMap<DoctorForCreationDto, Doctor>();
             CreateMap<Patient, PatientDto>()
-                .ForMember(doc => doc.FirstName, opt => opt.MapFrom(x => x.User.FirstName))
-                .ForMember(doc => doc.LastName, opt => opt.MapFrom(x => x.User.LastName))
-                .ForMember(doc => doc.DateOfBurth, opt => opt.MapFrom(x => x.User.DateOfBurth))
-                .ForMember(doc => doc.ZipCode, opt => opt.MapFrom(x => x.User.ZipCode))
-                .ForMember(doc => doc.Country, opt => opt.MapFrom(x => x.User.Country))
-                .ForMember(doc => doc.City, opt => opt.MapFrom(x => x.User.City));
+                .ForMember(pat => pat.FirstName, opt => opt.MapFrom(x => x.User.FirstName))
+                .ForMember(pat => pat.LastName, opt => opt.MapFrom(x => x.User.LastName))
+                .ForMember(pat => pat.UserName, opt => opt.MapFrom(x => x.User.UserName))
+                .ForMember(pat => pat.DateOfBurth, opt => opt.MapFrom(x => x.User.DateOfBurth))
+                .ForMember(pat => pat.ZipCode, opt => opt.MapFrom(x => x.User.ZipCode))
+                .ForMember(pat => pat.Country, opt => opt.MapFrom(x => x.User.Country))
+                .ForMember(pat => pat.City, opt => opt.MapFrom(x => x.User.City));
+            CreateMap<PatientForCreationDto, Patient>();
             CreateMap<UserRegistrationDto, User>();
             CreateMap<User, UserDto>();
         }
