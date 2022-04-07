@@ -39,9 +39,9 @@ export const SearchPage = () => {
   }, [searchTerm]);
 
   return (
-    <Page title="Search Results">
-      {searchTerm && <p css={forSearch}>for "{searchTerm}"</p>}
-      {doctorsLoading ? <div>Loading...</div> : <DoctorList data={doctors} />}
+    <Page title="Результаты поиска">
+      {searchTerm && <p css={forSearch}>для "{searchTerm}"</p>}
+      {doctorsLoading ? <div>Загрузка...</div> : <DoctorList data={doctors} />}
     </Page>
   );
 };

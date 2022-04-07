@@ -41,7 +41,7 @@ namespace Cure_All.Controllers
             if (user == null)
                 return NotFound();
             else if (user.Id != HttpContext.GetUserId()) 
-                return BadRequest(new { errors = new string[]{ "Authorization error!" } });
+                return BadRequest(new { errors = new string[]{ "Ошибка авторизации!" } });
 
             return Ok(_mapper.Map<UserDto>(user));
         }
@@ -72,7 +72,7 @@ namespace Cure_All.Controllers
             var newDoctor = await _mediator.Send(new GetDoctorCommand { doctorId = newDoctorId }, CancellationToken.None);
 
             if(newDoctor.UserName != registrationDto.UserName)
-                return BadRequest(new { Errors = new string[]{ "Something went wrong!" } });
+                return BadRequest(new { Errors = new string[]{ "Что-то пошло не так!" } });
 
             return Ok(new { Token = authResult.Token });
         }
@@ -92,7 +92,7 @@ namespace Cure_All.Controllers
             var newPatient = await _mediator.Send(new GetPatientCommand { patientId = newPatientId }, CancellationToken.None);
 
             if(newPatient.UserName != registrationDto.UserName)
-                return BadRequest(new { Errors = new string[] { "Something went wrong!" } });
+                return BadRequest(new { Errors = new string[] { "Что-то пошло не так!" } });
 
             return Ok(new { Token = authResult.Token });
         }

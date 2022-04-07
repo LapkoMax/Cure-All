@@ -16,8 +16,10 @@ export const Doctor = ({ doctor }: Props) => (
   <div css={doctorContainer}>
     <Link to={`/doctors/${doctor.id}`} css={doctorTitle}>
       {doctor.firstName} {doctor.lastName}
-      <div css={doctorSpecialzation}>Speciality: {doctor.specialization}</div>
-      <div css={doctorExp}>Years of experience: {doctor.yearsOfExperience}</div>
+      <div css={doctorSpecialzation}>
+        Специальность: {doctor.specialization}
+      </div>
+      <div css={doctorExp}>Опыт: {doctor.yearsOfExperience} лет</div>
     </Link>
   </div>
 );

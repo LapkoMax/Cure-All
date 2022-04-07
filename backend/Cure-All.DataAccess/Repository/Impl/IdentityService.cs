@@ -39,7 +39,7 @@ namespace Cure_All.DataAccess.Repository.Impl
             if (existingUser != null)
                 return new AuthenticationResultDto
                 {
-                    ErrorMessages = new List<string> { "User with this email already exist!" }
+                    ErrorMessages = new List<string> { "Данная электронная почта уже зарегистрирована, попробуйте другую!" }
                 };
 
             existingUser = await _userManager.FindByNameAsync(registrationDto.UserName);
@@ -47,7 +47,7 @@ namespace Cure_All.DataAccess.Repository.Impl
             if (existingUser != null)
                 return new AuthenticationResultDto
                 {
-                    ErrorMessages = new List<string> { "User with this user name already exist!" }
+                    ErrorMessages = new List<string> { "Данное имя пользователя уже зарегистрировано!" }
                 };
 
             var newUser = _mapper.Map<User>(registrationDto);
@@ -55,7 +55,7 @@ namespace Cure_All.DataAccess.Repository.Impl
             if (registrationDto.Password != registrationDto.ConfirmPassword)
                 return new AuthenticationResultDto
                 {
-                    ErrorMessages = new List<string> { "Password and confirm password do not match!" }
+                    ErrorMessages = new List<string> { "Пароль подтверждён неверно!" }
                 };
 
             var createdUser = await _userManager.CreateAsync(newUser, registrationDto.Password);
@@ -86,7 +86,7 @@ namespace Cure_All.DataAccess.Repository.Impl
             if(user == null)
                 return new AuthenticationResultDto
                 {
-                    ErrorMessages = new List<string> { "Login or password is wrong!" }
+                    ErrorMessages = new List<string> { "Неверные данные пользователя!" }
                 };
 
             var userHasValidPassword = await _userManager.CheckPasswordAsync(user, loginDto.Password);
@@ -94,7 +94,7 @@ namespace Cure_All.DataAccess.Repository.Impl
             if(!userHasValidPassword)
                 return new AuthenticationResultDto
                 {
-                    ErrorMessages = new List<string> { "Login or password is wrong!" }
+                    ErrorMessages = new List<string> { "Неверные данные пользователя!" }
                 };
 
             return await GenerateAuthResultForUser(user);

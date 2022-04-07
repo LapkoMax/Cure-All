@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { useEffect } from "react";
+import { Fragment, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -53,55 +53,49 @@ export const Header = () => {
       <Link
         to="/"
         css={titleAnchor}
-        className="col-3 row d-flex justify-content-start"
+        className={
+          (user === null ? "col-11" : "col-3") +
+          " row d-flex justify-content-start"
+        }
       >
         Cure-All
       </Link>
-      <form
-        className="col-3 row d-flex justify-content-center"
-        onSubmit={handleSubmit(submitForm)}
-      >
-        <input
-          {...register("searchTerm")}
-          type="text"
-          placeholder="Search for doctor..."
-          defaultValue={searchTerm}
-          css={searchInput}
-        />
-      </form>
-      {user ? (
-        <div className="col-3 row d-flex justify-content-end">
-          <div
-            css={helloUserLabel}
-            className="col-4 row d-flex justify-content-end"
+      {user !== null && (
+        <Fragment>
+          <form
+            className="col-3 row d-flex justify-content-center"
+            onSubmit={handleSubmit(submitForm)}
           >
-            Hello {user.userName}!
-          </div>
-          <Link
-            to=""
-            onClick={() => {
-              dispatch(signOutUserAction(location.pathname));
-            }}
-            css={signInAnchor}
-            className="col-4 row d-flex justify-content-end"
-          >
-            <div className="col-1">
-              <UserIcon />
+            <input
+              {...register("searchTerm")}
+              type="text"
+              placeholder="Поиск докторов..."
+              defaultValue={searchTerm}
+              css={searchInput}
+            />
+          </form>
+          <div className="col-3 row d-flex justify-content-end">
+            <div
+              css={helloUserLabel}
+              className="col-6 row d-flex justify-content-end"
+            >
+              Приветствую {user?.userName}!
             </div>
-            <span className="col-8 row">Sign Out</span>
-          </Link>
-        </div>
-      ) : (
-        <div className="col-3 row d-flex justify-content-end">
-          <Link
-            to="signin"
-            css={signInAnchor}
-            className="d-flex justify-content-end"
-          >
-            <UserIcon />
-            <span>Sign In</span>
-          </Link>
-        </div>
+            <Link
+              to=""
+              onClick={() => {
+                dispatch(signOutUserAction(location.pathname));
+              }}
+              css={signInAnchor}
+              className="col-4 row d-flex justify-content-end"
+            >
+              <div className="col-1">
+                <UserIcon />
+              </div>
+              <span className="col-8 row">Выход</span>
+            </Link>
+          </div>
+        </Fragment>
       )}
     </div>
   );

@@ -70,7 +70,7 @@ export const FieldTextArea = styled.textarea`
 export const FieldError = styled.div`
   font-size: 14px;
   color: red;
-  height: 30px;
+  height: 50px;
 `;
 
 export const SubmissionSuccess = styled.div`

@@ -1,3 +1,5 @@
 import { Page } from "./General/Page";
 
-export const NotFoundPage = () => <Page title="Page Not Found">{null}</Page>;
+export const NotFoundPage = () => (
+  <Page title="Страница не найдена">{null}</Page>
+);

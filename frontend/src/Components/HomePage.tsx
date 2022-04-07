@@ -39,10 +39,10 @@ export const HomePage = () => {
   return (
     <Page>
       <div css={titleContainer}>
-        <PageTitle>Doctors</PageTitle>
-        <PrimaryButton>Create new doctor</PrimaryButton>
+        <PageTitle>Список докторов</PageTitle>
+        <PrimaryButton>Добавить доктора</PrimaryButton>
       </div>
-      {doctorsLoading ? <div>Loading...</div> : <DoctorList data={doctors} />}
+      {doctorsLoading ? <div>Загрузка...</div> : <DoctorList data={doctors} />}
     </Page>
   );
 };

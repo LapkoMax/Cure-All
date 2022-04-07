@@ -39,7 +39,7 @@ export const DoctorPage = () => {
   return (
     <div>
       {doctorLoading ? (
-        <div>Loading...</div>
+        <div>Загрузка...</div>
       ) : (
         <Page>
           <div css={doctorContainer}>
@@ -49,11 +49,9 @@ export const DoctorPage = () => {
                 : `${doctor?.firstName} ${doctor?.lastName}`}
             </div>
             <div css={doctorSpecialzation}>
-              Speciality: {doctor?.specialization}
+              Специальность: {doctor?.specialization}
             </div>
-            <div css={doctorExp}>
-              Years of experience: {doctor?.yearsOfExperience}
-            </div>
+            <div css={doctorExp}>Опыт: {doctor?.yearsOfExperience} лет</div>
           </div>
         </Page>
       )}

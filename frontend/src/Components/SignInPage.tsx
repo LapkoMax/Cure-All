@@ -43,11 +43,13 @@ export const SignInPage = () => {
   };
 
   return (
-    <Page title="Sign In">
+    <Page title="Вход в аккаунт">
       <form onSubmit={handleSubmit(submitForm)}>
         <Fieldset disabled={isSubmitting}>
           <FieldContainer title="Input your username or email">
-            <FieldLabel htmlFor="login">Username or Email</FieldLabel>
+            <FieldLabel htmlFor="login">
+              Имя пользователя или эл. почта:
+            </FieldLabel>
             <FieldInput
               id="login"
               {...register("login", { required: "Login is required!" })}
@@ -56,7 +58,7 @@ export const SignInPage = () => {
             {errors.login && <FieldError>{errors.login.message}</FieldError>}
           </FieldContainer>
           <FieldContainer>
-            <FieldLabel htmlFor="password">Password</FieldLabel>
+            <FieldLabel htmlFor="password">Пароль:</FieldLabel>
             <FieldInput
               id="password"
               {...register("password", { required: "Password is required!" })}
@@ -68,22 +70,22 @@ export const SignInPage = () => {
           </FieldContainer>
           {loginErrors &&
             loginErrors.map((error) => <FieldError>{error}</FieldError>)}
-          <FormButtonContainer className="row d-flex justify-content-center">
-            <FormLabel className="col-9 row d-flex justify-content-center">
-              Do not have an account?
+          <FormButtonContainer className="row d-flex justify-content-around">
+            <FormLabel className="col-6 row d-flex justify-content-center">
+              Нет аккаунта?
             </FormLabel>
             <Link
               to="/register"
               css={registerLink}
-              className="col-3 row d-flex justify-content-center"
+              className="col-5 row d-flex justify-content-center"
             >
-              Register
+              Зарегистрироваться
             </Link>
             <PrimaryButton
               type="submit"
               className="col-5 row d-flex justify-content-center"
             >
-              Login
+              Войти
             </PrimaryButton>
           </FormButtonContainer>
         </Fieldset>

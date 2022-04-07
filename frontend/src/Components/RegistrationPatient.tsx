@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -29,7 +29,10 @@ export const RegistrationPatient = () => {
     register,
     formState: { errors, isSubmitting },
     handleSubmit,
+    watch,
   } = useForm<RegisterPatientForm>({ mode: "onBlur" });
+  const password = useRef({});
+  password.current = watch("password", "");
   const [loginErrors, setLoginErrors] = useState<string[] | undefined>([]);
 
   const submitForm = async (data: RegisterPatientForm) => {
@@ -52,18 +55,18 @@ export const RegistrationPatient = () => {
         className="row d-flex justify-content-around"
       >
         <FieldContainer className="row col-6 d-flex justify-content-center">
-          <FieldLabel htmlFor="firstName">First Name</FieldLabel>
+          <FieldLabel htmlFor="firstName">Имя</FieldLabel>
           <FieldInput
             id="firstName"
             {...register("firstName", {
-              required: "First name is required!",
+              required: "Имя обязательно!",
               minLength: {
                 value: 2,
-                message: "First name must be at least 2 characters in length!",
+                message: "Имя должно состоять минимум из 2 символов!",
               },
               maxLength: {
                 value: 50,
-                message: "First name must be 50 characters max!",
+                message: "Имя должно состоять максимум из 50 символов!",
               },
             })}
             type="text"
@@ -71,18 +74,18 @@ export const RegistrationPatient = () => {
           <FieldError>{errors.firstName?.message}</FieldError>
         </FieldContainer>
         <FieldContainer className="row col-6 d-flex justify-content-center">
-          <FieldLabel htmlFor="lastName">Last Name</FieldLabel>
+          <FieldLabel htmlFor="lastName">Фамилия</FieldLabel>
           <FieldInput
             id="lastName"
             {...register("lastName", {
-              required: "Last name is required!",
+              required: "Фамилия обязательна!",
               minLength: {
                 value: 2,
-                message: "Last name must be at least 2 characters in length!",
+                message: "Фамилия должна состоять минимум из 2 символов!",
               },
               maxLength: {
                 value: 50,
-                message: "Last name must be 50 characters max!",
+                message: "Фамилия должна состоять максимум из 50 символов!",
               },
             })}
             type="text"
@@ -90,22 +93,25 @@ export const RegistrationPatient = () => {
           <FieldError>{errors.lastName?.message}</FieldError>
         </FieldContainer>
         <FieldContainer className="row col-6 d-flex justify-content-center">
-          <FieldLabel htmlFor="userName">Username</FieldLabel>
+          <FieldLabel htmlFor="userName">Имя пользователя</FieldLabel>
           <FieldInput
             id="userName"
             {...register("userName", {
-              required: "Username is required!",
+              required: "Имя пользоветеля обязательно!",
               minLength: {
                 value: 2,
-                message: "Username must be at least 2 characters in length!",
+                message:
+                  "Имя пользователя должно состоять минимум из 2 символов!",
               },
               maxLength: {
                 value: 20,
-                message: "Username name must be 20 characters max!",
+                message:
+                  "Имя пользователя должно состоять максимум из 20 символов!",
               },
               pattern: {
-                value: /^[a-zA-Z0-9]+$/,
-                message: "Invalid username!",
+                value: /^[a-z]{2,}\d*$/i,
+                message:
+                  "Имя пользователя должно состоять из латинских символов, допускается наличие чисел!",
               },
             })}
             type="text"
@@ -113,15 +119,15 @@ export const RegistrationPatient = () => {
           <FieldError>{errors.userName?.message}</FieldError>
         </FieldContainer>
         <FieldContainer className="row col-6 d-flex justify-content-center">
-          <FieldLabel htmlFor="email">Email</FieldLabel>
+          <FieldLabel htmlFor="email">Эл. почта</FieldLabel>
           <FieldInput
             id="email"
             {...register("email", {
-              required: "Email is required!",
+              required: "Почта обязательна!",
               pattern: {
                 value:
                   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                message: "Invalid email format!",
+                message: "Неверный формат адреса почты!",
               },
             })}
             type="text"
@@ -129,26 +135,27 @@ export const RegistrationPatient = () => {
           <FieldError>{errors.email?.message}</FieldError>
         </FieldContainer>
         <FieldContainer className="row col-12 d-flex justify-content-center">
-          <FieldLabel htmlFor="dateOfBurth">Date of burth</FieldLabel>
+          <FieldLabel htmlFor="dateOfBurth">Дата рождения</FieldLabel>
           <FieldInput
             id="dateOfBurth"
             {...register("dateOfBurth", {
-              required: "Date of burth is required!",
+              required: "Дата рождения обязательна!",
             })}
             type="date"
+            lang="ru-Cyrl-BY"
           />
           <FieldError>{errors.dateOfBurth?.message}</FieldError>
         </FieldContainer>
         <FieldContainer className="row col-6 d-flex justify-content-center">
-          <FieldLabel htmlFor="phoneNumber">Phone number</FieldLabel>
+          <FieldLabel htmlFor="phoneNumber">Номер телефона</FieldLabel>
           <FieldInput
             id="phoneNumber"
             {...register("phoneNumber", {
-              required: "Phone number is required!",
+              required: "Номер телефона обязателен!",
               pattern: {
                 value:
                   /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/im,
-                message: "Invalid phone number format!",
+                message: "Неверный формат номера!",
               },
             })}
             type="text"
@@ -156,14 +163,14 @@ export const RegistrationPatient = () => {
           <FieldError>{errors.phoneNumber?.message}</FieldError>
         </FieldContainer>
         <FieldContainer className="row col-6 d-flex justify-content-center">
-          <FieldLabel htmlFor="zipCode">Zip Code</FieldLabel>
+          <FieldLabel htmlFor="zipCode">Почтовый код</FieldLabel>
           <FieldInput
             id="zipCode"
             {...register("zipCode", {
-              required: "Zip code is required!",
+              required: "Почтовый код обязателен!",
               pattern: {
                 value: /[0-9]{5}/,
-                message: "Zip code must contain of 5 digits!",
+                message: "Код должен состоять из 5 цифр!",
               },
             })}
             type="text"
@@ -171,19 +178,18 @@ export const RegistrationPatient = () => {
           <FieldError>{errors.zipCode?.message}</FieldError>
         </FieldContainer>
         <FieldContainer className="row col-6 d-flex justify-content-center">
-          <FieldLabel htmlFor="country">Country</FieldLabel>
+          <FieldLabel htmlFor="country">Страна</FieldLabel>
           <FieldInput
             id="country"
             {...register("country", {
-              required: "Country is required!",
+              required: "Страна обязательна!",
               minLength: {
                 value: 3,
-                message:
-                  "Country name must be at least 3 characters in length!",
+                message: "Название страны не может быть меньше 3 символов!",
               },
               maxLength: {
                 value: 50,
-                message: "Country name must be 50 characters max!",
+                message: "Название страны не может быть больше 50 символов!",
               },
             })}
             type="text"
@@ -191,18 +197,18 @@ export const RegistrationPatient = () => {
           <FieldError>{errors.country?.message}</FieldError>
         </FieldContainer>
         <FieldContainer className="row col-6 d-flex justify-content-center">
-          <FieldLabel htmlFor="city">City</FieldLabel>
+          <FieldLabel htmlFor="city">Город</FieldLabel>
           <FieldInput
             id="city"
             {...register("city", {
-              required: "city is required!",
+              required: "Город обязателен!",
               minLength: {
                 value: 3,
-                message: "City name must be at least 3 characters in length!",
+                message: "Название города не может быть меньше 3 символов!",
               },
               maxLength: {
                 value: 50,
-                message: "City name must be 50 characters max!",
+                message: "Название города не может быть больше 50 символов!",
               },
             })}
             type="text"
@@ -210,20 +216,41 @@ export const RegistrationPatient = () => {
           <FieldError>{errors.city?.message}</FieldError>
         </FieldContainer>
         <FieldContainer className="row col-6 d-flex justify-content-center">
-          <FieldLabel htmlFor="password">Password</FieldLabel>
+          <FieldLabel htmlFor="password">Пароль</FieldLabel>
           <FieldInput
             id="password"
-            {...register("password", { required: "Password is required!" })}
+            {...register("password", {
+              required: "Пароль обязателен!",
+              minLength: {
+                value: 8,
+                message: "Пароль должен состоять минимум из 8 символов!",
+              },
+              validate: {
+                latinCharacters: (value) =>
+                  !new RegExp("^[а-яА-ЯёЁ]").test(value) ||
+                  "Пароль не должен содержать кириллицу",
+                number: (value) =>
+                  /\d/.test(value) || "Пароль должен содержать минимум 1 цифру",
+                capitalLetter: (value) =>
+                  new RegExp("[A-Z]").test(value) ||
+                  "Пароль должен содержать минимум 1 заглавный символ",
+                specialCharacters: (value) =>
+                  /[\W_]+/g.test(value) ||
+                  "Пароль должен содержать минимум 1 спец. символ",
+              },
+            })}
             type="password"
           />
           <FieldError>{errors.password?.message}</FieldError>
         </FieldContainer>
         <FieldContainer className="row col-6 d-flex justify-content-center">
-          <FieldLabel htmlFor="confirmPassword">Confirm password</FieldLabel>
+          <FieldLabel htmlFor="confirmPassword">Подтвердите пароль</FieldLabel>
           <FieldInput
             id="confirmPassword"
             {...register("confirmPassword", {
-              required: "Confirm password is required!",
+              required: "Подтверждение пароля обязательно!",
+              validate: (value) =>
+                value === password.current || "Пароль подтверждён неверно",
             })}
             type="password"
           />
@@ -238,7 +265,7 @@ export const RegistrationPatient = () => {
             type="submit"
             className="col-4 d-flex justify-content-center"
           >
-            Register
+            Зарегистрироваться
           </PrimaryButton>
           <SecondaryButton
             onClick={() => {
@@ -246,7 +273,7 @@ export const RegistrationPatient = () => {
             }}
             className="col-4 d-flex justify-content-center"
           >
-            Cancel
+            Назад
           </SecondaryButton>
         </FormButtonContainer>
       </RegistrationFieldset>

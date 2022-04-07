@@ -18,44 +18,44 @@ namespace Cure_All.DataAccess.Configuration
                 new Specialization
                 {
                     Id = new Guid("a145fa19-2c78-4400-ac0b-cb268b097ebc"),
-                    Name = "Pediatrician",
-                    Description = "Doctor who focuses on the health of infants, children, adolescents and young adults."
+                    Name = "Педиатр",
+                    Description = "Врач, занимающийся вопросами здоровья младенцев, детей, подростков и молодых людей."
                 },
                 new Specialization
                 {
                     Id = new Guid("ae8e0c0f-2a06-4b14-bcc2-156fbc321dce"),
-                    Name = "Neurologist",
-                    Description = "Doctor who treat diseases of the brain and spinal cord, peripheral nerves and muscles."
+                    Name = "Невролог",
+                    Description = "Врач, лечащий заболевания головного и спинного мозга, периферических нервов и мышц."
                 },
                 new Specialization
                 {
                     Id = new Guid("b7ca4092-c54a-46d1-8cf9-550b08cfd3cf"),
-                    Name = "Allergist",
-                    Description = "Doctor who trained to diagnose, treat and manage allergies, asthma and immunologic disorders including primary immunodeficiency disorders."
+                    Name = "Аллерголог",
+                    Description = "Врач, прошедший обучение по диагностике, лечению и лечению аллергии, астмы и иммунологических нарушений, включая первичные иммунодефицитные состояния."
                 },
                 new Specialization
                 {
                     Id = new Guid("4a755e99-2e01-4d28-961e-05a537b34b84"),
-                    Name = "Gynecologist",
-                    Description = "Doctor who specializes in female reproductive health."
+                    Name = "Гинеколог",
+                    Description = "Врач, специализирующийся на женском репродуктивном здоровье."
                 },
                 new Specialization
                 {
                     Id = new Guid("dbe220dd-7310-4433-b40d-0ea3a8c2892e"),
-                    Name = "Urologist",
-                    Description = "Doctor who diagnose and treat diseases of the urinary tract in both men and women."
+                    Name = "Уролог",
+                    Description = "Врач, занимающийся диагностикой и лечением заболеваний мочевыводящих путей у мужчин и женщин."
                 },
                 new Specialization
                 {
                     Id = new Guid("cdd45304-ad8d-4029-bfd9-711c77f40bd6"),
-                    Name = "Ophthalmologist",
-                    Description = "Doctor who trained to diagnose and treat all eye and visual problems including vision services (glasses and contacts) and provide treatment and prevention of medical disorders of the eye including surgery."
+                    Name = "Офтальмолог",
+                    Description = "Врач, обученный диагностировать и лечить все проблемы с глазами и зрением, включая услуги по лечению зрения (очки и контактные линзы), а также проводить лечение и профилактику заболеваний глаз, включая хирургию."
                 },
                 new Specialization
                 {
                     Id = new Guid("d50635ef-a10c-4497-9fd3-22bee5de9168"),
-                    Name = "Psychiatrist",
-                    Description = "Doctor who specializes in mental health, including substance use disorders."
+                    Name = "Психиатр",
+                    Description = "Врач, специализирующийся на психическом здоровье, включая расстройства, связанные с употреблением психоактивных веществ."
                 }
             );
         }

@@ -8,7 +8,7 @@ import { RegistrationPatient } from "./RegistrationPatient";
 export const RegistrationPage = () => {
   const [userType, setUserType] = useState("");
   return (
-    <Page title="Register:">
+    <Page title="Зарегистрироваться как:">
       <ButtonGroup className="row d-flex justify-content-around">
         <PrimaryButton
           disabled={userType === "Doctor"}
@@ -17,7 +17,7 @@ export const RegistrationPage = () => {
           }}
           className="col-4 row d-flex justify-content-center"
         >
-          Doctor
+          Доктор
         </PrimaryButton>
         <PrimaryButton
           disabled={userType === "Patient"}
@@ -26,7 +26,7 @@ export const RegistrationPage = () => {
           }}
           className="col-4 row d-flex justify-content-center"
         >
-          Patient
+          Пациент
         </PrimaryButton>
       </ButtonGroup>
       {userType === "Doctor" && <RegistrationDoctor />}
