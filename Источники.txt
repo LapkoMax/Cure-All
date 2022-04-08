@@ -1,0 +1,10 @@
+1. https://docs.microsoft.com/ru-ru/dotnet/csharp/tour-of-csharp/
+2. https://timeweb.com/ru/community/articles/chto-takoe-csharp
+3. https://shwanoff.ru/plus-minus-c-sharp/
+4. https://coderlessons.com/tutorials/microsoft-technologies/izuchite-asp-net-core/asp-net-core-obzor
+5. https://docs.microsoft.com/ru-ru/aspnet/overview
+6. https://prog.bobrodobro.ru/63233
+7. https://liquidhub.ru/blogs/blog/chto-takoe-react
+8. https://nuancesprog.ru/p/13297/
+9. https://blog.skillfactory.ru/glossary/typescript/
+10. https://ru.education-wiki.com/3958588-what-is-visual-studio-code
