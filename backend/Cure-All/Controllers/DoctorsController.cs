@@ -22,10 +22,14 @@ namespace Cure_All.Controllers
     public class DoctorsController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly IIdentityService _identityService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public DoctorsController(IMediator mediator)
+        public DoctorsController(IMediator mediator, IIdentityService identityService, IHttpContextAccessor httpContextAccessor)
         {
             _mediator = mediator;
+            _identityService = identityService;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         [HttpGet]
@@ -52,6 +56,25 @@ namespace Cure_All.Controllers
             if (doctor == null)
                 return NotFound();
             return Ok(doctor);
+        }
+
+        [HttpPut("{doctorId}")]
+        public async Task<IActionResult> EditDoctor(Guid doctorId, DoctorForEditingDto doctor)
+        {
+            var user = await _identityService.GetUserAsync(doctor.OldUserName);
+
+            var doctorEntity = await _mediator.Send(new GetDoctorCommand { doctorId = doctorId }, CancellationToken.None);
+
+            if (user == null || doctorEntity == null) return NotFound();
+            else if (doctorEntity.UserId != user.Id) return Unauthorized();
+
+            var errors = await _identityService.EditUserAsync(doctor);
+
+            if (errors.Count() > 0) return BadRequest(new { Errors = errors });
+
+            await _mediator.Send(new EditDoctorCommand { doctor = doctor, doctorId = doctorId }, CancellationToken.None);
+
+            return Ok();
         }
     }
 }

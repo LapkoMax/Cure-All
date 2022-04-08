@@ -15,5 +15,9 @@ namespace Cure_All.DataAccess.Repository
         Task<AuthenticationResultDto> RegisterAsync(UserRegistrationDto registrationDto);
 
         Task<AuthenticationResultDto> LoginAsync(UserLoginDto loginDto);
+
+        Task<IEnumerable<string>> EditUserAsync(UserForEditingDto user);
+
+        Task<bool> DeleteUserAsync(User user);
     }
 }

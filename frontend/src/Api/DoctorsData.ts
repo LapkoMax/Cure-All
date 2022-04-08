@@ -4,6 +4,8 @@ export interface DoctorData {
   firstName: string;
   lastName: string;
   userName: string;
+  phoneNumber: string;
+  email: string;
   specialization: string;
   licenseNo: string;
   workStart: Date;
@@ -13,6 +15,28 @@ export interface DoctorData {
   zipCode: string;
   country: string;
   city: string;
+}
+
+export interface EditDoctorForm {
+  id: string;
+  userId: string;
+  firstName: string;
+  lastName: string;
+  oldUserName: string;
+  userName: string;
+  phoneNumber: string;
+  email: string;
+  specializationId: string;
+  licenseNo: string;
+  workStart: string;
+  workAddress: string;
+  dateOfBurth: string;
+  zipCode: string;
+  country: string;
+  city: string;
+  oldPassword: string;
+  newPassword: string;
+  confirmPassword: string;
 }
 
 export interface ResponseDoctor {
@@ -88,18 +112,43 @@ export const getDoctor = async (
 
   let headers = getHeaders(token);
 
-  const response = await fetch(
-    "http://localhost:5000/api/doctors/" + doctorId,
-    {
-      mode: "cors",
-      method: "GET",
-      headers: headers,
-    },
-  );
+  let response = await fetch("http://localhost:5000/api/doctors/" + doctorId, {
+    mode: "cors",
+    method: "GET",
+    headers: headers,
+  });
 
   if (response.status === 401) return { data: doctor, responseStatus: 401 };
+  else if (response.status === 404)
+    response = await fetch(
+      "http://localhost:5000/api/doctors/byUser/" + doctorId,
+      {
+        mode: "cors",
+        method: "GET",
+        headers: headers,
+      },
+    );
 
   doctor = await response.json();
 
   return { data: doctor, responseStatus: 200 };
+};
+
+export const editDoctor = async (
+  doctor: EditDoctorForm,
+  token?: string,
+): Promise<string[]> => {
+  let headers = getHeaders(token);
+  let response = await fetch("http://localhost:5000/api/doctors/" + doctor.id, {
+    mode: "cors",
+    method: "PUT",
+    body: JSON.stringify(doctor),
+    headers: headers,
+  });
+
+  if (response.status === 401) return ["Unauthorized"];
+  if (response.status === 200) return [];
+  let result = await response.json();
+
+  return result.errors !== null ? result.errors : [];
 };

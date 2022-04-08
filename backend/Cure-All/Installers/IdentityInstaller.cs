@@ -4,6 +4,7 @@ using Cure_All.DataAccess.Repository;
 using Cure_All.DataAccess.Repository.Impl;
 using Cure_All.Models.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,6 +23,7 @@ namespace Cure_All.Installers
         {
             services.AddDefaultIdentity<User>().AddRoles<IdentityRole>().AddEntityFrameworkStores<DataContext>();
             services.AddScoped<IIdentityService, IdentityService>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             var jwtSettings = new JWTSettings();
             configuration.Bind(nameof(jwtSettings), jwtSettings);
 

@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { useEffect } from "react";
 import { getDoctors } from "../Api/DoctorsData";
-import { PrimaryButton } from "../Styles/Common/Buttons";
 import { DoctorList } from "./Doctors/DoctorList";
 import { Page } from "./General/Page";
 import { PageTitle } from "./General/PageTitle";
@@ -40,7 +39,6 @@ export const HomePage = () => {
     <Page>
       <div css={titleContainer}>
         <PageTitle>Список докторов</PageTitle>
-        <PrimaryButton>Добавить доктора</PrimaryButton>
       </div>
       {doctorsLoading ? <div>Загрузка...</div> : <DoctorList data={doctors} />}
     </Page>

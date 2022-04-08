@@ -24,12 +24,14 @@ namespace Cure_All.Controllers
         private readonly IIdentityService _identityService;
         private readonly IMapper _mapper;
         private readonly IMediator _mediator;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public IdentityController(IIdentityService identityService, IMapper mapper, IMediator mediator)
+        public IdentityController(IIdentityService identityService, IMapper mapper, IMediator mediator, IHttpContextAccessor httpContextAccessor)
         {
             _identityService = identityService;
             _mapper = mapper;
             _mediator = mediator;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         [HttpGet("/userByLogin")]
@@ -108,11 +110,28 @@ namespace Cure_All.Controllers
             return Ok(new { Token = authResult.Token });
         }
 
-        [HttpPost("/activeUserId")]
+        [HttpDelete("/{userLogin}")]
         [Authorize]
-        public IActionResult GetActiveUserId()
+        public async Task<IActionResult> DeleteUser(string userLogin)
         {
-            return Ok(new { UserId = HttpContext.GetUserId() });
+            var user = await _identityService.GetUserAsync(userLogin);
+            var currentUserId = _httpContextAccessor.HttpContext.User.FindFirst("id").Value;
+
+            if (currentUserId != user.Id)
+                return BadRequest(new { Errors = new string[] { "You are not allowed to delete this user!" } });
+            else
+            {
+                bool result = false;
+                if (user.Type == "Doctor") result = await _mediator.Send(new DeleteDoctorCommand { userId = user.Id }, CancellationToken.None);
+                else if (user.Type == "Patient") result = await _mediator.Send(new DeletePatientCommand { userId = user.Id }, CancellationToken.None);
+
+                if (!result) return BadRequest(new { Errors = new string[] { "Something goes wrong!" } });
+
+                result = await _identityService.DeleteUserAsync(user);
+
+                if (!result) return BadRequest(new { Errors = new string[] { "Something goes wrong!" } });
+            }
+            return NoContent();
         }
     }
 }

@@ -100,6 +100,63 @@ namespace Cure_All.DataAccess.Repository.Impl
             return await GenerateAuthResultForUser(user);
         }
 
+        public async Task<IEnumerable<string>> EditUserAsync(UserForEditingDto user)
+        {
+            var userEntity = await GetUserAsync(user.OldUserName);
+
+            var result = new IdentityResult();
+
+            if (!string.IsNullOrEmpty(user.NewPassword) && !string.IsNullOrEmpty(user.OldPassword) && !string.IsNullOrEmpty(user.ConfirmPassword))
+            {
+                result = await _userManager.ChangePasswordAsync(userEntity, user.OldPassword, user.NewPassword);
+
+                if (!result.Succeeded) return result.Errors.Select(err => err.Description);
+            }
+
+            if (user.Email != userEntity.Email)
+            {
+                result = await _userManager.SetEmailAsync(userEntity, user.Email);
+                if (!result.Succeeded) return result.Errors.Select(err => err.Description);
+            }
+
+            if (user.PhoneNumber != userEntity.PhoneNumber)
+            {
+                result = await _userManager.SetPhoneNumberAsync(userEntity, user.PhoneNumber);
+                if (!result.Succeeded) return result.Errors.Select(err => err.Description);
+            }
+
+            if (user.UserName != userEntity.UserName)
+            {
+                result = await _userManager.SetUserNameAsync(userEntity, user.UserName);
+                if (!result.Succeeded) return result.Errors.Select(err => err.Description);
+            }
+
+            userEntity.FirstName = user.FirstName;
+            userEntity.LastName = user.LastName;
+            userEntity.DateOfBurth = user.DateOfBurth;
+            userEntity.ZipCode = user.ZipCode;
+            userEntity.Country = user.Country;
+            userEntity.City = user.City;
+
+            result = await _userManager.UpdateAsync(userEntity);
+
+            if (!result.Succeeded) return result.Errors.Select(err => err.Description);
+            else return new List<string>();
+        }
+
+        public async Task<bool> DeleteUserAsync(User user)
+        {
+            var userRoles = await _userManager.GetRolesAsync(user);
+            var result = false;
+            foreach(var role in userRoles)
+            {
+                result = (await _userManager.RemoveFromRoleAsync(user, role)).Succeeded;
+                if (!result) return false;
+            }
+            result = (await _userManager.DeleteAsync(user)).Succeeded;
+            return result;
+        }
+
         private async Task<AuthenticationResultDto> GenerateAuthResultForUser(User user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();

@@ -75,12 +75,13 @@ export const Header = () => {
             />
           </form>
           <div className="col-3 row d-flex justify-content-end">
-            <div
+            <Link
+              to={`profile/${user?.id}`}
               css={helloUserLabel}
               className="col-6 row d-flex justify-content-end"
             >
-              Приветствую {user?.userName}!
-            </div>
+              Профиль
+            </Link>
             <Link
               to=""
               onClick={() => {

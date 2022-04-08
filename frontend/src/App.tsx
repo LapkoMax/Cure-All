@@ -1,16 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import { Provider } from "react-redux";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import persistStore from "redux-persist/es/persistStore";
 import { PersistGate } from "redux-persist/integration/react";
 import { appContainer } from "./AppStyles";
-import { DoctorPage } from "./Components/DoctorPage";
 import { Header } from "./Components/General/Header";
-import { HomePage } from "./Components/HomePage";
-import { NotFoundPage } from "./Components/NotFoundPage";
-import { RegistrationPage } from "./Components/RegistrationPage";
-import { SearchPage } from "./Components/SearchPage";
-import { SignInPage } from "./Components/SignInPage";
+import { RoutesComponent } from "./Components/RoutesComponent";
 import { configureStore } from "./Store/Store";
 
 const store = configureStore();
@@ -22,16 +17,9 @@ function App() {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <BrowserRouter>
-          <div css={appContainer}>
+          <div css={appContainer} className="row">
             <Header />
-            <Routes>
-              <Route path="" element={<HomePage />} />
-              <Route path="signin" element={<SignInPage />} />
-              <Route path="register" element={<RegistrationPage />} />
-              <Route path="search" element={<SearchPage />} />
-              <Route path="doctors/:doctorId" element={<DoctorPage />} />
-              <Route path="*" element={<NotFoundPage />} />
-            </Routes>
+            <RoutesComponent />
           </div>
         </BrowserRouter>
       </PersistGate>

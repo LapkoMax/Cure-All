@@ -51,13 +51,14 @@ export interface AuthResult {
   token?: string;
 }
 
-const getHeaders = (): Headers => {
+const getHeaders = (token?: string): Headers => {
   let headers = new Headers();
 
   headers.append("Content-Type", "application/json");
   headers.append("Accept", "application/json");
   headers.append("Access-Control-Allow-Origin", "http://localhost:5000");
   headers.append("Access-Control-Allow-Headers", "true");
+  headers.append("Authorization", "bearer " + token);
   headers.append("Origin", "http://localhost:5000");
 
   return headers;
@@ -67,9 +68,7 @@ const addUserToAuthResult = async (
   userName: string,
   token: string,
 ): Promise<AuthResult> => {
-  let headers = getHeaders();
-
-  headers.append("Authorization", "bearer " + token);
+  let headers = getHeaders(token);
 
   const userResponse = await fetch(
     "http://localhost:5000/userByLogin?userLogin=" + userName,
@@ -148,4 +147,20 @@ export const registerPatient = async (
     return { success: false, errors: result.errors };
 
   return await addUserToAuthResult(patient.userName, result.token);
+};
+
+export const deleteUser = async (
+  userName: string,
+  token: string,
+): Promise<boolean> => {
+  let headers = getHeaders(token);
+
+  const response = await fetch("http://localhost:5000/" + userName, {
+    mode: "cors",
+    method: "DELETE",
+    headers: headers,
+  });
+
+  if (response.status === 204 || response.status === 401) return true;
+  return false;
 };

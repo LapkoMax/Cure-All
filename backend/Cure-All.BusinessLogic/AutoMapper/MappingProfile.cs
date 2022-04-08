@@ -17,6 +17,8 @@ namespace Cure_All.BusinessLogic.AutoMapper
                 .ForMember(doc => doc.FirstName, opt => opt.MapFrom(x => x.User.FirstName))
                 .ForMember(doc => doc.LastName, opt => opt.MapFrom(x => x.User.LastName))
                 .ForMember(doc => doc.UserName, opt => opt.MapFrom(x => x.User.UserName))
+                .ForMember(doc => doc.PhoneNumber, opt => opt.MapFrom(x => x.User.PhoneNumber))
+                .ForMember(doc => doc.Email, opt => opt.MapFrom(x => x.User.Email))
                 .ForMember(doc => doc.DateOfBurth, opt => opt.MapFrom(x => x.User.DateOfBurth))
                 .ForMember(doc => doc.ZipCode, opt => opt.MapFrom(x => x.User.ZipCode))
                 .ForMember(doc => doc.Country, opt => opt.MapFrom(x => x.User.Country))
@@ -24,6 +26,7 @@ namespace Cure_All.BusinessLogic.AutoMapper
                 .ForMember(doc => doc.Specialization, opt => opt.MapFrom(x => x.Specialization.Name))
                 .ForMember(doc => doc.YearsOfExperience, opt => opt.MapFrom(x => (int)(DateTime.Now.Subtract(x.WorkStart).Days / 365)));
             CreateMap<DoctorForCreationDto, Doctor>();
+            CreateMap<DoctorForEditingDto, Doctor>();
             CreateMap<Patient, PatientDto>()
                 .ForMember(pat => pat.FirstName, opt => opt.MapFrom(x => x.User.FirstName))
                 .ForMember(pat => pat.LastName, opt => opt.MapFrom(x => x.User.LastName))

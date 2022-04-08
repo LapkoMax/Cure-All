@@ -13,13 +13,20 @@ export const doctorTitle = css`
 `;
 
 export const doctorSpecialzation = css`
-  padding-bottom: 10px;
-  font-size: 15px;
+  padding: 10px 0px;
+  font-size: 17px;
   color: ${gray2};
 `;
 
 export const doctorExp = css`
-  font-size: 12px;
+  font-size: 18px;
   font-style: italic;
+  color: ${gray3};
+`;
+
+export const doctorAdditionalInf = css`
+  font-size: 16px;
+  font-style: italic;
+  padding-top: 15px;
   color: ${gray3};
 `;
