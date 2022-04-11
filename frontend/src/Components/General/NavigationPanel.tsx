@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { AppState } from "../../Store/Reducers/RootReducer";
 import {
   FormButtonContainer,
@@ -10,6 +11,7 @@ import { navigationContainer } from "../../Styles/General/NavigationStyles";
 import { PageTitle } from "./PageTitle";
 
 export const NavigationPanel = () => {
+  const navigate = useNavigate();
   const user = useSelector((state: AppState) => state.identity.user);
 
   return (
@@ -20,7 +22,13 @@ export const NavigationPanel = () => {
       >
         <PageTitle>Навигация:</PageTitle>
         {user?.type === "Doctor" && (
-          <PrimaryButton>Ваши посещения</PrimaryButton>
+          <PrimaryButton
+            onClick={() => {
+              navigate("appointments/" + user.id);
+            }}
+          >
+            Ваши посещения
+          </PrimaryButton>
         )}
       </FormButtonContainer>
     </div>

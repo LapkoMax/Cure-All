@@ -1,13 +1,14 @@
 import moment from "moment";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
 import { DoctorData, editDoctor, EditDoctorForm } from "../../Api/DoctorsData";
 import {
   getSpecializations,
   SpecializationData,
 } from "../../Api/SpecializationsData";
+import { signOutUserAction } from "../../Store/ActionCreators/IdentityActionCreators";
 import { AppState } from "../../Store/Reducers/RootReducer";
 import {
   FormButtonContainer,
@@ -29,7 +30,9 @@ type Props = {
 };
 
 export const EditDoctor = ({ doctor }: Props) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const {
     register,
     formState: { errors, isSubmitting },
@@ -85,6 +88,8 @@ export const EditDoctor = ({ doctor }: Props) => {
     const result = await editDoctor(data, userToken);
     if (result.length === 0) {
       navigate("/doctors/" + doctor?.id);
+    } else if (result[0] === "Unauthorized") {
+      dispatch(signOutUserAction(location.pathname));
     } else setLoginErrors(result);
   };
 

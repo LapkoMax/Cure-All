@@ -3,6 +3,7 @@ using Cure_All.BusinessLogic.Extensions;
 using Cure_All.DataAccess.Repository;
 using Cure_All.MediatRCommands.Doctor;
 using Cure_All.MediatRCommands.Patient;
+using Cure_All.MediatRCommands.PatientCard;
 using Cure_All.Models.DTO;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -96,6 +97,13 @@ namespace Cure_All.Controllers
             if(newPatient.UserName != registrationDto.UserName)
                 return BadRequest(new { Errors = new string[] { "Что-то пошло не так!" } });
 
+            var newPatientCardId = await _mediator.Send(new CreatePatientCardForPatientCommand { patientId = newPatientId }, CancellationToken.None);
+
+            var newPatientCard = await _mediator.Send(new GetPatientCardCommand { patientCardId = newPatientCardId }, CancellationToken.None);
+
+            if(newPatientCard == null)
+                return BadRequest(new { Errors = new string[] { "Что-то пошло не так!" } });
+
             return Ok(new { Token = authResult.Token });
         }
 
@@ -123,7 +131,16 @@ namespace Cure_All.Controllers
             {
                 bool result = false;
                 if (user.Type == "Doctor") result = await _mediator.Send(new DeleteDoctorCommand { userId = user.Id }, CancellationToken.None);
-                else if (user.Type == "Patient") result = await _mediator.Send(new DeletePatientCommand { userId = user.Id }, CancellationToken.None);
+                else if (user.Type == "Patient") 
+                {
+                    var patient = await _mediator.Send(new GetPatientCommand { userId = user.Id }, CancellationToken.None);
+
+                    result = await _mediator.Send(new DeletePatientCardCommand { patientId = patient.Id }, CancellationToken.None);
+
+                    if (!result) return BadRequest(new { Errors = new string[] { "Something goes wrong!" } });
+
+                    result = await _mediator.Send(new DeletePatientCommand { userId = user.Id }, CancellationToken.None);
+                }
 
                 if (!result) return BadRequest(new { Errors = new string[] { "Something goes wrong!" } });
 

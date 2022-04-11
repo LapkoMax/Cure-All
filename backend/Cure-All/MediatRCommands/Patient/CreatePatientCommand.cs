@@ -28,6 +28,7 @@ namespace Cure_All.MediatRCommands.Patient
             _repository = repository;
             _mapper = mapper;
         }
+
         public async Task<Guid> Handle(CreatePatientCommand command, CancellationToken cancellationToken)
         {
             var patientEntity = _mapper.Map<Models.Entities.Patient>(command.patient);

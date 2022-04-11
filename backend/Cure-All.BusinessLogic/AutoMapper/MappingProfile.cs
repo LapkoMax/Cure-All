@@ -38,6 +38,15 @@ namespace Cure_All.BusinessLogic.AutoMapper
             CreateMap<PatientForCreationDto, Patient>();
             CreateMap<UserRegistrationDto, User>();
             CreateMap<User, UserDto>();
+            CreateMap<Appointment, AppointmentDto>()
+                .ForMember(app => app.DoctorFirstName, opt => opt.MapFrom(x => x.Doctor.User.FirstName))
+                .ForMember(app => app.DoctorLastName, opt => opt.MapFrom(x => x.Doctor.User.LastName))
+                .ForMember(app => app.PatientFirstName, opt => opt.MapFrom(x => x.PatientCard.Patient.User.FirstName))
+                .ForMember(app => app.PatientLastName, opt => opt.MapFrom(x => x.PatientCard.Patient.User.LastName))
+                .ForMember(app => app.IllnessName, opt => opt.MapFrom(x => x.Illness.Name));
+            CreateMap<AppointmentForCreationDto, Appointment>()
+                .ForMember(app => app.Completed, opt => opt.MapFrom(x => false));
+            CreateMap<AppointmentForEditingDto, Appointment>();
         }
     }
 }

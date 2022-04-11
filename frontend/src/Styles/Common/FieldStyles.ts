@@ -64,6 +64,14 @@ export const FieldInput = styled.input`
   ${baseFieldCSS}
 `;
 
+export const FieldCheckBox = styled.div`
+  font-family: ${mainFontFamily};
+  font-size: ${mainFontSize};
+  margin-bottom: 5px;
+  padding: 0px 40px;
+  width: 100%;
+`;
+
 export const FieldSelect = styled.select`
   ${baseFieldCSS}
 `;
@@ -84,7 +92,6 @@ export const FieldError = styled.div`
 `;
 
 export const SubmissionSuccess = styled.div`
-  margin-top: 10px;
   color: green;
 `;
 

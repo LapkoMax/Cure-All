@@ -12,7 +12,9 @@ namespace Cure_All.MediatRCommands.Patient
 {
     public class GetPatientCommand : IRequest<PatientDto>
     {
-        public Guid patientId { get; set; }
+        public Guid? patientId { get; set; }
+
+        public string? userId { get; set; }
     }
 
     public class GetPatientCommandHandler : IRequestHandler<GetPatientCommand, PatientDto>
@@ -28,7 +30,10 @@ namespace Cure_All.MediatRCommands.Patient
         }
         public async Task<PatientDto> Handle(GetPatientCommand command, CancellationToken cancellationToken)
         {
-            var patientEntity = await _repository.Patient.GetPatientByPatientIdAsync(command.patientId);
+            var patientEntity = new Models.Entities.Patient();
+
+            if(command.patientId != null) patientEntity = await _repository.Patient.GetPatientByPatientIdAsync((Guid)command.patientId);
+            else if(command.userId != null) patientEntity = await _repository.Patient.GetPatientByUserIdAsync(command.userId);
 
             if (patientEntity == null)
                 return null;

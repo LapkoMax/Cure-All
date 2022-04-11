@@ -16,13 +16,13 @@ namespace Cure_All.DataAccess.Repository.Impl
 
         public override IQueryable<Appointment> FindAll(bool trackChanges = false) =>
             !trackChanges ?
-            DataContext.Appointments.Include(app => app.PatientCard).Include(app => app.Doctor).ThenInclude(doc => doc.User).Include(app => app.Illness).AsNoTracking() :
-            DataContext.Appointments.Include(app => app.PatientCard).Include(app => app.Doctor).ThenInclude(doc => doc.User).Include(app => app.Illness);
+            DataContext.Appointments.Include(app => app.PatientCard).ThenInclude(card => card.Patient).ThenInclude(pat => pat.User).Include(app => app.Doctor).ThenInclude(doc => doc.User).Include(app => app.Illness).AsNoTracking() :
+            DataContext.Appointments.Include(app => app.PatientCard).ThenInclude(card => card.Patient).ThenInclude(pat => pat.User).Include(app => app.Doctor).ThenInclude(doc => doc.User).Include(app => app.Illness);
 
         public override IQueryable<Appointment> FindByCondition(Expression<Func<Appointment, bool>> expression, bool trackChanges = false) =>
             !trackChanges ?
-            DataContext.Appointments.Include(app => app.PatientCard).Include(app => app.Doctor).ThenInclude(doc => doc.User).Include(app => app.Illness).Where(expression).AsNoTracking() :
-            DataContext.Appointments.Include(app => app.PatientCard).Include(app => app.Doctor).ThenInclude(doc => doc.User).Include(app => app.Illness).Where(expression);
+            DataContext.Appointments.Include(app => app.PatientCard).ThenInclude(card => card.Patient).ThenInclude(pat => pat.User).Include(app => app.Doctor).ThenInclude(doc => doc.User).Include(app => app.Illness).Where(expression).AsNoTracking() :
+            DataContext.Appointments.Include(app => app.PatientCard).ThenInclude(card => card.Patient).ThenInclude(pat => pat.User).Include(app => app.Doctor).ThenInclude(doc => doc.User).Include(app => app.Illness).Where(expression);
 
         public async Task<IEnumerable<Appointment>> GetAllAppointmentsForDoctorAsync(Guid doctorId, bool trackChanges = false)
         {

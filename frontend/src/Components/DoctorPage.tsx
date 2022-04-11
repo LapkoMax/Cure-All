@@ -64,21 +64,29 @@ export const DoctorPage = ({ userId }: Props) => {
   };
 
   return (
-    <div>
+    <Page>
       {doctorLoading ? (
         <div>Загрузка...</div>
       ) : (
-        <Page>
+        <div>
           <div css={doctorContainer}>
             <div css={doctorTitle}>
               {doctor === null
                 ? ""
                 : `${doctor?.firstName} ${doctor?.lastName}`}
             </div>
+            <div>
+              Дата рождения: {doctor?.dateOfBurth.toString().substring(0, 10)}
+            </div>
             <div css={doctorSpecialzation}>
               Специальность: {doctor?.specialization}
             </div>
             <div css={doctorExp}>Опыт: {doctor?.yearsOfExperience} лет</div>
+            <div css={doctorAdditionalInf}>
+              <div>Контактная информация:</div>
+              <div>Почта: {doctor?.email}</div>
+              <div>Телефон: {doctor?.phoneNumber}</div>
+            </div>
             <div css={doctorAdditionalInf}>
               <div>Номер лицензии: {doctor?.licenseNo}</div>
               <div>Страна: {doctor?.country}</div>
@@ -98,8 +106,8 @@ export const DoctorPage = ({ userId }: Props) => {
               </FormButtonContainer>
             </div>
           )}
-        </Page>
+        </div>
       )}
-    </div>
+    </Page>
   );
 };

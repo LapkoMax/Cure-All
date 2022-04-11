@@ -1,5 +1,8 @@
 import { Fragment } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
+import { AppointmentPage } from "./AppointmentPage";
+import { AppointmentsListPage } from "./AppointmentsListPage";
+import { EditAppointmentPage } from "./EditAppointmentPage";
 import { EditDoctorPage } from "./EditDoctorPage";
 import { NavigationPanel } from "./General/NavigationPanel";
 import { HomePage } from "./HomePage";
@@ -34,6 +37,18 @@ export const RoutesComponent = () => {
           <Route path="search" element={<SearchPage />} />
           <Route path="profile/:userId" element={<ProfilePage />} />
           <Route path="doctors/:doctorId/edit" element={<EditDoctorPage />} />
+          <Route
+            path="appointments/:userId"
+            element={<AppointmentsListPage />}
+          />
+          <Route
+            path="appointment/:appointmentId"
+            element={<AppointmentPage />}
+          />
+          <Route
+            path="appointment/:appointmentId/edit"
+            element={<EditAppointmentPage />}
+          />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>

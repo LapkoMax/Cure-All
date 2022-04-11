@@ -14,7 +14,7 @@ interface Props {
 
 export const Doctor = ({ doctor }: Props) => (
   <div css={doctorContainer}>
-    <Link to={`/doctors/${doctor.id}`} css={doctorTitle}>
+    <Link to={`/profile/${doctor.userId}`} css={doctorTitle}>
       {doctor.firstName} {doctor.lastName}
       <div css={doctorSpecialzation}>
         Специальность: {doctor.specialization}
