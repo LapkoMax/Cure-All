@@ -8,3 +8,9 @@
 8. https://nuancesprog.ru/p/13297/
 9. https://blog.skillfactory.ru/glossary/typescript/
 10. https://ru.education-wiki.com/3958588-what-is-visual-studio-code
+11. https://ru.theastrologypage.com/n-tier-architecture
+12. https://medium.com/nuances-of-programming/4-типа-архитектуры-программного-обеспечения-917133174724
+13. https://flexberry.github.io/ru/gbt_mssql.html
+14. https://tavalik.ru/sql-server-management-studio/
+15. https://blog.skillfactory.ru/glossary/redux/
+16. https://openu.ru/Books/UML/Use_case.asp
