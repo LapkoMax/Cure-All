@@ -4,6 +4,7 @@ export interface AppointmentData {
   patientFirstName: string;
   patientLastName: string;
   doctorId: string;
+  doctorUserId: string;
   doctorFirstName: string;
   doctorLastName: string;
   description: string;
@@ -54,6 +55,33 @@ export const getAppointmentsForDoctor = async (
 
   const response = await fetch(
     "http://localhost:5000/api/appointments/forDoctor/" + userId,
+    {
+      mode: "cors",
+      method: "GET",
+      headers: headers,
+    },
+  );
+
+  if (response.status === 401)
+    return { data: appointments, responseStatus: 401 };
+  else if (response.status !== 200)
+    return { data: appointments, responseStatus: response.status };
+
+  appointments = await response.json();
+
+  return { data: appointments, responseStatus: 200 };
+};
+
+export const getAppointmentsForPatientCard = async (
+  patientCardId?: string,
+  token?: string,
+): Promise<ResponseAppointents> => {
+  let appointments: AppointmentData[] = [];
+
+  let headers = getHeaders(token);
+
+  const response = await fetch(
+    "http://localhost:5000/api/appointments/forPatient/" + patientCardId,
     {
       mode: "cors",
       method: "GET",
@@ -130,7 +158,8 @@ export const editAppointment = async (
   appointmentId?: string,
   token?: string,
 ): Promise<string[]> => {
-  if (appointment.completed) appointment.endDate = new Date();
+  if (appointment.completed && appointment.endDate == null)
+    appointment.endDate = new Date();
   if (appointment.illnessId === "") appointment.illnessId = null;
 
   let headers = getHeaders(token);

@@ -31,14 +31,18 @@ namespace Cure_All.BusinessLogic.AutoMapper
                 .ForMember(pat => pat.FirstName, opt => opt.MapFrom(x => x.User.FirstName))
                 .ForMember(pat => pat.LastName, opt => opt.MapFrom(x => x.User.LastName))
                 .ForMember(pat => pat.UserName, opt => opt.MapFrom(x => x.User.UserName))
+                .ForMember(pat => pat.PhoneNumber, opt => opt.MapFrom(x => x.User.PhoneNumber))
+                .ForMember(pat => pat.Email, opt => opt.MapFrom(x => x.User.Email))
                 .ForMember(pat => pat.DateOfBurth, opt => opt.MapFrom(x => x.User.DateOfBurth))
                 .ForMember(pat => pat.ZipCode, opt => opt.MapFrom(x => x.User.ZipCode))
                 .ForMember(pat => pat.Country, opt => opt.MapFrom(x => x.User.Country))
                 .ForMember(pat => pat.City, opt => opt.MapFrom(x => x.User.City));
             CreateMap<PatientForCreationDto, Patient>();
+            CreateMap<PatientForEditingDto, Patient>();
             CreateMap<UserRegistrationDto, User>();
             CreateMap<User, UserDto>();
             CreateMap<Appointment, AppointmentDto>()
+                .ForMember(app => app.DoctorUserId, opt => opt.MapFrom(x => x.Doctor.UserId))
                 .ForMember(app => app.DoctorFirstName, opt => opt.MapFrom(x => x.Doctor.User.FirstName))
                 .ForMember(app => app.DoctorLastName, opt => opt.MapFrom(x => x.Doctor.User.LastName))
                 .ForMember(app => app.PatientFirstName, opt => opt.MapFrom(x => x.PatientCard.Patient.User.FirstName))
@@ -47,6 +51,11 @@ namespace Cure_All.BusinessLogic.AutoMapper
             CreateMap<AppointmentForCreationDto, Appointment>()
                 .ForMember(app => app.Completed, opt => opt.MapFrom(x => false));
             CreateMap<AppointmentForEditingDto, Appointment>();
+            CreateMap<IllnessForCreationDto, Illness>();
+            CreateMap<PatientCard, PatientCardDto>()
+                .ForMember(card => card.PatientUserId, opt => opt.MapFrom(x => x.Patient.UserId))
+                .ForMember(card => card.PatientFirstName, opt => opt.MapFrom(x => x.Patient.User.FirstName))
+                .ForMember(card => card.PatientLastName, opt => opt.MapFrom(x => x.Patient.User.LastName));
         }
     }
 }

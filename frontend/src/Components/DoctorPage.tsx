@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getDoctor } from "../Api/DoctorsData";
-import { deleteUser } from "../Api/IdentityData";
+import { deleteUser, UserData } from "../Api/IdentityData";
 import {
   gettingDoctorAction,
   gotDoctorAction,
@@ -27,16 +27,16 @@ import {
 import { Page } from "./General/Page";
 
 type Props = {
-  userId?: string;
+  user: UserData;
 };
 
-export const DoctorPage = ({ userId }: Props) => {
+export const DoctorPage = ({ user }: Props) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
   const doctor = useSelector((state: AppState) => state.doctors.doctor);
   const doctorLoading = useSelector((state: AppState) => state.doctors.loading);
-  const user = useSelector((state: AppState) => state.identity.user);
+  const loginedUser = useSelector((state: AppState) => state.identity.user);
   const userToken = useSelector((state: AppState) => state.identity.token);
 
   useEffect(() => {
@@ -47,7 +47,7 @@ export const DoctorPage = ({ userId }: Props) => {
         dispatch(signOutUserAction(location.pathname));
       dispatch(gotDoctorAction(result.data));
     };
-    doGetDoctor(userId);
+    doGetDoctor(user.id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -94,7 +94,7 @@ export const DoctorPage = ({ userId }: Props) => {
               <div>Работает по адресу: {doctor?.workAddress}</div>
             </div>
           </div>
-          {user?.id !== undefined && location.pathname.includes(user?.id) && (
+          {loginedUser?.id !== undefined && doctor?.userId === loginedUser?.id && (
             <div className="d-flex justify-content-center">
               <FormButtonContainer className="col-9 d-flex justify-content-around">
                 <PrimaryButton onClick={editClickHandler}>

@@ -9,7 +9,7 @@ namespace Cure_All.DataAccess.Repository
 {
     public interface IAppointmentRepository
     {
-        Task<IEnumerable<Appointment>> GetAllAppointmentsForUserAsync(Guid patientCardId, bool trackChanges = false);
+        Task<IEnumerable<Appointment>> GetAllAppointmentsForPatientAsync(Guid patientCardId, bool trackChanges = false);
 
         Task<IEnumerable<Appointment>> GetAllAppointmentsForDoctorAsync(Guid doctorId, bool trackChanges = false);
 

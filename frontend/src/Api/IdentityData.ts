@@ -51,6 +51,11 @@ export interface AuthResult {
   token?: string;
 }
 
+export interface ResponseUser {
+  data: UserData | null;
+  status: number;
+}
+
 const getHeaders = (token?: string): Headers => {
   let headers = new Headers();
 
@@ -103,6 +108,26 @@ export const loginUser = async (user: LoginUserForm): Promise<AuthResult> => {
     return { success: false, errors: result.errors };
 
   return await addUserToAuthResult(user.login, result.token);
+};
+
+export const getUserById = async (
+  userId?: string,
+  token?: string,
+): Promise<ResponseUser> => {
+  let headers = getHeaders(token);
+
+  const userResponse = await fetch("http://localhost:5000/userById/" + userId, {
+    mode: "cors",
+    method: "GET",
+    headers: headers,
+  });
+
+  if (userResponse.status === 401) return { data: null, status: 401 };
+  else if (userResponse.status === 404) return { data: null, status: 404 };
+
+  let userResult = await userResponse.json();
+
+  return { data: userResult, status: 200 };
 };
 
 export const registerDoctor = async (

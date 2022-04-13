@@ -33,6 +33,12 @@ namespace Cure_All.Controllers
             return await _mediator.Send(new GetAppointmentsForDoctorCommand { userId = userId }, CancellationToken.None);
         }
 
+        [HttpGet("forPatient/{patientCardId}")]
+        public async Task<IEnumerable<AppointmentDto>> GetAppointmentsForPatient(Guid patientCardId)
+        {
+            return await _mediator.Send(new GetAppointmentsForPatientCommand { patientCardId = patientCardId }, CancellationToken.None);
+        }
+
         [HttpGet("{appointmentId}")]
         public async Task<AppointmentDto> GetAppointment(Guid appointmentId)
         {

@@ -12,6 +12,8 @@ namespace Cure_All.DataAccess.Repository
     {
         Task<User> GetUserAsync(string userLogin);
 
+        Task<User> GetUserByIdAsync(string userId);
+
         Task<AuthenticationResultDto> RegisterAsync(UserRegistrationDto registrationDto);
 
         Task<AuthenticationResultDto> LoginAsync(UserLoginDto loginDto);

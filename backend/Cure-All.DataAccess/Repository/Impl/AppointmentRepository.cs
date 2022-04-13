@@ -29,7 +29,7 @@ namespace Cure_All.DataAccess.Repository.Impl
             return await FindByCondition(app => app.DoctorId.Equals(doctorId), trackChanges).ToListAsync();
         }
 
-        public async Task<IEnumerable<Appointment>> GetAllAppointmentsForUserAsync(Guid patientCardId, bool trackChanges = false)
+        public async Task<IEnumerable<Appointment>> GetAllAppointmentsForPatientAsync(Guid patientCardId, bool trackChanges = false)
         {
             return await FindByCondition(app => app.PatientCardId.Equals(patientCardId), trackChanges).ToListAsync();
         }

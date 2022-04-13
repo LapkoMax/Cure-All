@@ -74,50 +74,47 @@ export const AppointmentPage = () => {
       {appointmentLoading ? (
         <div>Загрузка...</div>
       ) : (
-        <div>
-          <div css={appointmentContainer} className="row">
-            <div css={appointmentTitle} className="row">
-              <div className="col-5 row">{appointment?.description}</div>
-              {appointment?.completed && (
-                <SubmissionSuccess className="col-4 row">
-                  Завершено
-                </SubmissionSuccess>
-              )}
-            </div>
-            <Link
-              to={`/patientCard/${appointment?.patientCardId}`}
-              css={appointmentAdditionalInf}
-              className="col-12 row"
-            >
-              Пациент: {appointment?.patientFirstName}{" "}
-              {appointment?.patientLastName}
-            </Link>
-            <Link
-              to={`/profile/${appointment?.doctorId}`}
-              css={appointmentAdditionalInf}
-              className="col-12 row"
-            >
-              Доктор: {appointment?.doctorFirstName}{" "}
-              {appointment?.doctorLastName}
-            </Link>
-            <div css={appointmentAdditionalInf} className="col-12 row">
-              Заболевание:{" "}
-              {appointment?.illnessName === null
-                ? "Не указано"
-                : appointment?.illnessName}
-            </div>
-            <div css={appointmentAdditionalInf} className="col-12 row">
-              Дата: {appointment?.startDate.toString().substring(0, 10)}{" "}
-              {appointment?.startDate.toString().substring(12, 16)}
-            </div>
-            {appointment?.endDate !== null && (
-              <div css={appointmentAdditionalInf} className="col-12 row">
-                Дата завершения:{" "}
-                {appointment?.endDate.toString().substring(0, 10)}{" "}
-                {appointment?.endDate.toString().substring(12, 16)}
-              </div>
+        <div css={appointmentContainer} className="row">
+          <div css={appointmentTitle} className="row">
+            <div className="col-5 row">{appointment?.description}</div>
+            {appointment?.completed && (
+              <SubmissionSuccess className="col-4 row">
+                Завершено
+              </SubmissionSuccess>
             )}
           </div>
+          <Link
+            to={`/patientCard/${appointment?.patientCardId}`}
+            css={appointmentAdditionalInf}
+            className="col-12 row"
+          >
+            Пациент: {appointment?.patientFirstName}{" "}
+            {appointment?.patientLastName}
+          </Link>
+          <Link
+            to={`/profile/${appointment?.doctorUserId}`}
+            css={appointmentAdditionalInf}
+            className="col-12 row"
+          >
+            Доктор: {appointment?.doctorFirstName} {appointment?.doctorLastName}
+          </Link>
+          <div css={appointmentAdditionalInf} className="col-12 row">
+            Заболевание:{" "}
+            {appointment?.illnessName === null
+              ? "Не указано"
+              : appointment?.illnessName}
+          </div>
+          <div css={appointmentAdditionalInf} className="col-12 row">
+            Дата: {appointment?.startDate.toString().substring(0, 10)}{" "}
+            {appointment?.startDate.toString().substring(12, 16)}
+          </div>
+          {appointment?.endDate !== null && (
+            <div css={appointmentAdditionalInf} className="col-12 row">
+              Дата завершения:{" "}
+              {appointment?.endDate.toString().substring(0, 10)}{" "}
+              {appointment?.endDate.toString().substring(12, 16)}
+            </div>
+          )}
         </div>
       )}
       {userCanEdit && (

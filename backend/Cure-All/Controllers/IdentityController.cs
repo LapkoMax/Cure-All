@@ -49,6 +49,18 @@ namespace Cure_All.Controllers
             return Ok(_mapper.Map<UserDto>(user));
         }
 
+        [HttpGet("/userById/{userId}")]
+        [Authorize]
+        public async Task<ActionResult<UserDto>> GetUserById(string userId)
+        {
+            var user = await _identityService.GetUserByIdAsync(userId);
+
+            if (user == null)
+                return NotFound();
+
+            return Ok(_mapper.Map<UserDto>(user));
+        }
+
         [HttpPost("/register")]
         public async Task<IActionResult> Register(UserRegistrationDto registrationDto)
         {

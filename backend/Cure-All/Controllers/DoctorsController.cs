@@ -23,13 +23,11 @@ namespace Cure_All.Controllers
     {
         private readonly IMediator _mediator;
         private readonly IIdentityService _identityService;
-        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public DoctorsController(IMediator mediator, IIdentityService identityService, IHttpContextAccessor httpContextAccessor)
+        public DoctorsController(IMediator mediator, IIdentityService identityService)
         {
             _mediator = mediator;
             _identityService = identityService;
-            _httpContextAccessor = httpContextAccessor;
         }
 
         [HttpGet]

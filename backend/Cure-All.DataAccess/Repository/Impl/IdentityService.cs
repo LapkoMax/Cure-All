@@ -32,6 +32,11 @@ namespace Cure_All.DataAccess.Repository.Impl
             return userLogin.Contains("@") ? await _userManager.FindByEmailAsync(userLogin) : await _userManager.FindByNameAsync(userLogin);
         }
 
+        public async Task<User> GetUserByIdAsync(string userId)
+        {
+            return await _userManager.FindByIdAsync(userId);
+        }
+
         public async Task<AuthenticationResultDto> RegisterAsync(UserRegistrationDto registrationDto)
         {
             var existingUser = await _userManager.FindByEmailAsync(registrationDto.Email);

@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   AppointmentData,
   editAppointment,
   EditAppointmentForm,
 } from "../../Api/AppointmentsData";
 import { getIllneses, IllnessData } from "../../Api/IllnesesData";
+import { signOutUserAction } from "../../Store/ActionCreators/IdentityActionCreators";
 import { AppState } from "../../Store/Reducers/RootReducer";
 import {
   FormButtonContainer,
@@ -31,12 +32,14 @@ type Props = {
 
 export const EditAppointment = ({ appointment }: Props) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const {
     register,
     formState: { errors, isSubmitting },
     handleSubmit,
     setValue,
   } = useForm<EditAppointmentForm>({ mode: "onBlur" });
+  const dispatch = useDispatch();
   const userToken = useSelector((state: AppState) => state.identity.token);
   const [editErrors, setEditErrors] = useState<string[] | undefined>([]);
   const [illneses, setIllneses] = useState<IllnessData[]>([]);
@@ -71,7 +74,9 @@ export const EditAppointment = ({ appointment }: Props) => {
     const result = await editAppointment(data, appointment?.id, userToken);
     if (result.length === 0) {
       navigate("/appointment/" + appointment?.id);
-    } else setEditErrors(result);
+    } else if (result[0] === "Unauthorized")
+      dispatch(signOutUserAction(location.pathname));
+    else setEditErrors(result);
   };
 
   return (
@@ -113,6 +118,19 @@ export const EditAppointment = ({ appointment }: Props) => {
               </FieldOption>
             ))}
           </FieldSelect>
+          <div className="row">
+            <FieldLabel className="col-8 row">
+              Нет подходящего заболевания?
+            </FieldLabel>
+            <PrimaryButton
+              className="col-4 row"
+              onClick={() => {
+                navigate("/addIllness?returnUrl=" + location.pathname);
+              }}
+            >
+              Добавьте новое
+            </PrimaryButton>
+          </div>
           <FieldError>{errors.illnessId?.message}</FieldError>
         </FieldContainer>
         <FieldCheckBox className="form-check col-12">

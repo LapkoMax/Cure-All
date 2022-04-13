@@ -18,6 +18,10 @@ namespace Cure_All.Models.DTO
 
         public string UserName { get; set; }
 
+        public string PhoneNumber { get; set; }
+
+        public string Email { get; set; }
+
         public DateTime DateOfBurth { get; set; }
 
         public string ZipCode { get; set; }

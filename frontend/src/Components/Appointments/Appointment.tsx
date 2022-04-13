@@ -7,6 +7,7 @@ import {
   appointmentContainer,
   appointmentTitle,
 } from "../../Styles/Appointments/AppointmentStyles";
+import { GiCheckMark } from "react-icons/gi";
 
 interface Props {
   appointment: AppointmentData;
@@ -16,6 +17,7 @@ export const Appointment = ({ appointment }: Props) => (
   <div css={appointmentContainer}>
     <Link to={`/appointment/${appointment.id}`} css={appointmentTitle}>
       <div css={appointmentTitle}>
+        {appointment.completed && <GiCheckMark color="green" />}{" "}
         {appointment.description.length <= 15
           ? appointment.description
           : appointment.description.substring(0, 15) + "..."}

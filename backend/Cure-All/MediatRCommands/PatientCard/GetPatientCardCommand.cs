@@ -1,4 +1,6 @@
-﻿using Cure_All.DataAccess.Repository;
+﻿using AutoMapper;
+using Cure_All.DataAccess.Repository;
+using Cure_All.Models.DTO;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,27 +10,33 @@ using System.Threading.Tasks;
 
 namespace Cure_All.MediatRCommands.PatientCard
 {
-    public class GetPatientCardCommand : IRequest<Models.Entities.PatientCard>
+    public class GetPatientCardCommand : IRequest<PatientCardDto>
     {
         public Guid patientCardId { get; set; }
     }
 
-    public class GetPatientCardCommandHandler : IRequestHandler<GetPatientCardCommand, Models.Entities.PatientCard>
+    public class GetPatientCardCommandHandler : IRequestHandler<GetPatientCardCommand, PatientCardDto>
     {
         private readonly IRepositoryManager _repository;
 
-        public GetPatientCardCommandHandler(IRepositoryManager repository)
+        private readonly IMapper _mapper;
+
+        public GetPatientCardCommandHandler(IRepositoryManager repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
-        public async Task<Models.Entities.PatientCard> Handle(GetPatientCardCommand command, CancellationToken cancellationToken)
+        public async Task<PatientCardDto> Handle(GetPatientCardCommand command, CancellationToken cancellationToken)
         {
-            var patientEntity = await _repository.PatientCard.GetPatientCardByIdAsync(command.patientCardId);
+            var patientCardEntity = await _repository.PatientCard.GetPatientCardByIdAsync(command.patientCardId);
 
-            if (patientEntity == null)
+            if (patientCardEntity == null)
                 return null;
-            return patientEntity;
+
+            var patientCard = _mapper.Map<PatientCardDto>(patientCardEntity);
+
+            return patientCard;
         }
     }
 }
