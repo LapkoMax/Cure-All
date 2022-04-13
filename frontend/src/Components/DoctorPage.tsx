@@ -106,6 +106,19 @@ export const DoctorPage = ({ user }: Props) => {
               </FormButtonContainer>
             </div>
           )}
+          {loginedUser?.id !== undefined && loginedUser.type === "Patient" && (
+            <div className="d-flex justify-content-center">
+              <FormButtonContainer className="col-9 d-flex justify-content-around">
+                <PrimaryButton
+                  onClick={() => {
+                    navigate("/newAppointment/" + doctor?.id);
+                  }}
+                >
+                  Записаться на приём
+                </PrimaryButton>
+              </FormButtonContainer>
+            </div>
+          )}
         </div>
       )}
     </Page>

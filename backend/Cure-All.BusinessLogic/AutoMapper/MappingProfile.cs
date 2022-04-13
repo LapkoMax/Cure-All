@@ -28,6 +28,7 @@ namespace Cure_All.BusinessLogic.AutoMapper
             CreateMap<DoctorForCreationDto, Doctor>();
             CreateMap<DoctorForEditingDto, Doctor>();
             CreateMap<Patient, PatientDto>()
+                .ForMember(pat => pat.PatientCardId, opt => opt.MapFrom(x => x.PatientCard.Id))
                 .ForMember(pat => pat.FirstName, opt => opt.MapFrom(x => x.User.FirstName))
                 .ForMember(pat => pat.LastName, opt => opt.MapFrom(x => x.User.LastName))
                 .ForMember(pat => pat.UserName, opt => opt.MapFrom(x => x.User.UserName))

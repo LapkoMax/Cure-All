@@ -17,7 +17,7 @@ function App() {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <BrowserRouter>
-          <div css={appContainer} className="row">
+          <div css={appContainer} className="col-12 row">
             <Header />
             <RoutesComponent />
           </div>

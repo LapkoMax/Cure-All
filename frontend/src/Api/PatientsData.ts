@@ -1,5 +1,6 @@
 export interface PatientData {
   id: string;
+  patientCardId: string;
   userId: string;
   firstName: string;
   lastName: string;

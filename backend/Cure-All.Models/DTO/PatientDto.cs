@@ -10,6 +10,8 @@ namespace Cure_All.Models.DTO
     {
         public Guid Id { get; set; }
 
+        public Guid PatientCardId { get; set; }
+
         public string UserId { get; set; }
 
         public string FirstName { get; set; }
