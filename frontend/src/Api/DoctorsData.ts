@@ -24,6 +24,11 @@ export interface DoctorData {
   city: string;
 }
 
+export interface AvailableAppointmentTimeData {
+  doctorId: string;
+  time: string;
+}
+
 export interface DoctorSceduleData {
   id: string;
   doctorId: string;
@@ -74,6 +79,11 @@ export interface ResponseDoctor {
 
 export interface ResponseDoctors {
   data: DoctorData[];
+  responseStatus: number;
+}
+
+export interface ResponseAvailableTime {
+  data: AvailableAppointmentTimeData[];
   responseStatus: number;
 }
 
@@ -227,6 +237,34 @@ export const getDoctor = async (
   doctor = await response.json();
 
   return { data: doctor, responseStatus: 200 };
+};
+
+export const getDoctorAvailableTime = async (
+  doctorId: string,
+  date: string,
+  token?: string,
+): Promise<ResponseAvailableTime> => {
+  let headers = getHeaders(token);
+
+  let response = await fetch(
+    "http://localhost:5000/api/doctors/" +
+      doctorId +
+      "/availableTime?date=" +
+      date,
+    {
+      mode: "cors",
+      method: "GET",
+      headers: headers,
+    },
+  );
+
+  if (response.status === 401) return { data: [], responseStatus: 401 };
+  else if (response.status !== 200)
+    return { data: [], responseStatus: response.status };
+
+  var results = await response.json();
+
+  return { data: results, responseStatus: 200 };
 };
 
 export const editDoctor = async (

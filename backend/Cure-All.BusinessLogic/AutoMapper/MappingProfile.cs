@@ -64,6 +64,7 @@ namespace Cure_All.BusinessLogic.AutoMapper
             CreateMap<UserRegistrationDto, User>();
             CreateMap<User, UserDto>();
             CreateMap<Appointment, AppointmentDto>()
+                .ForMember(app => app.StartTime, opt => opt.MapFrom(x => $"{x.StartTime.Hours}:{x.StartTime.Minutes}"))
                 .ForMember(app => app.DoctorUserId, opt => opt.MapFrom(x => x.Doctor.UserId))
                 .ForMember(app => app.DoctorFirstName, opt => opt.MapFrom(x => x.Doctor.User.FirstName))
                 .ForMember(app => app.DoctorLastName, opt => opt.MapFrom(x => x.Doctor.User.LastName))
@@ -71,7 +72,8 @@ namespace Cure_All.BusinessLogic.AutoMapper
                 .ForMember(app => app.PatientLastName, opt => opt.MapFrom(x => x.PatientCard.Patient.User.LastName))
                 .ForMember(app => app.IllnessName, opt => opt.MapFrom(x => x.Illness.Name));
             CreateMap<AppointmentForCreationDto, Appointment>()
-                .ForMember(app => app.Completed, opt => opt.MapFrom(x => false));
+                .ForMember(app => app.Completed, opt => opt.MapFrom(x => false))
+                .ForMember(app => app.StartTime, opt => opt.MapFrom(x => TimeSpan.Parse(x.StartTime)));
             CreateMap<AppointmentForEditingDto, Appointment>();
             CreateMap<IllnessForCreationDto, Illness>();
             CreateMap<PatientCard, PatientCardDto>()

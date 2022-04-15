@@ -32,6 +32,8 @@ namespace Cure_All.Models.DTO
 
         public DateTime StartDate { get; set; }
 
+        public string StartTime { get; set; }
+
         public DateTime? EndDate { get; set; }
 
         public bool Completed { get; set; }

@@ -56,6 +56,12 @@ namespace Cure_All.Controllers
             return Ok(doctor);
         }
 
+        [HttpGet("{doctorId}/availableTime")]
+        public async Task<IEnumerable<AvailableAppointmentTimeDto>> GetDoctorAvailableTime(Guid doctorId, DateTime date)
+        {
+            return await _mediator.Send(new GetAvailableAppointmentTimeForDateCommand { date = date, doctorId = doctorId }, CancellationToken.None);
+        }
+
         [HttpPut("{doctorId}")]
         public async Task<IActionResult> EditDoctor(Guid doctorId, DoctorForEditingDto doctor)
         {

@@ -17,5 +17,7 @@ namespace Cure_All.Models.DTO
         public Guid? IllnessId { get; set; }
 
         public DateTime StartDate { get; set; }
+
+        public string StartTime { get; set; }
     }
 }

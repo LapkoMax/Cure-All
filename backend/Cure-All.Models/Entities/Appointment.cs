@@ -32,6 +32,8 @@ namespace Cure_All.Models.Entities
 
         public DateTime StartDate { get; set; }
 
+        public TimeSpan StartTime { get; set; }
+
         public DateTime? EndDate { get; set; }
 
         public bool Completed { get; set; }
