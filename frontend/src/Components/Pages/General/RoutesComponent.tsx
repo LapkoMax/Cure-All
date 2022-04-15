@@ -1,20 +1,21 @@
 import { Fragment } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
-import { AppointmentPage } from "./AppointmentPage";
-import { AppointmentsListPage } from "./AppointmentsListPage";
-import { CreateIllnessPage } from "./CreateIllnessPage";
-import { DoctorListPage } from "./DoctorListPage";
-import { EditAppointmentPage } from "./EditAppointmentPage";
-import { EditDoctorPage } from "./EditDoctorPage";
-import { EditPatientPage } from "./EditPatientPage";
-import { NavigationPanel } from "./General/NavigationPanel";
+import { AppointmentPage } from "../Appointments/AppointmentPage";
+import { AppointmentsListPage } from "../Appointments/AppointmentsListPage";
+import { CreateIllnessPage } from "../Illneses/CreateIllnessPage";
+import { DoctorListPage } from "../Doctors/DoctorListPage";
+import { EditAppointmentPage } from "../Appointments/EditAppointmentPage";
+import { EditDoctorPage } from "../Doctors/EditDoctorPage";
+import { EditPatientPage } from "../Patients/EditPatientPage";
+import { NavigationPanel } from "../../General/NavigationPanel";
 import { HomePage } from "./HomePage";
 import { NotFoundPage } from "./NotFoundPage";
-import { PatientCardPage } from "./PatientCardPage";
+import { PatientCardPage } from "../PatientCards/PatientCardPage";
 import { ProfilePage } from "./ProfilePage";
 import { RegistrationPage } from "./RegistrationPage";
 import { SearchPage } from "./SearchPage";
 import { SignInPage } from "./SignInPage";
+import { CreateAppointmentPage } from "../Appointments/CreateAppointmentPage";
 
 export const RoutesComponent = () => {
   const location = useLocation();
@@ -57,6 +58,10 @@ export const RoutesComponent = () => {
           <Route
             path="appointment/:appointmentId/edit"
             element={<EditAppointmentPage />}
+          />
+          <Route
+            path="newAppointment/:doctorId"
+            element={<CreateAppointmentPage />}
           />
           <Route path="addIllness" element={<CreateIllnessPage />} />
           <Route

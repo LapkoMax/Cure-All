@@ -11,10 +11,31 @@ export interface DoctorData {
   workStart: Date;
   yearsOfExperience: number;
   workAddress: string;
+  averageAppointmentTime: number;
+  workDayStart: string;
+  workDayEnd: string;
+  dinnerStart: string;
+  dinnerEnd: string;
+  doctorsScedule: DoctorSceduleData[];
+  doctorDayOffs: DoctorDayOffData[];
   dateOfBurth: Date;
   zipCode: string;
   country: string;
   city: string;
+}
+
+export interface DoctorSceduleData {
+  id: string;
+  doctorId: string;
+  dayOfWeek: string;
+}
+
+export interface DoctorDayOffData {
+  id?: string;
+  doctorId?: string;
+  date?: string;
+  status: string;
+  statusName: string;
 }
 
 export interface EditDoctorForm {
@@ -30,6 +51,13 @@ export interface EditDoctorForm {
   licenseNo: string;
   workStart: string;
   workAddress: string;
+  averageAppointmentTime: number;
+  workDayStart: string;
+  workDayEnd: string;
+  dinnerStart: string;
+  dinnerEnd: string;
+  doctorsScedule: DoctorSceduleData[];
+  doctorDayOffs: DoctorDayOffData[];
   dateOfBurth: string;
   zipCode: string;
   country: string;
@@ -48,6 +76,73 @@ export interface ResponseDoctors {
   data: DoctorData[];
   responseStatus: number;
 }
+
+export interface DayOfWeek {
+  id: number;
+  value: string;
+  name: string;
+}
+
+export const DaysOfWeek: DayOfWeek[] = [
+  {
+    id: 1,
+    value: "Monday",
+    name: "Понедельник",
+  },
+  {
+    id: 2,
+    value: "Tuesday",
+    name: "Вторник",
+  },
+  {
+    id: 3,
+    value: "Wednesday",
+    name: "Среда",
+  },
+  {
+    id: 4,
+    value: "Thursday",
+    name: "Четверг",
+  },
+  {
+    id: 5,
+    value: "Friday",
+    name: "Пятница",
+  },
+  {
+    id: 6,
+    value: "Saturday",
+    name: "Суббота",
+  },
+  {
+    id: 7,
+    value: "Sunday",
+    name: "Воскресенье",
+  },
+];
+
+export const Statuses = [
+  {
+    id: 1,
+    name: "Выходной",
+    value: "DayOff",
+  },
+  {
+    id: 2,
+    name: "Больничный",
+    value: "SickDay",
+  },
+  {
+    id: 3,
+    name: "Праздник",
+    value: "Holiday",
+  },
+  {
+    id: 4,
+    name: "Отпуск",
+    value: "Vacation",
+  },
+];
 
 export interface DoctorParameters {
   orderBy?: string;
@@ -98,7 +193,7 @@ export const getDoctors = async (
     return { data: doctors, responseStatus: response.status };
 
   doctors = await response.json();
-
+  console.log(doctors);
   return { data: doctors, responseStatus: 200 };
 };
 

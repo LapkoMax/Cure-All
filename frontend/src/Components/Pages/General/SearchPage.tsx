@@ -2,16 +2,16 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useSearchParams } from "react-router-dom";
-import { getDoctors } from "../Api/DoctorsData";
+import { getDoctors } from "../../../Api/DoctorsData";
 import {
   gettingDoctorsAction,
   gotDoctorsAction,
-} from "../Store/ActionCreators/DoctorActionCreators";
-import { signOutUserAction } from "../Store/ActionCreators/IdentityActionCreators";
-import { AppState } from "../Store/Reducers/RootReducer";
-import { forSearch } from "../Styles/SearchPageStyles";
-import { DoctorList } from "./Doctors/DoctorList";
-import { Page } from "./General/Page";
+} from "../../../Store/ActionCreators/DoctorActionCreators";
+import { signOutUserAction } from "../../../Store/ActionCreators/IdentityActionCreators";
+import { AppState } from "../../../Store/Reducers/RootReducer";
+import { forSearch } from "../../../Styles/SearchPageStyles";
+import { DoctorList } from "../../Doctors/DoctorList";
+import { Page } from "../../General/Page";
 
 export const SearchPage = () => {
   const [searchParams] = useSearchParams();

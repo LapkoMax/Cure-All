@@ -18,13 +18,13 @@ namespace Cure_All.DataAccess.Repository.Impl
 
         public override IQueryable<Doctor> FindAll(bool trackChanges = false) =>
             !trackChanges ?
-            DataContext.Doctors.Include(doc => doc.User).Include(doc => doc.Specialization).AsNoTracking() :
-            DataContext.Doctors.Include(doc => doc.User).Include(doc => doc.Specialization);
+            DataContext.Doctors.Include(doc => doc.User).Include(doc => doc.Specialization).Include(doc => doc.DoctorsScedule).Include(doc => doc.DoctorDayOffs).AsNoTracking() :
+            DataContext.Doctors.Include(doc => doc.User).Include(doc => doc.Specialization).Include(doc => doc.DoctorsScedule).Include(doc => doc.DoctorDayOffs);
 
         public override IQueryable<Doctor> FindByCondition(Expression<Func<Doctor, bool>> expression, bool trackChanges = false) =>
             !trackChanges ?
-            DataContext.Doctors.Include(doc => doc.User).Include(doc => doc.Specialization).Where(expression).AsNoTracking() :
-            DataContext.Doctors.Include(doc => doc.User).Include(doc => doc.Specialization).Where(expression);
+            DataContext.Doctors.Include(doc => doc.User).Include(doc => doc.Specialization).Include(doc => doc.DoctorsScedule).Include(doc => doc.DoctorDayOffs).Where(expression).AsNoTracking() :
+            DataContext.Doctors.Include(doc => doc.User).Include(doc => doc.Specialization).Include(doc => doc.DoctorsScedule).Include(doc => doc.DoctorDayOffs).Where(expression);
 
         public async Task<IEnumerable<Doctor>> GetAllDoctorsAsync(DoctorParameters doctorParameters, bool trackChanges = false)
         {

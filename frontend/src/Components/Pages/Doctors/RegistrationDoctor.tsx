@@ -1,13 +1,19 @@
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { registerDoctor, RegisterDoctorForm } from "../Api/IdentityData";
+import {
+  CreateDoctorDayOffData,
+  CreateDoctorSceduleDataForm,
+  registerDoctor,
+  RegisterDoctorForm,
+} from "../../../Api/IdentityData";
 import {
   loggingUserAction,
   loginedUserAction,
-} from "../Store/ActionCreators/IdentityActionCreators";
-import { AppState } from "../Store/Reducers/RootReducer";
+} from "../../../Store/ActionCreators/IdentityActionCreators";
+import { AppState } from "../../../Store/Reducers/RootReducer";
 import {
+  FieldCheckBox,
   FieldContainer,
   FieldError,
   FieldInput,
@@ -15,17 +21,24 @@ import {
   FieldOption,
   FieldSelect,
   RegistrationFieldset,
-} from "../Styles/Common/FieldStyles";
-import { useEffect, useRef, useState } from "react";
+} from "../../../Styles/Common/FieldStyles";
+import { Fragment, useEffect, useRef, useState } from "react";
 import {
+  DangerButton,
   FormButtonContainer,
   PrimaryButton,
   SecondaryButton,
-} from "../Styles/Common/Buttons";
+} from "../../../Styles/Common/Buttons";
 import {
   getSpecializations,
   SpecializationData,
-} from "../Api/SpecializationsData";
+} from "../../../Api/SpecializationsData";
+import {
+  DayOfWeek,
+  DaysOfWeek,
+  DoctorDayOffData,
+  Statuses,
+} from "../../../Api/DoctorsData";
 
 export const RegistrationDoctor = () => {
   const dispatch = useDispatch();
@@ -43,6 +56,12 @@ export const RegistrationDoctor = () => {
   const [specializations, setSpecializations] = useState<SpecializationData[]>(
     [],
   );
+  const [sceduledDayList, setSceduledDayList] = useState<DayOfWeek[]>([]);
+  const [dayOffs, setDayOffs] = useState<DoctorDayOffData[]>([]);
+  const [newDayOff, setNewDayOff] = useState<DoctorDayOffData>({
+    status: "",
+    statusName: "",
+  });
 
   useEffect(() => {
     const doGetSpecializations = async () => {
@@ -56,11 +75,66 @@ export const RegistrationDoctor = () => {
   const submitForm = async (data: RegisterDoctorForm) => {
     setLoginErrors([]);
     dispatch(loggingUserAction());
+    data.doctorsScedule = sceduledDayList.map((day) => {
+      return {
+        dayOfWeek: day.value,
+      } as CreateDoctorSceduleDataForm;
+    });
+    data.doctorDayOffs = dayOffs.map((day) => {
+      return {
+        date: day.date,
+        status: day.status,
+      } as CreateDoctorDayOffData;
+    });
+    console.log(data);
     const result = await registerDoctor(data);
     if (result.success) {
       dispatch(loginedUserAction(result));
       navigate(returnUrl === "" ? "/" : returnUrl);
     } else setLoginErrors(result.errors);
+  };
+
+  const onDayOfWeekSelect = (dayOfWeek: DayOfWeek) => {
+    console.log(sceduledDayList.includes(dayOfWeek));
+    let newSceduledDayList = sceduledDayList;
+    if (newSceduledDayList.includes(dayOfWeek)) {
+      newSceduledDayList = [];
+      sceduledDayList.forEach((day) => {
+        console.log(`${day.value} === ${dayOfWeek.value}`);
+        if (day.value !== dayOfWeek.value)
+          newSceduledDayList = newSceduledDayList.concat(day);
+      });
+    } else newSceduledDayList = newSceduledDayList.concat(dayOfWeek);
+    console.log(newSceduledDayList);
+    setSceduledDayList(newSceduledDayList);
+  };
+
+  const onDayOffDateSelect = (e: any) => {
+    if (e.target.value !== "")
+      setNewDayOff({ ...newDayOff, date: e.target.value });
+  };
+
+  const onDayOffStatusSelect = (e: any) => {
+    if (e.target.value !== "") {
+      let values = e.target.value.split(" ");
+      setNewDayOff({ ...newDayOff, status: values[0], statusName: values[1] });
+    }
+  };
+
+  const addNewDayOff = () => {
+    if (newDayOff.date !== "" && newDayOff.status !== "") {
+      setDayOffs(dayOffs.concat(newDayOff));
+      setNewDayOff({ ...newDayOff, date: "", status: "", statusName: "" });
+      console.log(dayOffs);
+    }
+  };
+
+  const removeDayOff = (index: number) => {
+    let newDayOffs: DoctorDayOffData[] = [];
+    dayOffs.forEach((day, dayIndex) => {
+      if (dayIndex !== index) newDayOffs.push(day);
+    });
+    setDayOffs(newDayOffs);
   };
 
   return (
@@ -134,6 +208,93 @@ export const RegistrationDoctor = () => {
           />
           <FieldError>{errors.workStart?.message}</FieldError>
         </FieldContainer>
+        <FieldContainer className="row col-12 d-flex justify-content-center">
+          <FieldLabel htmlFor="sceduledDays">
+            Выберите свои рабочие дни(все остальные дни будут считаться
+            выходными):
+          </FieldLabel>
+          <div id="sceduledDays">
+            {DaysOfWeek.map((day) => (
+              <FieldCheckBox
+                id={day.id.toString()}
+                className="form-check col-12"
+              >
+                <input
+                  className="form-check-input mt-3"
+                  type="checkbox"
+                  value={day.value}
+                  onClick={() => {
+                    onDayOfWeekSelect(day);
+                  }}
+                />
+                <FieldLabel className="form-check-label col-lg-10 col-md-11 col-sm-11 col-form-label text-left mt-1">
+                  {day.name}
+                </FieldLabel>
+              </FieldCheckBox>
+            ))}
+          </div>
+        </FieldContainer>
+        <FieldContainer className="row col-12 d-flex justify-content-center">
+          <FieldLabel htmlFor="dayOffs">
+            Можете добавить специфические даты(приздник, отпуск и т. д.):
+          </FieldLabel>
+          <div
+            id="dayOffs"
+            className="col-12 row d-flex justify-content-around"
+          >
+            <div className="col-12 row">
+              {dayOffs.map((day, index) => (
+                <Fragment>
+                  <FieldLabel className="col-10 row mb-2">{`${index + 1}. ${
+                    day.date
+                  } - ${day.statusName}`}</FieldLabel>
+                  <DangerButton
+                    className="col-2 row mb-2 btn btn-primary"
+                    type="button"
+                    onClick={() => {
+                      removeDayOff(index);
+                    }}
+                  >
+                    Удалить
+                  </DangerButton>
+                </Fragment>
+              ))}
+            </div>
+            <div className="col-4 row">
+              <FieldInput
+                value={newDayOff.date}
+                type="date"
+                lang="ru-Cyrl-BY"
+                onChange={onDayOffDateSelect}
+              />
+            </div>
+            <div className="col-4 row">
+              <FieldSelect
+                value={`${newDayOff.status} ${newDayOff.statusName}`}
+                onChange={onDayOffStatusSelect}
+              >
+                <FieldOption key={0} disabled value={" "}>
+                  Можете выбрать статус
+                </FieldOption>
+                {Statuses.map((status) => (
+                  <FieldOption
+                    key={status.id}
+                    value={`${status.value} ${status.name}`}
+                  >
+                    {status.name}
+                  </FieldOption>
+                ))}
+              </FieldSelect>
+            </div>
+            <PrimaryButton
+              className="col-4 row btn btn-primary"
+              onClick={addNewDayOff}
+              type="button"
+            >
+              Подтвердить
+            </PrimaryButton>
+          </div>
+        </FieldContainer>
         <FieldContainer className="row col-6 d-flex justify-content-center">
           <FieldLabel htmlFor="zipCode">Почтовый код</FieldLabel>
           <FieldInput
@@ -203,24 +364,83 @@ export const RegistrationDoctor = () => {
           />
           <FieldError>{errors.city?.message}</FieldError>
         </FieldContainer>
-        <FieldContainer className="row col-12 d-flex justify-content-center">
-          <FieldLabel htmlFor="specializationId">Специализация</FieldLabel>
+        <FieldContainer className="row col-6 d-flex justify-content-center mt-5">
+          <FieldLabel className="mt-4" htmlFor="specializationId">
+            Специализация
+          </FieldLabel>
           <FieldSelect
             id="specializationId"
             {...register("specializationId", {
               required: "Специализация обязательна!",
             })}
+            defaultValue={""}
           >
-            <FieldOption value="" disabled selected>
+            <FieldOption key={0} disabled value={""}>
               Пожалуйста выберите специализацию
             </FieldOption>
             {specializations.map((spec) => (
-              <FieldOption value={spec.id} title={spec.description}>
+              <FieldOption
+                key={spec.id}
+                value={spec.id}
+                title={spec.description}
+              >
                 {spec.name}
               </FieldOption>
             ))}
           </FieldSelect>
           <FieldError>{errors.specializationId?.message}</FieldError>
+        </FieldContainer>
+        <FieldContainer className="row col-6 d-flex justify-content-center">
+          <FieldLabel htmlFor="averageAppointmentTime">
+            Примерная продолжительность вашего приёма(в минутах):
+          </FieldLabel>
+          <FieldInput
+            id="averageAppointmentTime"
+            {...register("averageAppointmentTime", {
+              valueAsNumber: true,
+              required: "Продолжительность приёма обязательна!",
+              min: { value: 5, message: "5 минут - минимальное время" },
+              max: { value: 45, message: "45 минут - минимальное время" },
+            })}
+            type="number"
+          />
+          <FieldError>{errors.averageAppointmentTime?.message}</FieldError>
+        </FieldContainer>
+        <FieldContainer className="row col-6 d-flex justify-content-center">
+          <FieldLabel htmlFor="workDayStart">
+            Начало вашего рабочего дня:
+          </FieldLabel>
+          <FieldInput
+            id="workDayStart"
+            {...register("workDayStart")}
+            type="time"
+          />
+          <FieldError>{errors.workDayStart?.message}</FieldError>
+        </FieldContainer>
+        <FieldContainer className="row col-6 d-flex justify-content-center">
+          <FieldLabel htmlFor="workDayEnd">
+            Конец вашего рабочего дня:
+          </FieldLabel>
+          <FieldInput id="workDayEnd" {...register("workDayEnd")} type="time" />
+          <FieldError>{errors.workDayEnd?.message}</FieldError>
+        </FieldContainer>
+        <FieldContainer className="row col-6 d-flex justify-content-center">
+          <FieldLabel htmlFor="dinnerStart">
+            Начало вашего обеденного перерыва:
+          </FieldLabel>
+          <FieldInput
+            id="dinnerStart"
+            {...register("dinnerStart")}
+            type="time"
+          />
+          <FieldError>{errors.dinnerStart?.message}</FieldError>
+        </FieldContainer>
+        <FieldContainer className="row col-6 d-flex justify-content-center">
+          <FieldLabel htmlFor="dinnerEnd">
+            Конец вашего обеденного перерыва:
+          </FieldLabel>
+          <FieldInput id="dinnerEnd" {...register("dinnerEnd")} type="time" />
+          <FieldError>{errors.dinnerEnd?.message}</FieldError>
         </FieldContainer>
         <FieldContainer className="row col-6 d-flex justify-content-center">
           <FieldLabel htmlFor="licenseNo">Номер лицензии</FieldLabel>

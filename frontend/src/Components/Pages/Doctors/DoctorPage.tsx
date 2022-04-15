@@ -2,29 +2,29 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import { getDoctor } from "../Api/DoctorsData";
-import { deleteUser, UserData } from "../Api/IdentityData";
+import { getDoctor } from "../../../Api/DoctorsData";
+import { deleteUser, UserData } from "../../../Api/IdentityData";
 import {
   gettingDoctorAction,
   gotDoctorAction,
-} from "../Store/ActionCreators/DoctorActionCreators";
-import { signOutUserAction } from "../Store/ActionCreators/IdentityActionCreators";
-import { AppState } from "../Store/Reducers/RootReducer";
+} from "../../../Store/ActionCreators/DoctorActionCreators";
+import { signOutUserAction } from "../../../Store/ActionCreators/IdentityActionCreators";
+import { AppState } from "../../../Store/Reducers/RootReducer";
 import {
   DangerButton,
   FormButtonContainer,
   PrimaryButton,
-} from "../Styles/Common/Buttons";
+} from "../../../Styles/Common/Buttons";
 import {
   doctorContainer,
   doctorTitle,
-} from "../Styles/Doctors/DoctorPageStyles";
+} from "../../../Styles/Doctors/DoctorPageStyles";
 import {
   doctorAdditionalInf,
   doctorExp,
   doctorSpecialzation,
-} from "../Styles/Doctors/DoctorStyles";
-import { Page } from "./General/Page";
+} from "../../../Styles/Doctors/DoctorStyles";
+import { Page } from "../../General/Page";
 
 type Props = {
   user: UserData;

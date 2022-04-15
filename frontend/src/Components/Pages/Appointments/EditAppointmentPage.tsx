@@ -1,15 +1,15 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
-import { getAppointment } from "../Api/AppointmentsData";
+import { getAppointment } from "../../../Api/AppointmentsData";
 import {
   gettingAppointmentAction,
   gotAppointmentAction,
-} from "../Store/ActionCreators/AppointmentActionCreators";
-import { signOutUserAction } from "../Store/ActionCreators/IdentityActionCreators";
-import { AppState } from "../Store/Reducers/RootReducer";
-import { EditAppointment } from "./Appointments/EditAppointment";
-import { Page } from "./General/Page";
+} from "../../../Store/ActionCreators/AppointmentActionCreators";
+import { signOutUserAction } from "../../../Store/ActionCreators/IdentityActionCreators";
+import { AppState } from "../../../Store/Reducers/RootReducer";
+import { EditAppointment } from "../../Appointments/EditAppointment";
+import { Page } from "../../General/Page";
 
 export const EditAppointmentPage = () => {
   const { appointmentId } = useParams();

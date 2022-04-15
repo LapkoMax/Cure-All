@@ -34,6 +34,11 @@ namespace Cure_All.MediatRCommands.Doctor
                 return null;
 
             var doctorToReturn = _mapper.Map<DoctorDto>(doctorEntity);
+
+            doctorToReturn.DoctorsScedule = _mapper.Map<IEnumerable<DoctorsSceduleDto>>(doctorEntity.DoctorsScedule);
+
+            doctorToReturn.DoctorDayOffs = _mapper.Map<IEnumerable<DoctorDayOffsDto>>(doctorEntity.DoctorDayOffs);
+
             return doctorToReturn;
         }
     }

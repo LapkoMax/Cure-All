@@ -1,17 +1,17 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
-import { getDoctor } from "../Api/DoctorsData";
+import { getDoctor } from "../../../Api/DoctorsData";
 import {
   gettingDoctorAction,
   gotDoctorAction,
-} from "../Store/ActionCreators/DoctorActionCreators";
-import { signOutUserAction } from "../Store/ActionCreators/IdentityActionCreators";
-import { AppState } from "../Store/Reducers/RootReducer";
-import { EditDoctor } from "./Doctors/EditDoctor";
-import { Page } from "./General/Page";
+} from "../../../Store/ActionCreators/DoctorActionCreators";
+import { signOutUserAction } from "../../../Store/ActionCreators/IdentityActionCreators";
+import { AppState } from "../../../Store/Reducers/RootReducer";
+import { AddAppointment } from "../../Appointments/AddAppointment";
+import { Page } from "../../General/Page";
 
-export const EditDoctorPage = () => {
+export const CreateAppointmentPage = () => {
   const { doctorId } = useParams();
   const dispatch = useDispatch();
   const location = useLocation();
@@ -32,8 +32,12 @@ export const EditDoctorPage = () => {
   }, []);
 
   return (
-    <Page title="Редактировать профиль:">
-      {doctorLoading ? <div>Загрузка...</div> : <EditDoctor doctor={doctor} />}
+    <Page title="Запись на приём">
+      {doctorLoading ? (
+        <div>Загрузка...</div>
+      ) : (
+        <AddAppointment doctor={doctor}></AddAppointment>
+      )}
     </Page>
   );
 };

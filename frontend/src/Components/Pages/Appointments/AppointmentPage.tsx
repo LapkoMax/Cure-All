@@ -6,25 +6,25 @@ import {
   deleteAppointment,
   getAppointment,
   ifUserCanEditAppointment,
-} from "../Api/AppointmentsData";
+} from "../../../Api/AppointmentsData";
 import {
   gettingAppointmentAction,
   gotAppointmentAction,
-} from "../Store/ActionCreators/AppointmentActionCreators";
-import { signOutUserAction } from "../Store/ActionCreators/IdentityActionCreators";
-import { AppState } from "../Store/Reducers/RootReducer";
+} from "../../../Store/ActionCreators/AppointmentActionCreators";
+import { signOutUserAction } from "../../../Store/ActionCreators/IdentityActionCreators";
+import { AppState } from "../../../Store/Reducers/RootReducer";
 import {
   appointmentAdditionalInf,
   appointmentContainer,
   appointmentTitle,
-} from "../Styles/Appointments/AppointmentPageStyles";
+} from "../../../Styles/Appointments/AppointmentPageStyles";
 import {
   DangerButton,
   FormButtonContainer,
   PrimaryButton,
-} from "../Styles/Common/Buttons";
-import { SubmissionSuccess } from "../Styles/Common/FieldStyles";
-import { Page } from "./General/Page";
+} from "../../../Styles/Common/Buttons";
+import { SubmissionSuccess } from "../../../Styles/Common/FieldStyles";
+import { Page } from "../../General/Page";
 
 export const AppointmentPage = () => {
   const { appointmentId } = useParams();

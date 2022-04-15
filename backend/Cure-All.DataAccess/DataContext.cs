@@ -30,6 +30,10 @@ namespace Cure_All.DataAccess
 
         public DbSet<Doctor> Doctors { get; set; }
 
+        public DbSet<DoctorsScedule> DoctorsScedules { get; set; }
+
+        public DbSet<DoctorDayOffs> DoctorDayOffs { get; set; }
+
         public DbSet<Specialization> Specializations { get; set; }
 
         public DbSet<Illness> Illnesses { get; set; }

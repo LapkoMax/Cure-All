@@ -12,6 +12,10 @@ namespace Cure_All.DataAccess.Repository.Impl
 
         private IDoctorRepository _doctorRepository;
 
+        private IDoctorsSceduleRepository _doctorSceduleRepository;
+
+        private IDoctorDayOffRepository _doctorDayOffRepository;
+
         private IPatientRepository _patientRepository;
 
         private IPatientCardRepository _patientCardRepository;
@@ -36,6 +40,26 @@ namespace Cure_All.DataAccess.Repository.Impl
                 if (_doctorRepository == null)
                     _doctorRepository = new DoctorRepository(_dataContext);
                 return _doctorRepository;
+            }
+        }
+
+        public IDoctorsSceduleRepository DoctorsScedule
+        {
+            get
+            {
+                if (_doctorSceduleRepository == null)
+                    _doctorSceduleRepository = new DoctorsSceduleRepository(_dataContext);
+                return _doctorSceduleRepository;
+            }
+        }
+
+        public IDoctorDayOffRepository DoctorDayOff
+        {
+            get
+            {
+                if (_doctorDayOffRepository == null)
+                    _doctorDayOffRepository = new DoctorDayOffRepository(_dataContext);
+                return _doctorDayOffRepository;
             }
         }
 

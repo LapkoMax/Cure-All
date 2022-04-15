@@ -2,25 +2,25 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import { deleteUser, UserData } from "../Api/IdentityData";
-import { getPatient } from "../Api/PatientsData";
-import { signOutUserAction } from "../Store/ActionCreators/IdentityActionCreators";
+import { deleteUser, UserData } from "../../../Api/IdentityData";
+import { getPatient } from "../../../Api/PatientsData";
+import { signOutUserAction } from "../../../Store/ActionCreators/IdentityActionCreators";
 import {
   gettingPatientAction,
   gotPatientAction,
-} from "../Store/ActionCreators/PatientActionCreators";
-import { AppState } from "../Store/Reducers/RootReducer";
+} from "../../../Store/ActionCreators/PatientActionCreators";
+import { AppState } from "../../../Store/Reducers/RootReducer";
 import {
   DangerButton,
   FormButtonContainer,
   PrimaryButton,
-} from "../Styles/Common/Buttons";
-import { doctorAdditionalInf } from "../Styles/Doctors/DoctorStyles";
+} from "../../../Styles/Common/Buttons";
+import { doctorAdditionalInf } from "../../../Styles/Doctors/DoctorStyles";
 import {
   patientContainer,
   patientTitle,
-} from "../Styles/Patient/PatientPageStyles";
-import { Page } from "./General/Page";
+} from "../../../Styles/Patient/PatientPageStyles";
+import { Page } from "../../General/Page";
 
 type Props = {
   user: UserData;

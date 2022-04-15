@@ -5,7 +5,7 @@ import persistStore from "redux-persist/es/persistStore";
 import { PersistGate } from "redux-persist/integration/react";
 import { appContainer } from "./AppStyles";
 import { Header } from "./Components/General/Header";
-import { RoutesComponent } from "./Components/RoutesComponent";
+import { RoutesComponent } from "./Components/Pages/General/RoutesComponent";
 import { configureStore } from "./Store/Store";
 
 const store = configureStore();

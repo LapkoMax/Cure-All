@@ -33,6 +33,14 @@ namespace Cure_All.MediatRCommands.Doctor
             var doctorEntities = await _repository.Doctor.GetAllDoctorsAsync(command.doctorParameters);
 
             var doctorsToReturn = _mapper.Map<IEnumerable<DoctorDto>>(doctorEntities);
+
+            foreach(var doctorToReturn in doctorsToReturn)
+            {
+                doctorToReturn.DoctorsScedule = _mapper.Map<IEnumerable<DoctorsSceduleDto>>(doctorEntities.Where(doc => doc.Id.Equals(doctorToReturn.Id)).SingleOrDefault().DoctorsScedule);
+
+                doctorToReturn.DoctorDayOffs = _mapper.Map<IEnumerable<DoctorDayOffsDto>>(doctorEntities.Where(doc => doc.Id.Equals(doctorToReturn.Id)).SingleOrDefault().DoctorDayOffs);
+            }
+
             return doctorsToReturn;
         }
     }

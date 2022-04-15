@@ -2,24 +2,27 @@ import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { registerPatient, RegisterPatientForm } from "../Api/IdentityData";
+import {
+  registerPatient,
+  RegisterPatientForm,
+} from "../../../Api/IdentityData";
 import {
   loggingUserAction,
   loginedUserAction,
-} from "../Store/ActionCreators/IdentityActionCreators";
-import { AppState } from "../Store/Reducers/RootReducer";
+} from "../../../Store/ActionCreators/IdentityActionCreators";
+import { AppState } from "../../../Store/Reducers/RootReducer";
 import {
   FormButtonContainer,
   PrimaryButton,
   SecondaryButton,
-} from "../Styles/Common/Buttons";
+} from "../../../Styles/Common/Buttons";
 import {
   FieldContainer,
   FieldError,
   FieldInput,
   FieldLabel,
   RegistrationFieldset,
-} from "../Styles/Common/FieldStyles";
+} from "../../../Styles/Common/FieldStyles";
 
 export const RegistrationPatient = () => {
   const dispatch = useDispatch();

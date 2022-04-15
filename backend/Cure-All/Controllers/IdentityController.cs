@@ -2,6 +2,8 @@
 using Cure_All.BusinessLogic.Extensions;
 using Cure_All.DataAccess.Repository;
 using Cure_All.MediatRCommands.Doctor;
+using Cure_All.MediatRCommands.DoctorDayOff;
+using Cure_All.MediatRCommands.DoctorsScedule;
 using Cure_All.MediatRCommands.Patient;
 using Cure_All.MediatRCommands.PatientCard;
 using Cure_All.Models.DTO;
@@ -88,6 +90,12 @@ namespace Cure_All.Controllers
 
             if(newDoctor.UserName != registrationDto.UserName)
                 return BadRequest(new { Errors = new string[]{ "Что-то пошло не так!" } });
+
+            foreach (var docSced in registrationDto.DoctorsScedule)
+                docSced.DoctorId = newDoctorId;
+
+            foreach (var docDayOff in registrationDto.DoctorDayOffs)
+                docDayOff.DoctorId = newDoctorId;
 
             return Ok(new { Token = authResult.Token });
         }

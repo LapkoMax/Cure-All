@@ -22,6 +22,13 @@ export interface EditAppointmentForm {
   completed: boolean;
 }
 
+export interface CreateAppointmentForm {
+  patientCardId: string;
+  doctorId: string;
+  description: string;
+  startDate: Date;
+}
+
 export interface ResponseAppointents {
   data: AppointmentData[];
   responseStatus: number;
@@ -179,6 +186,28 @@ export const editAppointment = async (
   let result = await response.json();
 
   return result.errors !== null ? result.errors : [];
+};
+
+export const createAppointment = async (
+  appointment: CreateAppointmentForm,
+  token?: string,
+): Promise<string[]> => {
+  let headers = getHeaders(token);
+
+  const response = await fetch("http://localhost:5000/api/appointments", {
+    mode: "cors",
+    method: "POST",
+    body: JSON.stringify(appointment),
+    headers: headers,
+  });
+
+  if (response.status === 401) return ["Unauthorized"];
+
+  let result = await response.json();
+
+  if (result.errors) return result.errors;
+
+  return ["Its OK: " + result];
 };
 
 export const deleteAppointment = async (

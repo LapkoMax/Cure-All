@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
-import { getUserById, UserData } from "../Api/IdentityData";
-import { signOutUserAction } from "../Store/ActionCreators/IdentityActionCreators";
-import { AppState } from "../Store/Reducers/RootReducer";
-import { DoctorPage } from "./DoctorPage";
-import { PatientPage } from "./PatientPage";
+import { getUserById, UserData } from "../../../Api/IdentityData";
+import { signOutUserAction } from "../../../Store/ActionCreators/IdentityActionCreators";
+import { AppState } from "../../../Store/Reducers/RootReducer";
+import { DoctorPage } from "../Doctors/DoctorPage";
+import { PatientPage } from "../Patients/PatientPage";
 
 export const ProfilePage = () => {
   const { userId } = useParams();

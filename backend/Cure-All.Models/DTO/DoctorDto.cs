@@ -32,6 +32,20 @@ namespace Cure_All.Models.DTO
 
         public string WorkAddress { get; set; }
 
+        public int AverageAppointmentTime { get; set; }
+
+        public string WorkDayStart { get; set; }
+
+        public string WorkDayEnd { get; set; }
+
+        public string DinnerStart { get; set; }
+
+        public string DinnerEnd { get; set; }
+
+        public IEnumerable<DoctorsSceduleDto> DoctorsScedule { get; set; }
+
+        public IEnumerable<DoctorDayOffsDto> DoctorDayOffs { get; set; }
+
         public DateTime DateOfBurth { get; set; }
 
         public string ZipCode { get; set; }

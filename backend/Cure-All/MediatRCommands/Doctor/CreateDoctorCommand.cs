@@ -20,7 +20,9 @@ namespace Cure_All.MediatRCommands.Doctor
     public class CreateDoctorCommandHandler : IRequestHandler<CreateDoctorCommand, Guid>
     {
         private readonly IRepositoryManager _repository;
+
         private readonly IMapper _mapper;
+
         public CreateDoctorCommandHandler(IRepositoryManager repository, IMapper mapper)
         {
             _repository = repository;

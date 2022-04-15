@@ -4,22 +4,25 @@ import { FormLabel } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { loginUser, LoginUserForm } from "../Api/IdentityData";
+import { loginUser, LoginUserForm } from "../../../Api/IdentityData";
 import {
   loggingUserAction,
   loginedUserAction,
-} from "../Store/ActionCreators/IdentityActionCreators";
-import { AppState } from "../Store/Reducers/RootReducer";
-import { FormButtonContainer, PrimaryButton } from "../Styles/Common/Buttons";
+} from "../../../Store/ActionCreators/IdentityActionCreators";
+import { AppState } from "../../../Store/Reducers/RootReducer";
+import {
+  FormButtonContainer,
+  PrimaryButton,
+} from "../../../Styles/Common/Buttons";
 import {
   FieldContainer,
   FieldError,
   FieldInput,
   FieldLabel,
   Fieldset,
-} from "../Styles/Common/FieldStyles";
-import { registerLink } from "../Styles/SignInPageStyles";
-import { Page } from "./General/Page";
+} from "../../../Styles/Common/FieldStyles";
+import { registerLink } from "../../../Styles/SignInPageStyles";
+import { Page } from "../../General/Page";
 
 export const SignInPage = () => {
   const dispatch = useDispatch();

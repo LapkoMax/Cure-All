@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { ButtonGroup } from "react-bootstrap";
-import { PrimaryButton } from "../Styles/Common/Buttons";
-import { Page } from "./General/Page";
-import { RegistrationDoctor } from "./RegistrationDoctor";
-import { RegistrationPatient } from "./RegistrationPatient";
+import { PrimaryButton } from "../../../Styles/Common/Buttons";
+import { Page } from "../../General/Page";
+import { RegistrationDoctor } from "../Doctors/RegistrationDoctor";
+import { RegistrationPatient } from "../Patients/RegistrationPatient";
 
 export const RegistrationPage = () => {
   const [userType, setUserType] = useState("");

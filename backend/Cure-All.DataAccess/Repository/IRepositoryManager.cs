@@ -10,6 +10,10 @@ namespace Cure_All.DataAccess.Repository
     {
         IDoctorRepository Doctor { get; }
 
+        IDoctorsSceduleRepository DoctorsScedule { get; }
+
+        IDoctorDayOffRepository DoctorDayOff { get; }
+
         IPatientRepository Patient { get; }
 
         IPatientCardRepository PatientCard { get; }

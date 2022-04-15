@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Cure_All.BusinessLogic.Extensions;
 using Cure_All.Models.DTO;
 using Cure_All.Models.Entities;
 using System;
@@ -24,9 +25,29 @@ namespace Cure_All.BusinessLogic.AutoMapper
                 .ForMember(doc => doc.Country, opt => opt.MapFrom(x => x.User.Country))
                 .ForMember(doc => doc.City, opt => opt.MapFrom(x => x.User.City))
                 .ForMember(doc => doc.Specialization, opt => opt.MapFrom(x => x.Specialization.Name))
-                .ForMember(doc => doc.YearsOfExperience, opt => opt.MapFrom(x => (int)(DateTime.Now.Subtract(x.WorkStart).Days / 365)));
-            CreateMap<DoctorForCreationDto, Doctor>();
+                .ForMember(doc => doc.YearsOfExperience, opt => opt.MapFrom(x => (int)(DateTime.Now.Subtract(x.WorkStart).Days / 365)))
+                .ForMember(doc => doc.WorkDayStart, opt => opt.MapFrom(x => $"{x.WorkDayStart.Hours}:{x.WorkDayStart.Minutes}"))
+                .ForMember(doc => doc.WorkDayEnd, opt => opt.MapFrom(x => $"{x.WorkDayEnd.Hours}:{x.WorkDayEnd.Minutes}"))
+                .ForMember(doc => doc.DinnerStart, opt => opt.MapFrom(x => $"{x.DinnerStart.Hours}:{x.DinnerStart.Minutes}"))
+                .ForMember(doc => doc.DinnerEnd, opt => opt.MapFrom(x => $"{x.DinnerEnd.Hours}:{x.DinnerEnd.Minutes}"));
+            CreateMap<DoctorForCreationDto, Doctor>()
+                .ForMember(doc => doc.WorkDayStart, opt => opt.MapFrom(x => TimeSpan.Parse(x.WorkDayStart)))
+                .ForMember(doc => doc.WorkDayEnd, opt => opt.MapFrom(x => TimeSpan.Parse(x.WorkDayEnd)))
+                .ForMember(doc => doc.DinnerStart, opt => opt.MapFrom(x => TimeSpan.Parse(x.DinnerStart)))
+                .ForMember(doc => doc.DinnerEnd, opt => opt.MapFrom(x => TimeSpan.Parse(x.DinnerEnd)));
             CreateMap<DoctorForEditingDto, Doctor>();
+            CreateMap<DoctorsScedule, DoctorsSceduleDto>()
+                .ForMember(docSced => docSced.dayOfWeek, opt => opt.MapFrom(x => x.dayOfWeek.ToString()));
+            CreateMap<DoctorSceduleForCreationDto, DoctorsScedule>()
+                .ForMember(docSced => docSced.dayOfWeek, opt => opt.MapFrom(x => x.dayOfWeek.GetDayOfWeek()));
+            CreateMap<DoctorSceduleForEditingDto, DoctorsScedule>()
+                .ForMember(docSced => docSced.dayOfWeek, opt => opt.MapFrom(x => x.dayOfWeek.GetDayOfWeek()));
+            CreateMap<DoctorDayOffs, DoctorDayOffsDto>()
+                .ForMember(docDayOff => docDayOff.Status, opt => opt.MapFrom(x => x.Status.ToString()));
+            CreateMap<DoctorDayOffForCreationDto, DoctorDayOffs>()
+                .ForMember(docDayOff => docDayOff.Status, opt => opt.MapFrom(x => x.Status.GetStatus()));
+            CreateMap<DoctorDayOffForEditingDto, DoctorDayOffs>()
+                .ForMember(docDayOff => docDayOff.Status, opt => opt.MapFrom(x => x.Status.GetStatus()));
             CreateMap<Patient, PatientDto>()
                 .ForMember(pat => pat.PatientCardId, opt => opt.MapFrom(x => x.PatientCard.Id))
                 .ForMember(pat => pat.FirstName, opt => opt.MapFrom(x => x.User.FirstName))

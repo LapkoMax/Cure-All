@@ -1,15 +1,15 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
-import { getPatient } from "../Api/PatientsData";
-import { signOutUserAction } from "../Store/ActionCreators/IdentityActionCreators";
+import { getPatient } from "../../../Api/PatientsData";
+import { signOutUserAction } from "../../../Store/ActionCreators/IdentityActionCreators";
 import {
   gettingPatientAction,
   gotPatientAction,
-} from "../Store/ActionCreators/PatientActionCreators";
-import { AppState } from "../Store/Reducers/RootReducer";
-import { Page } from "./General/Page";
-import { EditPatien } from "./Patients/EditPatient";
+} from "../../../Store/ActionCreators/PatientActionCreators";
+import { AppState } from "../../../Store/Reducers/RootReducer";
+import { Page } from "../../General/Page";
+import { EditPatien } from "../../Patients/EditPatient";
 
 export const EditPatientPage = () => {
   const { patientId } = useParams();

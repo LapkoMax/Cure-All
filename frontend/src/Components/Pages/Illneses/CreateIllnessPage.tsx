@@ -1,6 +1,6 @@
 import { useSearchParams } from "react-router-dom";
-import { Page } from "./General/Page";
-import { CreateIllness } from "./Illness/CreateIllness";
+import { Page } from "../../General/Page";
+import { CreateIllness } from "../../Illness/CreateIllness";
 
 export const CreateIllnessPage = () => {
   const [searchParams] = useSearchParams();

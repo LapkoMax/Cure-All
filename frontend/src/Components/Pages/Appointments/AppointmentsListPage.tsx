@@ -1,15 +1,15 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
-import { getAppointmentsForDoctor } from "../Api/AppointmentsData";
+import { getAppointmentsForDoctor } from "../../../Api/AppointmentsData";
 import {
   gettingAppointmentsAction,
   gotAppointmentsAction,
-} from "../Store/ActionCreators/AppointmentActionCreators";
-import { signOutUserAction } from "../Store/ActionCreators/IdentityActionCreators";
-import { AppState } from "../Store/Reducers/RootReducer";
-import { AppointmentList } from "./Appointments/AppointmentList";
-import { Page } from "./General/Page";
+} from "../../../Store/ActionCreators/AppointmentActionCreators";
+import { signOutUserAction } from "../../../Store/ActionCreators/IdentityActionCreators";
+import { AppState } from "../../../Store/Reducers/RootReducer";
+import { AppointmentList } from "../../Appointments/AppointmentList";
+import { Page } from "../../General/Page";
 
 export const AppointmentsListPage = () => {
   const { userId } = useParams();

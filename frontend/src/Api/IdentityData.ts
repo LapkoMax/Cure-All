@@ -21,12 +21,28 @@ export interface RegisterDoctorForm {
   licenseNo: string;
   workStart: Date;
   workAddress: string;
+  averageAppointmentTime: number;
+  workDayStart: Date;
+  workDayEnd: Date;
+  dinnerStart: Date;
+  dinnerEnd: Date;
+  doctorsScedule: CreateDoctorSceduleDataForm[];
+  doctorDayOffs: CreateDoctorDayOffData[];
   userName: string;
   email: string;
   phoneNumber: string;
   type: string;
   password: string;
   confirmPassword: string;
+}
+
+export interface CreateDoctorSceduleDataForm {
+  dayOfWeek: string;
+}
+
+export interface CreateDoctorDayOffData {
+  date: string;
+  status: string;
 }
 
 export interface RegisterPatientForm {
@@ -134,7 +150,7 @@ export const registerDoctor = async (
   doctor: RegisterDoctorForm,
 ): Promise<AuthResult> => {
   doctor.type = "Doctor";
-
+  console.log(doctor);
   let headers = getHeaders();
 
   const response = await fetch("http://localhost:5000/registerDoctor", {

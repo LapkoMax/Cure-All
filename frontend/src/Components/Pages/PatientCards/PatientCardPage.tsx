@@ -2,25 +2,25 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useParams } from "react-router-dom";
-import { getAppointmentsForPatientCard } from "../Api/AppointmentsData";
-import { getPatientCard } from "../Api/PatientCardsData";
+import { getAppointmentsForPatientCard } from "../../../Api/AppointmentsData";
+import { getPatientCard } from "../../../Api/PatientCardsData";
 import {
   gettingAppointmentsAction,
   gotAppointmentsAction,
-} from "../Store/ActionCreators/AppointmentActionCreators";
-import { signOutUserAction } from "../Store/ActionCreators/IdentityActionCreators";
+} from "../../../Store/ActionCreators/AppointmentActionCreators";
+import { signOutUserAction } from "../../../Store/ActionCreators/IdentityActionCreators";
 import {
   gettingPatientCardAction,
   gotPatientCardAction,
-} from "../Store/ActionCreators/PatientCardActionCreators";
-import { AppState } from "../Store/Reducers/RootReducer";
+} from "../../../Store/ActionCreators/PatientCardActionCreators";
+import { AppState } from "../../../Store/Reducers/RootReducer";
 import {
   patientCardAdditionalInf,
   patientCardContainer,
   patientCardTitle,
-} from "../Styles/PatientCards/PatientCardPageStyles";
-import { AppointmentList } from "./Appointments/AppointmentList";
-import { Page } from "./General/Page";
+} from "../../../Styles/PatientCards/PatientCardPageStyles";
+import { AppointmentList } from "../../Appointments/AppointmentList";
+import { Page } from "../../General/Page";
 
 export const PatientCardPage = () => {
   const { patientCardId } = useParams();
