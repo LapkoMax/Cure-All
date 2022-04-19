@@ -28,6 +28,8 @@ namespace Cure_All.DataAccess.Repository.Impl
 
         private IAppointmentRepository _appointmentRepository;
 
+        private INotificationRepository _notificationRepository;
+
         public RepositoryManager(DataContext dataContext)
         {
             _dataContext = dataContext;
@@ -120,6 +122,16 @@ namespace Cure_All.DataAccess.Repository.Impl
                 if (_appointmentRepository == null)
                     _appointmentRepository = new AppointmentRepository(_dataContext);
                 return _appointmentRepository;
+            }
+        }
+
+        public INotificationRepository Notification
+        {
+            get
+            {
+                if (_notificationRepository == null)
+                    _notificationRepository = new NotificationRepository(_dataContext);
+                return _notificationRepository;
             }
         }
 

@@ -76,12 +76,12 @@ export const AppointmentPage = () => {
       ) : (
         <div css={appointmentContainer} className="row">
           <div css={appointmentTitle} className="row">
-            <div className="col-5 row">{appointment?.description}</div>
             {appointment?.completed && (
               <SubmissionSuccess className="col-4 row">
                 Завершено
               </SubmissionSuccess>
             )}
+            <div className="col-12 row">{appointment?.description}</div>
           </div>
           <Link
             to={`/patientCard/${appointment?.patientCardId}`}
@@ -105,8 +105,10 @@ export const AppointmentPage = () => {
               : appointment?.illnessName}
           </div>
           <div css={appointmentAdditionalInf} className="col-12 row">
-            Дата: {appointment?.startDate.toString().substring(0, 10)}{" "}
-            {appointment?.startDate.toString().substring(12, 16)}
+            Дата: {appointment?.startDate.toString().substring(0, 10)}
+          </div>
+          <div css={appointmentAdditionalInf} className="col-12 row">
+            Время: {appointment?.startTime}
           </div>
           {appointment?.endDate !== null && (
             <div css={appointmentAdditionalInf} className="col-12 row">

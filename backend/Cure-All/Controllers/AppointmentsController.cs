@@ -1,5 +1,6 @@
 ﻿using Cure_All.DataAccess.Repository;
 using Cure_All.MediatRCommands.Appointment;
+using Cure_All.MediatRCommands.Notification;
 using Cure_All.Models.DTO;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -56,11 +57,17 @@ namespace Cure_All.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateAppointment(AppointmentForCreationDto appointment)
         {
-            var newAppointmentId = await _mediator.Send(new CreateNewAppointmentCommand { appointment = appointment }, CancellationToken.None);
+            var notificationForAppointment = await _mediator.Send(new CreateNewAppointmentCommand { appointment = appointment }, CancellationToken.None);
 
-            if (newAppointmentId == null)
+            if (notificationForAppointment == null || notificationForAppointment.AppointmentId == null || notificationForAppointment.AppointmentId == Guid.Empty)
                 return BadRequest(new { Errors = new string[] { "Что-то пошло не так" } });
-            return Ok(newAppointmentId);
+
+            var newNotificationId = await _mediator.Send(new CreateNotificationCommand { notification = notificationForAppointment }, CancellationToken.None);
+
+            if (newNotificationId == Guid.Empty)
+                return BadRequest(new { Errors = new string[] { "Что-то пошло не так" } });
+
+            return Ok(notificationForAppointment.AppointmentId);
         }
 
         [HttpPut("{appointmentId}")]

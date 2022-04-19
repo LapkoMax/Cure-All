@@ -203,7 +203,7 @@ export const getDoctors = async (
     return { data: doctors, responseStatus: response.status };
 
   doctors = await response.json();
-  console.log(doctors);
+
   return { data: doctors, responseStatus: 200 };
 };
 

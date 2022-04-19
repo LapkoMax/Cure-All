@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 
 namespace Cure_All.MediatRCommands.Appointment
 {
-    public class CreateNewAppointmentCommand : IRequest<Guid>
+    public class CreateNewAppointmentCommand : IRequest<NotificationForCreationDto>
     {
         public AppointmentForCreationDto appointment;
     }
 
-    public class CreateNewAppointmentCommandHandler : IRequestHandler<CreateNewAppointmentCommand, Guid>
+    public class CreateNewAppointmentCommandHandler : IRequestHandler<CreateNewAppointmentCommand, NotificationForCreationDto>
     {
         private readonly IRepositoryManager _repository;
 
@@ -27,7 +27,7 @@ namespace Cure_All.MediatRCommands.Appointment
             _mapper = mapper;
         }
 
-        public async Task<Guid> Handle(CreateNewAppointmentCommand command, CancellationToken cancellationToken)
+        public async Task<NotificationForCreationDto> Handle(CreateNewAppointmentCommand command, CancellationToken cancellationToken)
         {
             var appointmentEntity = _mapper.Map<Models.Entities.Appointment>(command.appointment);
 
@@ -35,7 +35,20 @@ namespace Cure_All.MediatRCommands.Appointment
 
             await _repository.SaveAsync();
 
-            return appointmentEntity.Id;
+            if (appointmentEntity.Id == Guid.Empty)
+                return null;
+
+            var appointment = await _repository.Appointment.GetAppointmentAsync(appointmentEntity.Id);
+
+            var notification = new NotificationForCreationDto
+            {
+                UserId = appointment.Doctor.UserId,
+                Message = $"Вам поступил новый запрос на посещение",
+                AppointmentId = appointment.Id,
+                ShowFrom = DateTime.UtcNow
+            };
+
+            return notification;
         }
     }
 }

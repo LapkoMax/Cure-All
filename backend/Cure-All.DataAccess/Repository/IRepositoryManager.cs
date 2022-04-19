@@ -26,6 +26,8 @@ namespace Cure_All.DataAccess.Repository
 
         IAppointmentRepository Appointment { get; }
 
+        INotificationRepository Notification { get; }
+
         Task SaveAsync();
     }
 }

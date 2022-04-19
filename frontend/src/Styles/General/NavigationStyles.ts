@@ -5,3 +5,7 @@ export const navigationContainer = css`
   padding: 30px 20px;
   max-width: 200px;
 `;
+
+export const notificationSpan = css`
+  background-color: red;
+`;

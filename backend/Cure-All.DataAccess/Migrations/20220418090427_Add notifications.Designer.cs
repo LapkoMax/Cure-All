@@ -4,14 +4,16 @@ using Cure_All.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Cure_All.DataAccess.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220418090427_Add notifications")]
+    partial class Addnotifications
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -172,24 +174,16 @@ namespace Cure_All.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("AppointmentId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Message")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Readed")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("ShowFrom")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AppointmentId");
 
                     b.HasIndex("UserId");
 
@@ -429,21 +423,21 @@ namespace Cure_All.DataAccess.Migrations
                         new
                         {
                             Id = "bd70f5f5-5ee3-4f84-92a9-2677f943a90e",
-                            ConcurrencyStamp = "e6cedb9f-d004-4250-9142-d628d955562a",
+                            ConcurrencyStamp = "6e136d65-1f94-4063-a55f-adc0315770a4",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "4804449b-83a4-4796-8355-88f317323715",
-                            ConcurrencyStamp = "5dee0c8a-bbf8-4f1b-80b1-5b1006e01846",
+                            ConcurrencyStamp = "6185186d-64f0-4503-ade0-66aab8b01c2b",
                             Name = "Doctor",
                             NormalizedName = "DOCTOR"
                         },
                         new
                         {
                             Id = "01453c60-8d7a-4078-a9c5-94b297b7ad97",
-                            ConcurrencyStamp = "38f7a459-a09d-4737-bcd7-6dfdd5d9b27f",
+                            ConcurrencyStamp = "7c544714-8df4-4db1-8032-82e440e34276",
                             Name = "Patient",
                             NormalizedName = "PATIENT"
                         });
@@ -623,15 +617,9 @@ namespace Cure_All.DataAccess.Migrations
 
             modelBuilder.Entity("Cure_All.Models.Entities.Notification", b =>
                 {
-                    b.HasOne("Cure_All.Models.Entities.Appointment", "Appointment")
-                        .WithMany()
-                        .HasForeignKey("AppointmentId");
-
                     b.HasOne("Cure_All.Models.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
-
-                    b.Navigation("Appointment");
 
                     b.Navigation("User");
                 });

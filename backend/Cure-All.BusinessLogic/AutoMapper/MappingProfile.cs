@@ -80,6 +80,9 @@ namespace Cure_All.BusinessLogic.AutoMapper
                 .ForMember(card => card.PatientUserId, opt => opt.MapFrom(x => x.Patient.UserId))
                 .ForMember(card => card.PatientFirstName, opt => opt.MapFrom(x => x.Patient.User.FirstName))
                 .ForMember(card => card.PatientLastName, opt => opt.MapFrom(x => x.Patient.User.LastName));
+            CreateMap<Notification, NotificationDto>();
+            CreateMap<NotificationForCreationDto, Notification>()
+                .ForMember(notif => notif.Readed, opt => opt.MapFrom(x => false));
         }
     }
 }

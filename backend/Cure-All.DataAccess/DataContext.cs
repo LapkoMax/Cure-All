@@ -43,5 +43,7 @@ namespace Cure_All.DataAccess
         public DbSet<PatientCard> PatientCards { get; set; }
 
         public DbSet<PatientIllneses> PatientIllneses { get; set; }
+
+        public DbSet<Notification> Notifications { get; set; }
     }
 }

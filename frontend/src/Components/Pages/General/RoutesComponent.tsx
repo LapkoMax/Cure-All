@@ -16,6 +16,8 @@ import { RegistrationPage } from "./RegistrationPage";
 import { SearchPage } from "./SearchPage";
 import { SignInPage } from "./SignInPage";
 import { CreateAppointmentPage } from "../Appointments/CreateAppointmentPage";
+import { NotificationsPage } from "./NotificationsPage";
+import { NotificationPage } from "./NotificationPage";
 
 export const RoutesComponent = () => {
   const location = useLocation();
@@ -67,6 +69,11 @@ export const RoutesComponent = () => {
           <Route
             path="patientCard/:patientCardId"
             element={<PatientCardPage />}
+          />
+          <Route path="notifications" element={<NotificationsPage />} />
+          <Route
+            path="notifications/:notificationId"
+            element={<NotificationPage />}
           />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>

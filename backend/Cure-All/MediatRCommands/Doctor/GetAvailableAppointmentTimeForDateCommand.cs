@@ -43,7 +43,7 @@ namespace Cure_All.MediatRCommands.Doctor
 
             var doctorWorkingDays = string.Join(" ", doctorScedule.Select(sced => sced.dayOfWeek.ToString()));
 
-            if (!doctorWorkingDays.Contains(command.date.DayOfWeek.ToString()))
+            if (!doctorWorkingDays.Contains(command.date.DayOfWeek.ToString()) || command.date.Date < DateTime.UtcNow.Date)
                 return availableTime;
 
             var doctorDayOffs = await _repository.DoctorDayOff.GetDoctorsDayOffsByDoctorId(command.doctorId);
@@ -57,10 +57,16 @@ namespace Cure_All.MediatRCommands.Doctor
 
             while(time < doctor.WorkDayEnd)
             {
+                if (DateTime.UtcNow.Date == command.date.Date && DateTime.Now.TimeOfDay > time) 
+                {
+                    time = time.Add(new TimeSpan(0, doctor.AverageAppointmentTime, 0)); 
+                    continue;
+                }
+
                 bool available = true;
 
                 foreach (var appTime in appointmentsTime)
-                    if (time > appTime && time < appTime.Add(new TimeSpan(0, doctor.AverageAppointmentTime, 0))) available = false;
+                    if (time >= appTime && time <= appTime.Add(new TimeSpan(0, doctor.AverageAppointmentTime, 0))) available = false;
 
                 if (available && time > doctor.DinnerStart.Subtract(new TimeSpan(0, doctor.AverageAppointmentTime, 0)) && time < doctor.DinnerEnd) available = false;
 
