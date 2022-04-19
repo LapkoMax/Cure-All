@@ -6,6 +6,7 @@ export const headerContainer = css`
   position: fixed;
   box-sizing: border-box;
   top: 0;
+  min-width: 1930px;
   width: 100%;
   display: flex;
   align-items: center;
@@ -50,9 +51,6 @@ export const signInAnchor = css`
   :focus {
     outline-color: ${gray5};
   }
-  span {
-    margin-left: 5px;
-  }
 `;
 
 export const helloUserLabel = css`
@@ -62,4 +60,7 @@ export const helloUserLabel = css`
   background-color: transparent;
   color: ${gray2};
   text-decoration: none;
+  span {
+    margin-left: 5px;
+  }
 `;

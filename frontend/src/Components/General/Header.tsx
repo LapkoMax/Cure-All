@@ -80,7 +80,10 @@ export const Header = () => {
               css={helloUserLabel}
               className="col-6 row d-flex justify-content-end"
             >
-              Профиль
+              <span className="col-2">
+                <UserIcon />
+              </span>
+              {user?.userName}
             </Link>
             <Link
               to=""
@@ -90,9 +93,6 @@ export const Header = () => {
               css={signInAnchor}
               className="col-4 row d-flex justify-content-end"
             >
-              <div className="col-1">
-                <UserIcon />
-              </div>
               <span className="col-8 row">Выход</span>
             </Link>
           </div>

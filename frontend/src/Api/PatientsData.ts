@@ -89,6 +89,22 @@ export const getPatient = async (
   return { data: patient, responseStatus: 200 };
 };
 
+export const getPatientAmount = async (token?: string): Promise<number> => {
+  let headers = getHeaders(token);
+
+  let response = await fetch("http://localhost:5000/api/patients/amount", {
+    mode: "cors",
+    method: "GET",
+    headers: headers,
+  });
+
+  if (response.status !== 200) return 0;
+
+  var result = await response.json();
+
+  return result;
+};
+
 export const editPatient = async (
   patient: EditPatientForm,
   token?: string,

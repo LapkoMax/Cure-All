@@ -29,14 +29,34 @@ namespace Cure_All.DataAccess.Repository.Impl
             return await FindByCondition(app => app.DoctorId.Equals(doctorId), trackChanges).ToListAsync();
         }
 
+        public async Task<IEnumerable<Appointment>> GetTodaysAppointmentsForDoctorAsync(Guid doctorId, bool trackChanges = false)
+        {
+            return await FindByCondition(app => app.DoctorId.Equals(doctorId) && app.StartDate.Date == DateTime.UtcNow.Date, trackChanges).ToListAsync();
+        }
+
         public async Task<IEnumerable<Appointment>> GetAllAppointmentsForPatientAsync(Guid patientCardId, bool trackChanges = false)
         {
             return await FindByCondition(app => app.PatientCardId.Equals(patientCardId), trackChanges).ToListAsync();
         }
 
+        public async Task<IEnumerable<Appointment>> GetTodaysAppointmentsForPatientAsync(Guid patientCardId, bool trackChanges = false)
+        {
+            return await FindByCondition(app => app.PatientCardId.Equals(patientCardId) && app.StartDate.Date == DateTime.UtcNow.Date, trackChanges).ToListAsync();
+        }
+
         public async Task<Appointment> GetAppointmentAsync(Guid appointmentId, bool trackChanges = false)
         {
             return await FindByCondition(app => app.Id.Equals(appointmentId), trackChanges).SingleOrDefaultAsync();
+        }
+
+        public async Task<int> GetAppointmentAmountAsync()
+        {
+            return await FindAll().CountAsync();
+        }
+
+        public async Task<int> GetCompletedAppointmentAmountAsync()
+        {
+            return await FindByCondition(app => app.Completed).CountAsync();
         }
 
         public void CreateAppointment(Appointment appointment) => Create(appointment);

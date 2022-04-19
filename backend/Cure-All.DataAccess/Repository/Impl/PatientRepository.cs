@@ -39,6 +39,11 @@ namespace Cure_All.DataAccess.Repository.Impl
             return await FindByCondition(pat => pat.UserId.Equals(userId), trackChanges).SingleOrDefaultAsync();
         }
 
+        public async Task<int> GetPatientAmountAsync()
+        {
+            return await FindAll().CountAsync();
+        }
+
         public void CreatePatient(Patient patient) => Create(patient);
 
         public void DeletePatient(Patient patient) => Delete(patient);

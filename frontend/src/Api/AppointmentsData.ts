@@ -135,6 +135,97 @@ export const getAppointment = async (
   return { data: appointment, responseStatus: 200 };
 };
 
+export const getAppointmentAmount = async (token?: string): Promise<number> => {
+  let headers = getHeaders(token);
+
+  let response = await fetch("http://localhost:5000/api/appointments/amount", {
+    mode: "cors",
+    method: "GET",
+    headers: headers,
+  });
+
+  if (response.status !== 200) return 0;
+
+  var result = await response.json();
+
+  return result;
+};
+
+export const getCompletedAppointmentAmount = async (
+  token?: string,
+): Promise<number> => {
+  let headers = getHeaders(token);
+
+  let response = await fetch(
+    "http://localhost:5000/api/appointments/completedAmount",
+    {
+      mode: "cors",
+      method: "GET",
+      headers: headers,
+    },
+  );
+
+  if (response.status !== 200) return 0;
+
+  var result = await response.json();
+
+  return result;
+};
+
+export const getTodayAppointmentsForDoctor = async (
+  userId?: string,
+  token?: string,
+): Promise<ResponseAppointents> => {
+  let appointments: AppointmentData[] = [];
+
+  let headers = getHeaders(token);
+
+  const response = await fetch(
+    "http://localhost:5000/api/appointments/today/forDoctor/" + userId,
+    {
+      mode: "cors",
+      method: "GET",
+      headers: headers,
+    },
+  );
+
+  if (response.status === 401)
+    return { data: appointments, responseStatus: 401 };
+  else if (response.status !== 200)
+    return { data: appointments, responseStatus: response.status };
+
+  appointments = await response.json();
+
+  return { data: appointments, responseStatus: 200 };
+};
+
+export const getTodayAppointmentsForPatientCard = async (
+  patientCardId?: string,
+  token?: string,
+): Promise<ResponseAppointents> => {
+  let appointments: AppointmentData[] = [];
+
+  let headers = getHeaders(token);
+
+  const response = await fetch(
+    "http://localhost:5000/api/appointments/today/forPatient/" + patientCardId,
+    {
+      mode: "cors",
+      method: "GET",
+      headers: headers,
+    },
+  );
+
+  if (response.status === 401)
+    return { data: appointments, responseStatus: 401 };
+  else if (response.status !== 200)
+    return { data: appointments, responseStatus: response.status };
+
+  appointments = await response.json();
+
+  return { data: appointments, responseStatus: 200 };
+};
+
 export const ifUserCanEditAppointment = async (
   appointmentId?: string,
   userId?: string,

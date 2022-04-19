@@ -267,6 +267,22 @@ export const getDoctorAvailableTime = async (
   return { data: results, responseStatus: 200 };
 };
 
+export const getDoctorAmount = async (token?: string): Promise<number> => {
+  let headers = getHeaders(token);
+
+  let response = await fetch("http://localhost:5000/api/doctors/amount", {
+    mode: "cors",
+    method: "GET",
+    headers: headers,
+  });
+
+  if (response.status !== 200) return 0;
+
+  var result = await response.json();
+
+  return result;
+};
+
 export const editDoctor = async (
   doctor: EditDoctorForm,
   token?: string,

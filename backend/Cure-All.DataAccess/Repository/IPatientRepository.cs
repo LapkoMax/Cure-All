@@ -15,6 +15,8 @@ namespace Cure_All.DataAccess.Repository
 
         Task<Patient> GetPatientByUserIdAsync(string userId, bool trackChanges = false);
 
+        Task<int> GetPatientAmountAsync();
+
         void CreatePatient(Patient patient);
 
         void DeletePatient(Patient patient);

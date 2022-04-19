@@ -34,10 +34,22 @@ namespace Cure_All.Controllers
             return await _mediator.Send(new GetAppointmentsForDoctorCommand { userId = userId }, CancellationToken.None);
         }
 
+        [HttpGet("today/forDoctor/{userId}")]
+        public async Task<IEnumerable<AppointmentDto>> GetTodaysAppointmentsForDoctor(string userId)
+        {
+            return await _mediator.Send(new GetTodayAppointmentsForDoctorCommand { userId = userId }, CancellationToken.None);
+        }
+
         [HttpGet("forPatient/{patientCardId}")]
         public async Task<IEnumerable<AppointmentDto>> GetAppointmentsForPatient(Guid patientCardId)
         {
             return await _mediator.Send(new GetAppointmentsForPatientCommand { patientCardId = patientCardId }, CancellationToken.None);
+        }
+
+        [HttpGet("today/forPatient/{patientCardId}")]
+        public async Task<IEnumerable<AppointmentDto>> GetTodayAppointmentsForPatient(Guid patientCardId)
+        {
+            return await _mediator.Send(new GetTodayAppointmentsForPatientCommand { patientCardId = patientCardId }, CancellationToken.None);
         }
 
         [HttpGet("{appointmentId}")]
@@ -52,6 +64,18 @@ namespace Cure_All.Controllers
             var appointment = await _repository.Appointment.GetAppointmentAsync(appointmentId);
 
             return appointment.Doctor.UserId == userId;
+        }
+
+        [HttpGet("amount")]
+        public async Task<IActionResult> GetAppointmentAmount()
+        {
+            return Ok(await _repository.Appointment.GetAppointmentAmountAsync());
+        }
+
+        [HttpGet("completedAmount")]
+        public async Task<IActionResult> GetCompletedAppointmentAmount()
+        {
+            return Ok(await _repository.Appointment.GetCompletedAppointmentAmountAsync());
         }
 
         [HttpPost]

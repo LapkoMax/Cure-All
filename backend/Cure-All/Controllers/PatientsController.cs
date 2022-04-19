@@ -20,12 +20,15 @@ namespace Cure_All.Controllers
     {
         private readonly IMediator _mediator;
 
+        private readonly IRepositoryManager _repository;
+
         private readonly IIdentityService _identityService;
 
-        public PatientsController(IMediator mediator, IIdentityService identityService)
+        public PatientsController(IMediator mediator, IIdentityService identityService, IRepositoryManager repository)
         {
             _mediator = mediator;
             _identityService = identityService;
+            _repository = repository;
         }
 
         [HttpGet("{patientId}")]
@@ -46,6 +49,12 @@ namespace Cure_All.Controllers
             if (patient == null)
                 return NotFound();
             return Ok(patient);
+        }
+
+        [HttpGet("amount")]
+        public async Task<IActionResult> GetPatientAmount()
+        {
+            return Ok(await _repository.Patient.GetPatientAmountAsync());
         }
 
         [HttpPut("{patientId}")]

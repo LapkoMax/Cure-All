@@ -22,12 +22,14 @@ namespace Cure_All.Controllers
     public class DoctorsController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly IRepositoryManager _repository;
         private readonly IIdentityService _identityService;
 
-        public DoctorsController(IMediator mediator, IIdentityService identityService)
+        public DoctorsController(IMediator mediator, IIdentityService identityService, IRepositoryManager repository)
         {
             _mediator = mediator;
             _identityService = identityService;
+            _repository = repository;
         }
 
         [HttpGet]
@@ -60,6 +62,12 @@ namespace Cure_All.Controllers
         public async Task<IEnumerable<AvailableAppointmentTimeDto>> GetDoctorAvailableTime(Guid doctorId, DateTime date)
         {
             return await _mediator.Send(new GetAvailableAppointmentTimeForDateCommand { date = date, doctorId = doctorId }, CancellationToken.None);
+        }
+
+        [HttpGet("amount")]
+        public async Task<IActionResult> GetDoctorAmount()
+        {
+            return Ok(await _repository.Doctor.GetDoctorAmountAsync());
         }
 
         [HttpPut("{doctorId}")]

@@ -11,9 +11,17 @@ namespace Cure_All.DataAccess.Repository
     {
         Task<IEnumerable<Appointment>> GetAllAppointmentsForPatientAsync(Guid patientCardId, bool trackChanges = false);
 
+        Task<IEnumerable<Appointment>> GetTodaysAppointmentsForPatientAsync(Guid patientCardId, bool trackChanges = false);
+
         Task<IEnumerable<Appointment>> GetAllAppointmentsForDoctorAsync(Guid doctorId, bool trackChanges = false);
 
+        Task<IEnumerable<Appointment>> GetTodaysAppointmentsForDoctorAsync(Guid doctorId, bool trackChanges = false);
+
         Task<Appointment> GetAppointmentAsync(Guid appointmentId, bool trackChanges = false);
+
+        Task<int> GetAppointmentAmountAsync();
+
+        Task<int> GetCompletedAppointmentAmountAsync();
 
         void CreateAppointment(Appointment appointment);
 

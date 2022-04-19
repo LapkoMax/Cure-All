@@ -33,7 +33,7 @@ export const DoctorListPage = () => {
   }, []);
 
   return (
-    <Page>
+    <Page title="Список докторов">
       {doctorsLoading ? <div>Загрузка...</div> : <DoctorList data={doctors} />}
     </Page>
   );
