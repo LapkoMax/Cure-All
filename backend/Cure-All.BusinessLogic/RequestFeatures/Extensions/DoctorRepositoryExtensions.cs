@@ -14,7 +14,7 @@ namespace Cure_All.BusinessLogic.RequestFeatures.Extensions
         public static IEnumerable<Doctor> FilterDoctors(this IEnumerable<Doctor> doctors, int minExperienceYears) =>
             doctors.Where(doc => ((DateTime.UtcNow - doc.WorkStart).Days / 365) >= minExperienceYears);
 
-        public static IQueryable<Doctor> Search(this IQueryable<Doctor> doctors, string fullNameSearchTerm, string specialirySearchTerm)
+        public static IQueryable<Doctor> Search(this IQueryable<Doctor> doctors, string fullNameSearchTerm, string specialirySearchTerm, string countySearchTerm, string citySearchTerm)
         {
             if (!string.IsNullOrEmpty(fullNameSearchTerm))
             {
@@ -26,6 +26,18 @@ namespace Cure_All.BusinessLogic.RequestFeatures.Extensions
             {
                 var lowerCaseTerm = specialirySearchTerm.Trim().ToLower();
                 doctors = doctors.Where(doc => doc.Specialization.Name.Contains(lowerCaseTerm));
+            }
+
+            if (!string.IsNullOrEmpty(countySearchTerm))
+            {
+                var lowerCaseTerm = countySearchTerm.Trim().ToLower();
+                doctors = doctors.Where(doc => doc.User.Country.Contains(lowerCaseTerm));
+            }
+
+            if (!string.IsNullOrEmpty(citySearchTerm))
+            {
+                var lowerCaseTerm = citySearchTerm.Trim().ToLower();
+                doctors = doctors.Where(doc => doc.User.City.Contains(lowerCaseTerm));
             }
 
             return doctors;

@@ -154,11 +154,47 @@ export const Statuses = [
   },
 ];
 
+export interface DoctorFiend {
+  id: number;
+  name: string;
+  displayName: string;
+}
+
+export const DoctorFields: DoctorFiend[] = [
+  {
+    id: 1,
+    name: "firstname",
+    displayName: "Имя",
+  },
+  {
+    id: 2,
+    name: "lastname",
+    displayName: "Фамилия",
+  },
+  {
+    id: 3,
+    name: "workStart",
+    displayName: "Опыт",
+  },
+  {
+    id: 4,
+    name: "country",
+    displayName: "Страна",
+  },
+  {
+    id: 5,
+    name: "city",
+    displayName: "Город",
+  },
+];
+
 export interface DoctorParameters {
   orderBy?: string;
   minExperienceYears?: number;
   fullNameSearchTerm?: string;
   specialitySearchTerm?: string;
+  countrySearchTerm?: string;
+  citySearchTerm?: string;
 }
 
 const getHeaders = (token?: string): Headers => {
@@ -184,11 +220,15 @@ export const getDoctors = async (
     parameters === undefined
       ? ""
       : "?" +
-        JSON.stringify(parameters)
+        JSON.stringify(parameters, function (key, value) {
+          if (value === "" || value.toString().includes("&")) return undefined;
+          return value;
+        })
           .replaceAll("{", "")
           .replaceAll("}", "")
           .replaceAll(":", "=")
-          .replaceAll('"', "");
+          .replaceAll('"', "")
+          .replaceAll(",", "&");
 
   let headers = getHeaders(token);
 

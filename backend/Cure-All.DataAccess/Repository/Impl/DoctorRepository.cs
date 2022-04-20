@@ -29,7 +29,7 @@ namespace Cure_All.DataAccess.Repository.Impl
         public async Task<IEnumerable<Doctor>> GetAllDoctorsAsync(DoctorParameters doctorParameters, bool trackChanges = false)
         {
             return (await FindAll(trackChanges)
-                .Search(doctorParameters.FullNameSearchTerm, doctorParameters.SpecialitySearchTerm)
+                .Search(doctorParameters.FullNameSearchTerm, doctorParameters.SpecialitySearchTerm, doctorParameters.CountrySearchTerm, doctorParameters.CitySearchTerm)
                 .Sort(doctorParameters.OrderBy)
                 .ToListAsync())
                 .FilterDoctors(doctorParameters.MinExperienceYears);

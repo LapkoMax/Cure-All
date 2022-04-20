@@ -18,5 +18,9 @@ namespace Cure_All.BusinessLogic.RequestFeatures
         public string FullNameSearchTerm { get; set; }
 
         public string SpecialitySearchTerm { get; set; }
+
+        public string CountrySearchTerm { get; set; }
+
+        public string CitySearchTerm { get; set; }
     }
 }

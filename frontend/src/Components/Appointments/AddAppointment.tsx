@@ -69,7 +69,7 @@ export const AddAppointment = ({ doctor }: Props) => {
       else if (result.data !== null) dispatch(gotPatientAction(result.data));
     };
     doGetPatient(user?.id);
-    console.log(patient);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
@@ -97,7 +97,6 @@ export const AddAppointment = ({ doctor }: Props) => {
       if (result.responseStatus === 401)
         dispatch(signOutUserAction(location.pathname));
       else if (result.responseStatus === 200) setAvailableTime(result.data);
-      console.log(result);
     }
   };
 

@@ -86,7 +86,7 @@ export const RegistrationDoctor = () => {
         status: day.status,
       } as CreateDoctorDayOffData;
     });
-    console.log(data);
+
     const result = await registerDoctor(data);
     if (result.success) {
       dispatch(loginedUserAction(result));
@@ -95,17 +95,14 @@ export const RegistrationDoctor = () => {
   };
 
   const onDayOfWeekSelect = (dayOfWeek: DayOfWeek) => {
-    console.log(sceduledDayList.includes(dayOfWeek));
     let newSceduledDayList = sceduledDayList;
     if (newSceduledDayList.includes(dayOfWeek)) {
       newSceduledDayList = [];
       sceduledDayList.forEach((day) => {
-        console.log(`${day.value} === ${dayOfWeek.value}`);
         if (day.value !== dayOfWeek.value)
           newSceduledDayList = newSceduledDayList.concat(day);
       });
     } else newSceduledDayList = newSceduledDayList.concat(dayOfWeek);
-    console.log(newSceduledDayList);
     setSceduledDayList(newSceduledDayList);
   };
 
@@ -125,7 +122,6 @@ export const RegistrationDoctor = () => {
     if (newDayOff.date !== "" && newDayOff.status !== "") {
       setDayOffs(dayOffs.concat(newDayOff));
       setNewDayOff({ ...newDayOff, date: "", status: "", statusName: "" });
-      console.log(dayOffs);
     }
   };
 

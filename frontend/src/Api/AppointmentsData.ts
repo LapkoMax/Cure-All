@@ -286,14 +286,14 @@ export const createAppointment = async (
   token?: string,
 ): Promise<string[]> => {
   let headers = getHeaders(token);
-  console.log(appointment);
+
   const response = await fetch("http://localhost:5000/api/appointments", {
     mode: "cors",
     method: "POST",
     body: JSON.stringify(appointment),
     headers: headers,
   });
-  console.log(response);
+
   if (response.status === 401) return ["Unauthorized"];
 
   let result = await response.json();

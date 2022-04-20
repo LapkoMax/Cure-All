@@ -74,7 +74,6 @@ export const EditDoctor = ({ doctor }: Props) => {
     doGetSpecializations();
 
     if (doctor != null) {
-      console.log(doctor);
       setValue("firstName", doctor.firstName);
       setValue("lastName", doctor.lastName);
       setValue("userName", doctor.userName);

@@ -150,7 +150,7 @@ export const registerDoctor = async (
   doctor: RegisterDoctorForm,
 ): Promise<AuthResult> => {
   doctor.type = "Doctor";
-  console.log(doctor);
+
   let headers = getHeaders();
 
   const response = await fetch("http://localhost:5000/registerDoctor", {
