@@ -134,3 +134,22 @@ export const rejectNotification = async (
   if (response.status !== 200) return false;
   return true;
 };
+
+export const deleteNotification = async (
+  notificationId?: string,
+  token?: string,
+): Promise<boolean> => {
+  var headers = getHeaders(token);
+
+  const response = await fetch(
+    "http://localhost:5000/api/notifications/" + notificationId,
+    {
+      mode: "cors",
+      method: "DELETE",
+      headers: headers,
+    },
+  );
+
+  if (response.status !== 204) return false;
+  return true;
+};

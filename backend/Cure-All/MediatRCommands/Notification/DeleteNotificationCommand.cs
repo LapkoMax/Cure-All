@@ -30,7 +30,7 @@ namespace Cure_All.MediatRCommands.Notification
         {
             var notification = await _repository.Notification.GetNotificationAsync(command.notificationId, true);
 
-            if (notification.UserId != _httpContextAccessor.HttpContext.User.FindFirst("id").Value)
+            if (notification == null || notification.UserId != _httpContextAccessor.HttpContext.User.FindFirst("id").Value)
                 return false;
 
             _repository.Notification.DeleteNotification(notification);

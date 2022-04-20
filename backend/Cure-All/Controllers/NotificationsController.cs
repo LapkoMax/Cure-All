@@ -97,7 +97,7 @@ namespace Cure_All.Controllers
         {
             var result = await _mediator.Send(new DeleteNotificationCommand { notificationId = notificationId }, CancellationToken.None);
 
-            if (result)
+            if (!result)
                 return BadRequest();
             return NoContent();
         }

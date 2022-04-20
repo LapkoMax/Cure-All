@@ -3,8 +3,10 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { getAppointment } from "../../../Api/AppointmentsData";
+import { getDoctor } from "../../../Api/DoctorsData";
 import {
   confirmNotification,
+  deleteNotification,
   getNotification,
   rejectNotification,
 } from "../../../Api/NotificationsData";
@@ -12,6 +14,10 @@ import {
   gettingAppointmentAction,
   gotAppointmentAction,
 } from "../../../Store/ActionCreators/AppointmentActionCreators";
+import {
+  gettingDoctorAction,
+  gotDoctorAction,
+} from "../../../Store/ActionCreators/DoctorActionCreators";
 import { signOutUserAction } from "../../../Store/ActionCreators/IdentityActionCreators";
 import {
   gettingNotificationAction,
@@ -27,9 +33,11 @@ import {
   notificationAppointment,
   notificationContainer,
   notificationDesctiption,
+  notificationDoctor,
 } from "../../../Styles/Notifications/NotificationPageStyles";
 import { notificationTitle } from "../../../Styles/Notifications/NotificationStyles";
 import { Appointment } from "../../Appointments/Appointment";
+import { Doctor } from "../../Doctors/Doctor";
 import { Page } from "../../General/Page";
 
 export const NotificationPage = () => {
@@ -50,6 +58,8 @@ export const NotificationPage = () => {
   const appointmentLoading = useSelector(
     (state: AppState) => state.appointments.loading,
   );
+  const doctor = useSelector((state: AppState) => state.doctors.doctor);
+  const doctorLoading = useSelector((state: AppState) => state.doctors.loading);
 
   useEffect(() => {
     const doGetNotification = async (notificationId?: string) => {
@@ -72,8 +82,31 @@ export const NotificationPage = () => {
       else if (result.responseStatus === 200)
         dispatch(gotAppointmentAction(result.data));
     };
-    if (notification !== undefined && notification !== null)
+    const doGetDoctor = async (doctorId?: string) => {
+      dispatch(gettingDoctorAction());
+      let result = await getDoctor(userToken, doctorId);
+      if (result.responseStatus === 401)
+        dispatch(signOutUserAction(location.pathname));
+      else if (result.responseStatus === 200)
+        dispatch(gotDoctorAction(result.data));
+    };
+    if (
+      notification !== undefined &&
+      notification !== null &&
+      notification.appointmentId !== null
+    )
       doGetAppointment(notification.appointmentId);
+    else if (
+      notification !== undefined &&
+      notification !== null &&
+      notification.message.includes("Доктор: ")
+    ) {
+      let doctorId = notification.message
+        .split(". ")[1]
+        .replace("Доктор: ", "");
+      doGetDoctor(doctorId);
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [notification]);
 
@@ -87,6 +120,11 @@ export const NotificationPage = () => {
     if (result) navigate("/notifications");
   };
 
+  const onNotificationDelete = async () => {
+    var result = await deleteNotification(notificationId, userToken);
+    if (result) navigate("/notifications");
+  };
+
   return (
     <Page>
       {notificationLoading ? (
@@ -96,25 +134,51 @@ export const NotificationPage = () => {
           <div css={notificationDesctiption}>
             {notification?.message.split(". ")[0]}
           </div>
-          {appointmentLoading ? (
-            <div>Загрузка...</div>
+          {notification?.appointmentId !== null ? (
+            <div>
+              {appointmentLoading ? (
+                <div>Загрузка...</div>
+              ) : (
+                <div>
+                  <div css={notificationTitle}>Посещение:</div>
+                  <div css={notificationAppointment}>
+                    <Appointment appointment={appointment} />
+                  </div>
+                  {notification?.message.split(". ")[0] ===
+                  "Вам поступил новый запрос на посещение" ? (
+                    <FormButtonContainer className="d-flex justify-content-around">
+                      <PrimaryButton onClick={onAppointmentConfirm}>
+                        Принять посещение
+                      </PrimaryButton>
+                      <DangerButton onClick={onAppointmentReject}>
+                        Отклонить посещение
+                      </DangerButton>
+                    </FormButtonContainer>
+                  ) : (
+                    <FormButtonContainer className="d-flex justify-content-around">
+                      <DangerButton onClick={onNotificationDelete}>
+                        Удалить уведомление
+                      </DangerButton>
+                    </FormButtonContainer>
+                  )}
+                </div>
+              )}
+            </div>
           ) : (
             <div>
-              <div css={notificationTitle}>Посещение:</div>
-              <div css={notificationAppointment}>
-                <Appointment appointment={appointment} />
+              <div css={notificationTitle}>Доктором:</div>
+              <div css={notificationDoctor}>
+                {doctorLoading ? (
+                  <div>Загрузка...</div>
+                ) : (
+                  <Doctor doctor={doctor} />
+                )}
               </div>
-              {notification?.message.split(". ")[0] ===
-                "Вам поступил новый запрос на посещение" && (
-                <FormButtonContainer className="d-flex justify-content-around">
-                  <PrimaryButton onClick={onAppointmentConfirm}>
-                    Принять посещение
-                  </PrimaryButton>
-                  <DangerButton onClick={onAppointmentReject}>
-                    Отклонить посещение
-                  </DangerButton>
-                </FormButtonContainer>
-              )}
+              <FormButtonContainer className="d-flex justify-content-around">
+                <DangerButton onClick={onNotificationDelete}>
+                  Удалить уведомление
+                </DangerButton>
+              </FormButtonContainer>
             </div>
           )}
         </div>

@@ -35,7 +35,7 @@ namespace Cure_All.MediatRCommands.Notification
             {
                 UserId = patientCard.Patient.UserId,
                 Readed = false,
-                Message = $"Ваше посещение на {appointment.StartDate.Date} {appointment.StartTime} отклонено. Доктор: {appointment.DoctorId}. ",
+                Message = $"Ваше посещение на {appointment.StartDate.Date.ToShortDateString()} {appointment.StartTime} отклонено. Доктор: {appointment.DoctorId}. ",
                 ShowFrom = DateTime.UtcNow
             };
 
@@ -45,7 +45,7 @@ namespace Cure_All.MediatRCommands.Notification
 
             await _repository.SaveAsync();
 
-            if (newNotification.Id == Guid.Empty)
+            if (newNotification.Id != Guid.Empty)
                 _repository.Appointment.DeleteAppointment(appointment);
 
             await _repository.SaveAsync();

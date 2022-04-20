@@ -17,3 +17,8 @@ export const notificationAppointment = css`
   border-top: solid;
   border-color: ${accent1};
 `;
+
+export const notificationDoctor = css`
+  border-top: solid;
+  border-color: ${accent1};
+`;
