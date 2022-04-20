@@ -6,7 +6,7 @@ export const headerContainer = css`
   position: fixed;
   box-sizing: border-box;
   top: 0;
-  min-width: 1930px;
+  min-width: 100%;
   width: 100%;
   display: flex;
   align-items: center;

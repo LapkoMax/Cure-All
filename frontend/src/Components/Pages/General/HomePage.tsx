@@ -107,7 +107,10 @@ export const HomePage = () => {
       className="col-12 row d-flex justify-content-around"
     >
       <div css={homePageTitle}>Добро пожаловать!</div>
-      <div css={homePageGeneralInformation} className="col-5 row">
+      <div
+        css={homePageGeneralInformation}
+        className="col-bg-5 col-md-12 col-sm-12 row"
+      >
         <div className="col-6">
           <div>У нас зарегистрированы:</div>
           <div>Докторов: {doctorAmount}</div>
@@ -119,7 +122,7 @@ export const HomePage = () => {
           <div>Завершено: {completedAppointmentAmount}</div>
         </div>
       </div>
-      <div css={homePageTodayInf} className="col-6">
+      <div css={homePageTodayInf} className="col-bg-6 col-md-12 col-sm-12">
         Сегодня: {new Date().toISOString().substring(0, 10)}
         {appointmentsLoading ? (
           <div>Загрузка...</div>

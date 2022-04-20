@@ -3,7 +3,6 @@ import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import persistStore from "redux-persist/es/persistStore";
 import { PersistGate } from "redux-persist/integration/react";
-import { appContainer } from "./AppStyles";
 import { Header } from "./Components/General/Header";
 import { RoutesComponent } from "./Components/Pages/General/RoutesComponent";
 import { configureStore } from "./Store/Store";
@@ -17,10 +16,8 @@ function App() {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <BrowserRouter>
-          <div css={appContainer} className="col-12 row">
-            <Header />
-            <RoutesComponent />
-          </div>
+          <Header />
+          <RoutesComponent />
         </BrowserRouter>
       </PersistGate>
     </Provider>

@@ -7,8 +7,16 @@ export const appContainer = css`
   font-family: ${mainFontFamily};
   font-size: ${mainFontSize};
   color: ${gray2};
-  min-height: 963px;
-  min-width: 1930px;
+  min-height: 100vh;
+  min-width: 100vh;
+`;
+
+export const appContainerWithBackGround = css`
+  font-family: ${mainFontFamily};
+  font-size: ${mainFontSize};
+  color: ${gray2};
+  min-height: 100vh;
+  min-width: 100vh;
   background-image: url(${doctorSmiling});
   background-size: cover;
 `;

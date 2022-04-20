@@ -21,6 +21,7 @@ export const homePageGeneralInformation = css`
   border-width: 1px;
   font-size: 18px;
   padding: 5px;
+  margin-bottom: 15px;
   height: 100%;
   position: relative;
 `;

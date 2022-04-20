@@ -665,7 +665,7 @@ export const EditDoctor = ({ doctor }: Props) => {
           </PrimaryButton>
           <SecondaryButton
             onClick={() => {
-              navigate("/doctor/" + doctor?.id);
+              navigate("/profile/" + doctor?.userId);
             }}
             className="col-4 d-flex justify-content-center"
           >

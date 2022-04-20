@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+/** @jsxImportSource @emotion/react */
 import { Route, Routes, useLocation } from "react-router-dom";
 import { AppointmentPage } from "../Appointments/AppointmentPage";
 import { AppointmentsListPage } from "../Appointments/AppointmentsListPage";
@@ -18,14 +18,22 @@ import { SignInPage } from "./SignInPage";
 import { CreateAppointmentPage } from "../Appointments/CreateAppointmentPage";
 import { NotificationsPage } from "./NotificationsPage";
 import { NotificationPage } from "./NotificationPage";
+import { appContainerWithBackGround, appContainer } from "../../../AppStyles";
 
 export const RoutesComponent = () => {
   const location = useLocation();
   return (
-    <Fragment>
+    <div
+      css={
+        location.pathname.includes("signin")
+          ? appContainerWithBackGround
+          : appContainer
+      }
+      className="col-12 row"
+    >
       {!location.pathname.includes("signin") &&
         !location.pathname.includes("register") && (
-          <div className="col-2 row">
+          <div className="col-bg-2 col-md-4 col-sm-5 row">
             <NavigationPanel />
           </div>
         )}
@@ -34,7 +42,7 @@ export const RoutesComponent = () => {
           (location.pathname.includes("signin") ||
           location.pathname.includes("register")
             ? "col-12"
-            : "col-10") + " row"
+            : "col-bg-10 col-md-8 col-sm-7") + " row"
         }
       >
         <Routes>
@@ -78,6 +86,6 @@ export const RoutesComponent = () => {
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>
-    </Fragment>
+    </div>
   );
 };
