@@ -52,5 +52,38 @@ namespace Cure_All.BusinessLogic.RequestFeatures.Extensions
                 return doctors.OrderBy(doc => doc.User.LastName);
             return doctors.OrderBy(orderQuery);
         }
+
+        public static IQueryable<Doctor> SortByUserParams(this IQueryable<Doctor> doctors, string orderByQueryString)
+        {
+            if (string.IsNullOrEmpty(orderByQueryString) || (!orderByQueryString.Contains("firstname") && !orderByQueryString.Contains("lastname") && !orderByQueryString.Contains("country") && !orderByQueryString.Contains("city")))
+                return doctors;
+            var orderParams = orderByQueryString.Trim().Split(',');
+            foreach(var param in orderParams)
+            {
+                switch(param.Split(" ")[0])
+                {
+                    case "firstname":
+                        if (param.Split(" ").Length == 1) doctors = doctors.OrderBy(doc => doc.User.FirstName);
+                        else if (param.Split(" ").Length == 2) doctors = doctors.OrderByDescending(doc => doc.User.FirstName);
+                        break;
+                    case "lastname":
+                        if (param.Split(" ").Length == 1) doctors = doctors.OrderBy(doc => doc.User.LastName);
+                        else if (param.Split(" ").Length == 2) doctors = doctors.OrderByDescending(doc => doc.User.LastName);
+                        break;
+                    case "country":
+                        if (param.Split(" ").Length == 1) doctors = doctors.OrderBy(doc => doc.User.Country);
+                        else if (param.Split(" ").Length == 2) doctors = doctors.OrderByDescending(doc => doc.User.Country);
+                        break;
+                    case "city":
+                        if (param.Split(" ").Length == 1) doctors = doctors.OrderBy(doc => doc.User.City);
+                        else if (param.Split(" ").Length == 2) doctors = doctors.OrderByDescending(doc => doc.User.City);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            return doctors;
+        }
     }
 }

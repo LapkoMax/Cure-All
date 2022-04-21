@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Cure_All.BusinessLogic.RequestFeatures;
 using Cure_All.DataAccess.Repository;
 using Cure_All.Models.DTO;
 using MediatR;
@@ -13,6 +14,8 @@ namespace Cure_All.MediatRCommands.Appointment
     public class GetAppointmentsForDoctorCommand : IRequest<IEnumerable<AppointmentDto>>
     {
         public string userId { get; set; }
+
+        public AppointmentParameters parameters { get; set; }
     }
 
     public class GetAppointmentsForDoctorCommandHandler : IRequestHandler<GetAppointmentsForDoctorCommand, IEnumerable<AppointmentDto>>
@@ -31,7 +34,7 @@ namespace Cure_All.MediatRCommands.Appointment
         {
             var doctor = await _repository.Doctor.GetDoctorByUserIdAsync(command.userId);
 
-            var appointments = await _repository.Appointment.GetAllAppointmentsForDoctorAsync(doctor.Id);
+            var appointments = await _repository.Appointment.GetAppointmentsForDoctorAsync(doctor.Id, command.parameters);
 
             var appointmentsToReturn = _mapper.Map<IEnumerable<AppointmentDto>>(appointments);
 

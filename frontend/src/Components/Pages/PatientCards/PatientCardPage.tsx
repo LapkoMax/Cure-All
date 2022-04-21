@@ -1,8 +1,12 @@
 /** @jsxImportSource @emotion/react */
-import { useEffect } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useParams } from "react-router-dom";
-import { getAppointmentsForPatientCard } from "../../../Api/AppointmentsData";
+import {
+  getAllAppointmentsForPatientCard,
+  getAppointmentDatesForPatientCard,
+  getAppointmentsForPatientCard,
+} from "../../../Api/AppointmentsData";
 import { getPatientCard } from "../../../Api/PatientCardsData";
 import {
   gettingAppointmentsAction,
@@ -14,6 +18,8 @@ import {
   gotPatientCardAction,
 } from "../../../Store/ActionCreators/PatientCardActionCreators";
 import { AppState } from "../../../Store/Reducers/RootReducer";
+import { PrimaryButton } from "../../../Styles/Common/Buttons";
+import { FieldOption, FieldSelect } from "../../../Styles/Common/FieldStyles";
 import {
   patientCardAdditionalInf,
   patientCardContainer,
@@ -21,6 +27,7 @@ import {
 } from "../../../Styles/PatientCards/PatientCardPageStyles";
 import { AppointmentList } from "../../Appointments/AppointmentList";
 import { Page } from "../../General/Page";
+import { PageTitle } from "../../General/PageTitle";
 
 export const PatientCardPage = () => {
   const { patientCardId } = useParams();
@@ -39,6 +46,11 @@ export const PatientCardPage = () => {
     (state: AppState) => state.appointments.loading,
   );
   const userToken = useSelector((state: AppState) => state.identity.token);
+  const [dates, setDates] = useState<string[]>([]);
+  const [selectedDate, setSelectedDate] = useState<string>(
+    new Date().toISOString().substring(0, 10),
+  );
+  const [isAllAppointments, setIsAllAppointments] = useState(false);
 
   useEffect(() => {
     const doGetPatientCard = async (patientCardId?: string) => {
@@ -50,9 +62,16 @@ export const PatientCardPage = () => {
 
     const doGetAppointments = async (patientCardId?: string) => {
       dispatch(gettingAppointmentsAction());
+      let dateResults = await getAppointmentDatesForPatientCard(
+        patientCardId,
+        userToken,
+      );
+
+      setDates(dateResults.map((date) => date.toString().substring(0, 10)));
       let result = await getAppointmentsForPatientCard(
         patientCardId,
         userToken,
+        { date: selectedDate },
       );
       if (result.responseStatus === 401)
         dispatch(signOutUserAction(location.pathname));
@@ -63,6 +82,36 @@ export const PatientCardPage = () => {
     doGetAppointments(patientCardId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    setSelectedDate(dates[0]);
+  }, [dates]);
+
+  useEffect(() => {
+    const doGetAppointments = async (patientCardId?: string) => {
+      dispatch(gettingAppointmentsAction());
+      let result = isAllAppointments
+        ? await getAllAppointmentsForPatientCard(patientCardId, userToken)
+        : await getAppointmentsForPatientCard(
+            patientCardId,
+            userToken,
+            selectedDate === ""
+              ? undefined
+              : {
+                  date: selectedDate,
+                },
+          );
+      if (result.responseStatus === 401)
+        dispatch(signOutUserAction(location.pathname));
+      dispatch(gotAppointmentsAction(result.data));
+    };
+    doGetAppointments(patientCardId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedDate, isAllAppointments]);
+
+  const onDateSelect = (e: any) => {
+    setSelectedDate(e.target.value);
+  };
 
   return (
     <Page title="Карта пациента">
@@ -83,7 +132,49 @@ export const PatientCardPage = () => {
             {appointmentsLoading ? (
               <div>Загрузка...</div>
             ) : (
-              <AppointmentList data={appointments} />
+              <Fragment>
+                <PageTitle>Посещения:</PageTitle>
+                {appointments === [] ? (
+                  <PageTitle>Здесь ничего нет(</PageTitle>
+                ) : (
+                  <Fragment>
+                    <PageTitle>
+                      <div className="col-12 row">
+                        <div className="col-4 row d-flex justify-content-center pt-2">
+                          {isAllAppointments ? "Все посещения:" : "Для даты:"}
+                        </div>
+                        {!isAllAppointments && (
+                          <div className="col-4 row d-flex justify-content-center">
+                            <FieldSelect
+                              value={selectedDate}
+                              onChange={onDateSelect}
+                            >
+                              {dates.map((date) => (
+                                <FieldOption key={date} value={date}>
+                                  {date}
+                                </FieldOption>
+                              ))}
+                            </FieldSelect>
+                          </div>
+                        )}
+                        <PrimaryButton
+                          className={`btn btn-primary ${
+                            isAllAppointments ? "col-5" : "col-4"
+                          } row mx-2`}
+                          onClick={() => {
+                            setIsAllAppointments(!isAllAppointments);
+                          }}
+                        >
+                          {isAllAppointments
+                            ? "Посещения для даты"
+                            : "Все посещения"}
+                        </PrimaryButton>
+                      </div>
+                    </PageTitle>
+                    <AppointmentList data={appointments} />
+                  </Fragment>
+                )}
+              </Fragment>
             )}
           </div>
         </div>

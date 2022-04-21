@@ -33,7 +33,7 @@ export const RoutesComponent = () => {
     >
       {!location.pathname.includes("signin") &&
         !location.pathname.includes("register") && (
-          <div className="col-bg-2 col-md-4 col-sm-5 row">
+          <div className="col-lg-2 col-md-4 col-sm-5 row">
             <NavigationPanel />
           </div>
         )}
@@ -42,7 +42,7 @@ export const RoutesComponent = () => {
           (location.pathname.includes("signin") ||
           location.pathname.includes("register")
             ? "col-12"
-            : "col-bg-10 col-md-8 col-sm-7") + " row"
+            : "col-lg-10 col-md-8 col-sm-7") + " row"
         }
       >
         <Routes>

@@ -31,6 +31,7 @@ namespace Cure_All.DataAccess.Repository.Impl
             return (await FindAll(trackChanges)
                 .Search(doctorParameters.FullNameSearchTerm, doctorParameters.SpecialitySearchTerm, doctorParameters.CountrySearchTerm, doctorParameters.CitySearchTerm)
                 .Sort(doctorParameters.OrderBy)
+                .SortByUserParams(doctorParameters.OrderBy)
                 .ToListAsync())
                 .FilterDoctors(doctorParameters.MinExperienceYears);
         }

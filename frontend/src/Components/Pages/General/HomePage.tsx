@@ -16,9 +16,9 @@ import {
 } from "../../../Api/PatientsData";
 import {
   getAppointmentAmount,
+  getAppointmentsForDoctor,
+  getAppointmentsForPatientCard,
   getCompletedAppointmentAmount,
-  getTodayAppointmentsForDoctor,
-  getTodayAppointmentsForPatientCard,
 } from "../../../Api/AppointmentsData";
 import { AppointmentList } from "../../Appointments/AppointmentList";
 import {
@@ -63,15 +63,18 @@ export const HomePage = () => {
     const doGetAppointments = async () => {
       dispatch(gettingAppointmentsAction());
       if (user?.type === "Doctor") {
-        var results = await getTodayAppointmentsForDoctor(user.id, userToken);
+        var results = await getAppointmentsForDoctor(user.id, userToken, {
+          date: new Date().toISOString().substring(0, 10),
+        });
         if (results.responseStatus === 401)
           dispatch(signOutUserAction(location.pathname));
         else if (results.responseStatus === 200)
           dispatch(gotAppointmentsAction(results.data));
       } else if (user?.type === "Patient") {
-        results = await getTodayAppointmentsForPatientCard(
+        results = await getAppointmentsForPatientCard(
           loginedPatient?.patientCardId,
           userToken,
+          { date: new Date().toISOString().substring(0, 10) },
         );
         if (results.responseStatus === 401)
           dispatch(signOutUserAction(location.pathname));
@@ -109,7 +112,7 @@ export const HomePage = () => {
       <div css={homePageTitle}>Добро пожаловать!</div>
       <div
         css={homePageGeneralInformation}
-        className="col-bg-5 col-md-12 col-sm-12 row"
+        className="col-lg-5 col-md-12 col-sm-12 row"
       >
         <div className="col-6">
           <div>У нас зарегистрированы:</div>
@@ -122,7 +125,7 @@ export const HomePage = () => {
           <div>Завершено: {completedAppointmentAmount}</div>
         </div>
       </div>
-      <div css={homePageTodayInf} className="col-bg-6 col-md-12 col-sm-12">
+      <div css={homePageTodayInf} className="col-lg-6 col-md-12 col-sm-12">
         Сегодня: {new Date().toISOString().substring(0, 10)}
         {appointmentsLoading ? (
           <div>Загрузка...</div>

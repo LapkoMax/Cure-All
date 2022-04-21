@@ -1,4 +1,6 @@
-﻿using Cure_All.Models.Entities;
+﻿using Cure_All.BusinessLogic.RequestFeatures;
+using Cure_All.BusinessLogic.RequestFeatures.Extensions;
+using Cure_All.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -29,9 +31,23 @@ namespace Cure_All.DataAccess.Repository.Impl
             return await FindByCondition(app => app.DoctorId.Equals(doctorId), trackChanges).ToListAsync();
         }
 
-        public async Task<IEnumerable<Appointment>> GetTodaysAppointmentsForDoctorAsync(Guid doctorId, bool trackChanges = false)
+        public async Task<IEnumerable<Appointment>> GetAppointmentsForDoctorAsync(Guid doctorId, AppointmentParameters parameters, bool trackChanges = false)
         {
-            return await FindByCondition(app => app.DoctorId.Equals(doctorId) && app.StartDate.Date == DateTime.UtcNow.Date, trackChanges).ToListAsync();
+            return await FindByCondition(app => app.DoctorId.Equals(doctorId), trackChanges).SearchAppointments(parameters.Date == null ? new DateTime().Date : (DateTime)parameters.Date).ToListAsync();
+        }
+
+        public async Task<IEnumerable<DateTime>> GetAppointmentDatesForDoctorAsync(Guid doctorId)
+        {
+            var doctorAppointments = await GetAllAppointmentsForDoctorAsync(doctorId);
+
+            var dates = new HashSet<DateTime>();
+
+            foreach(var app in doctorAppointments)
+            {
+                dates.Add(app.StartDate);
+            }
+
+            return dates;
         }
 
         public async Task<IEnumerable<Appointment>> GetAllAppointmentsForPatientAsync(Guid patientCardId, bool trackChanges = false)
@@ -39,9 +55,23 @@ namespace Cure_All.DataAccess.Repository.Impl
             return await FindByCondition(app => app.PatientCardId.Equals(patientCardId), trackChanges).ToListAsync();
         }
 
-        public async Task<IEnumerable<Appointment>> GetTodaysAppointmentsForPatientAsync(Guid patientCardId, bool trackChanges = false)
+        public async Task<IEnumerable<Appointment>> GetAppointmentsForPatientAsync(Guid patientCardId, AppointmentParameters parameters, bool trackChanges = false)
         {
-            return await FindByCondition(app => app.PatientCardId.Equals(patientCardId) && app.StartDate.Date == DateTime.UtcNow.Date, trackChanges).ToListAsync();
+            return await FindByCondition(app => app.PatientCardId.Equals(patientCardId), trackChanges).SearchAppointments(parameters.Date == null ? new DateTime().Date : (DateTime)parameters.Date).ToListAsync();
+        }
+
+        public async Task<IEnumerable<DateTime>> GetAppointmentDatesForPatientAsync(Guid patientCardId)
+        {
+            var patientAppointments = await GetAllAppointmentsForPatientAsync(patientCardId);
+
+            var dates = new HashSet<DateTime>();
+
+            foreach (var app in patientAppointments)
+            {
+                dates.Add(app.StartDate);
+            }
+
+            return dates;
         }
 
         public async Task<Appointment> GetAppointmentAsync(Guid appointmentId, bool trackChanges = false)

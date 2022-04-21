@@ -41,6 +41,11 @@ export interface ResponseAppointment {
   responseStatus: number;
 }
 
+export interface AppointmentParameters {
+  orderBy?: string;
+  date?: string;
+}
+
 const getHeaders = (token?: string): Headers => {
   let headers = new Headers();
 
@@ -54,7 +59,7 @@ const getHeaders = (token?: string): Headers => {
   return headers;
 };
 
-export const getAppointmentsForDoctor = async (
+export const getAllAppointmentsForDoctor = async (
   userId?: string,
   token?: string,
 ): Promise<ResponseAppointents> => {
@@ -63,7 +68,106 @@ export const getAppointmentsForDoctor = async (
   let headers = getHeaders(token);
 
   const response = await fetch(
-    "http://localhost:5000/api/appointments/forDoctor/" + userId,
+    "http://localhost:5000/api/appointments/all/forDoctor/" + userId,
+    {
+      mode: "cors",
+      method: "GET",
+      headers: headers,
+    },
+  );
+
+  if (response.status === 401)
+    return { data: appointments, responseStatus: 401 };
+  else if (response.status !== 200)
+    return { data: appointments, responseStatus: response.status };
+
+  appointments = await response.json();
+
+  return { data: appointments, responseStatus: 200 };
+};
+
+export const getAppointmentsForDoctor = async (
+  userId?: string,
+  token?: string,
+  parameters?: AppointmentParameters,
+): Promise<ResponseAppointents> => {
+  let appointments: AppointmentData[] = [];
+
+  let headers = getHeaders(token);
+
+  var query =
+    parameters === undefined || parameters.date === undefined
+      ? ""
+      : "?" +
+        JSON.stringify(parameters, function (key, value) {
+          if (
+            value === undefined ||
+            value === "" ||
+            value.toString().includes("&")
+          )
+            return undefined;
+          return value;
+        })
+          .replaceAll("{", "")
+          .replaceAll("}", "")
+          .replaceAll(":", "=")
+          .replaceAll('"', "")
+          .replaceAll(",", "&");
+
+  const response = await fetch(
+    "http://localhost:5000/api/appointments/forDoctor/" + userId + query,
+    {
+      mode: "cors",
+      method: "GET",
+      headers: headers,
+    },
+  );
+
+  if (response.status === 401)
+    return { data: appointments, responseStatus: 401 };
+  else if (response.status !== 200)
+    return { data: appointments, responseStatus: response.status };
+
+  appointments = await response.json();
+
+  return { data: appointments, responseStatus: 200 };
+};
+
+export const getAppointmentDatesForDoctor = async (
+  userId?: string,
+  token?: string,
+): Promise<Date[]> => {
+  let appointmentDates: Date[] = [];
+
+  let headers = getHeaders(token);
+
+  const response = await fetch(
+    "http://localhost:5000/api/appointments/dates/forDoctor/" + userId,
+    {
+      mode: "cors",
+      method: "GET",
+      headers: headers,
+    },
+  );
+
+  if (response.status === 401) return appointmentDates;
+  else if (response.status !== 200) return appointmentDates;
+
+  appointmentDates = await response.json();
+
+  return appointmentDates;
+};
+
+export const getAllAppointmentsForPatientCard = async (
+  patientCardId?: string,
+  token?: string,
+): Promise<ResponseAppointents> => {
+  let appointments: AppointmentData[] = [];
+
+  let headers = getHeaders(token);
+
+  const response = await fetch(
+    "http://localhost:5000/api/appointments/all/forPatient/" + patientCardId,
     {
       mode: "cors",
       method: "GET",
@@ -84,13 +188,35 @@ export const getAppointmentsForDoctor = async (
 export const getAppointmentsForPatientCard = async (
   patientCardId?: string,
   token?: string,
+  parameters?: AppointmentParameters,
 ): Promise<ResponseAppointents> => {
   let appointments: AppointmentData[] = [];
 
   let headers = getHeaders(token);
 
+  var query =
+    parameters === undefined || parameters.date === undefined
+      ? ""
+      : "?" +
+        JSON.stringify(parameters, function (key, value) {
+          if (
+            value === undefined ||
+            value === "" ||
+            value.toString().includes("&")
+          )
+            return undefined;
+          return value;
+        })
+          .replaceAll("{", "")
+          .replaceAll("}", "")
+          .replaceAll(":", "=")
+          .replaceAll('"', "")
+          .replaceAll(",", "&");
+
   const response = await fetch(
-    "http://localhost:5000/api/appointments/forPatient/" + patientCardId,
+    "http://localhost:5000/api/appointments/forPatient/" +
+      patientCardId +
+      query,
     {
       mode: "cors",
       method: "GET",
@@ -106,6 +232,31 @@ export const getAppointmentsForPatientCard = async (
   appointments = await response.json();
 
   return { data: appointments, responseStatus: 200 };
+};
+
+export const getAppointmentDatesForPatientCard = async (
+  patientCardId?: string,
+  token?: string,
+): Promise<Date[]> => {
+  let appointmentDates: Date[] = [];
+
+  let headers = getHeaders(token);
+
+  const response = await fetch(
+    "http://localhost:5000/api/appointments/dates/forPatient/" + patientCardId,
+    {
+      mode: "cors",
+      method: "GET",
+      headers: headers,
+    },
+  );
+
+  if (response.status === 401) return appointmentDates;
+  else if (response.status !== 200) return appointmentDates;
+
+  appointmentDates = await response.json();
+
+  return appointmentDates;
 };
 
 export const getAppointment = async (
@@ -170,60 +321,6 @@ export const getCompletedAppointmentAmount = async (
   var result = await response.json();
 
   return result;
-};
-
-export const getTodayAppointmentsForDoctor = async (
-  userId?: string,
-  token?: string,
-): Promise<ResponseAppointents> => {
-  let appointments: AppointmentData[] = [];
-
-  let headers = getHeaders(token);
-
-  const response = await fetch(
-    "http://localhost:5000/api/appointments/today/forDoctor/" + userId,
-    {
-      mode: "cors",
-      method: "GET",
-      headers: headers,
-    },
-  );
-
-  if (response.status === 401)
-    return { data: appointments, responseStatus: 401 };
-  else if (response.status !== 200)
-    return { data: appointments, responseStatus: response.status };
-
-  appointments = await response.json();
-
-  return { data: appointments, responseStatus: 200 };
-};
-
-export const getTodayAppointmentsForPatientCard = async (
-  patientCardId?: string,
-  token?: string,
-): Promise<ResponseAppointents> => {
-  let appointments: AppointmentData[] = [];
-
-  let headers = getHeaders(token);
-
-  const response = await fetch(
-    "http://localhost:5000/api/appointments/today/forPatient/" + patientCardId,
-    {
-      mode: "cors",
-      method: "GET",
-      headers: headers,
-    },
-  );
-
-  if (response.status === 401)
-    return { data: appointments, responseStatus: 401 };
-  else if (response.status !== 200)
-    return { data: appointments, responseStatus: response.status };
-
-  appointments = await response.json();
-
-  return { data: appointments, responseStatus: 200 };
 };
 
 export const ifUserCanEditAppointment = async (

@@ -10,26 +10,26 @@ using System.Threading.Tasks;
 
 namespace Cure_All.MediatRCommands.Appointment
 {
-    public class GetTodayAppointmentsForPatientCommand : IRequest<IEnumerable<AppointmentDto>>
+    public class GetAllAppointmentsForPatientCommand : IRequest<IEnumerable<AppointmentDto>>
     {
         public Guid patientCardId { get; set; }
     }
 
-    public class GetTodayAppointmentsForPatientCommandHandler : IRequestHandler<GetTodayAppointmentsForPatientCommand, IEnumerable<AppointmentDto>>
+    public class GetAllAppointmentsForPatientCommandHandler : IRequestHandler<GetAllAppointmentsForPatientCommand, IEnumerable<AppointmentDto>>
     {
         private readonly IRepositoryManager _repository;
 
         private readonly IMapper _mapper;
 
-        public GetTodayAppointmentsForPatientCommandHandler(IRepositoryManager repository, IMapper mapper)
+        public GetAllAppointmentsForPatientCommandHandler(IRepositoryManager repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<AppointmentDto>> Handle(GetTodayAppointmentsForPatientCommand command, CancellationToken cancellationToken)
+        public async Task<IEnumerable<AppointmentDto>> Handle(GetAllAppointmentsForPatientCommand command, CancellationToken cancellationToken)
         {
-            var appointments = await _repository.Appointment.GetTodaysAppointmentsForPatientAsync(command.patientCardId);
+            var appointments = await _repository.Appointment.GetAllAppointmentsForPatientAsync(command.patientCardId);
 
             var appointmentsToReturn = _mapper.Map<IEnumerable<AppointmentDto>>(appointments);
 

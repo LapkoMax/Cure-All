@@ -1,4 +1,5 @@
-﻿using Cure_All.DataAccess.Repository;
+﻿using Cure_All.BusinessLogic.RequestFeatures;
+using Cure_All.DataAccess.Repository;
 using Cure_All.MediatRCommands.Appointment;
 using Cure_All.MediatRCommands.Notification;
 using Cure_All.Models.DTO;
@@ -28,28 +29,40 @@ namespace Cure_All.Controllers
             _repository = repository;
         }
 
-        [HttpGet("forDoctor/{userId}")]
+        [HttpGet("all/forDoctor/{userId}")]
         public async Task<IEnumerable<AppointmentDto>> GetAppointmentsForDoctor(string userId)
         {
-            return await _mediator.Send(new GetAppointmentsForDoctorCommand { userId = userId }, CancellationToken.None);
+            return await _mediator.Send(new GetAllAppointmentsForDoctorCommand { userId = userId }, CancellationToken.None);
         }
 
-        [HttpGet("today/forDoctor/{userId}")]
-        public async Task<IEnumerable<AppointmentDto>> GetTodaysAppointmentsForDoctor(string userId)
+        [HttpGet("forDoctor/{userId}")]
+        public async Task<IEnumerable<AppointmentDto>> GetAppointmentsForDoctor(string userId, [FromQuery] AppointmentParameters parameters)
         {
-            return await _mediator.Send(new GetTodayAppointmentsForDoctorCommand { userId = userId }, CancellationToken.None);
+            return await _mediator.Send(new GetAppointmentsForDoctorCommand { userId = userId, parameters = parameters }, CancellationToken.None);
+        }
+
+        [HttpGet("dates/forDoctor/{userId}")]
+        public async Task<IEnumerable<DateTime>> GetAppointmentDatesForDoctor(string userId)
+        {
+            return await _mediator.Send(new GetAppointmentDatesForDoctorCommand { userId = userId }, CancellationToken.None);
+        }
+
+        [HttpGet("all/forPatient/{patientCardId}")]
+        public async Task<IEnumerable<AppointmentDto>> GetAllAppointmentsForPatient(Guid patientCardId)
+        {
+            return await _mediator.Send(new GetAllAppointmentsForPatientCommand { patientCardId = patientCardId }, CancellationToken.None);
         }
 
         [HttpGet("forPatient/{patientCardId}")]
-        public async Task<IEnumerable<AppointmentDto>> GetAppointmentsForPatient(Guid patientCardId)
+        public async Task<IEnumerable<AppointmentDto>> GetAppointmentsForPatient(Guid patientCardId, [FromQuery] AppointmentParameters parameters)
         {
-            return await _mediator.Send(new GetAppointmentsForPatientCommand { patientCardId = patientCardId }, CancellationToken.None);
+            return await _mediator.Send(new GetAppointmentsForPatientCommand { patientCardId = patientCardId, parameters = parameters }, CancellationToken.None);
         }
 
-        [HttpGet("today/forPatient/{patientCardId}")]
-        public async Task<IEnumerable<AppointmentDto>> GetTodayAppointmentsForPatient(Guid patientCardId)
+        [HttpGet("dates/forPatient/{patientCardId}")]
+        public async Task<IEnumerable<DateTime>> GetAppointmentDatesForPatient(Guid patientCardId)
         {
-            return await _mediator.Send(new GetTodayAppointmentsForPatientCommand { patientCardId = patientCardId }, CancellationToken.None);
+            return await _mediator.Send(new GetAppointmentDatesForPatientCommand { patientCardId = patientCardId }, CancellationToken.None);
         }
 
         [HttpGet("{appointmentId}")]

@@ -163,13 +163,13 @@ export interface DoctorFiend {
 export const DoctorFields: DoctorFiend[] = [
   {
     id: 1,
-    name: "firstname",
-    displayName: "Имя",
+    name: "lastname",
+    displayName: "Фамилия",
   },
   {
     id: 2,
-    name: "lastname",
-    displayName: "Фамилия",
+    name: "firstname",
+    displayName: "Имя",
   },
   {
     id: 3,
