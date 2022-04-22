@@ -8,15 +8,17 @@ export const appContainer = css`
   font-size: ${mainFontSize};
   color: ${gray2};
   min-height: 100vh;
-  min-width: 100vh;
-`;
-
-export const appContainerWithBackGround = css`
-  font-family: ${mainFontFamily};
-  font-size: ${mainFontSize};
-  color: ${gray2};
-  min-height: 100vh;
-  min-width: 100vh;
+  box-sizing: border-box;
+  min-width: 100vw;
+  width: 100vw;
+  overflow-x: hidden;
+  overflow-y: inherit;
+  display: flex;
+  justify-content: space-between;
   background-image: url(${doctorSmiling});
   background-size: cover;
+  background-position: center;
+  background-position-y: 30px;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 `;

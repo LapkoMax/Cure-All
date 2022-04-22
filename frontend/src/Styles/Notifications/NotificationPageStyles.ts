@@ -4,6 +4,7 @@ import { accent1, gray4 } from "../Common/Colors";
 export const notificationContainer = css`
   padding: 10px;
   border: solid;
+  background-color: white;
   border-width: 2px;
   border-color: ${gray4};
   border-radius: 10px;

@@ -5,6 +5,9 @@ export const doctorList = css`
   list-style: none;
   margin: 10px 0 0 0;
   padding: 0px 20px;
+  max-width: 600px;
+  margin: 15px auto 20px auto;
+  padding: 15px 20px;
   background-color: #fff;
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;

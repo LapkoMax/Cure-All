@@ -18,19 +18,12 @@ import { SignInPage } from "./SignInPage";
 import { CreateAppointmentPage } from "../Appointments/CreateAppointmentPage";
 import { NotificationsPage } from "./NotificationsPage";
 import { NotificationPage } from "./NotificationPage";
-import { appContainerWithBackGround, appContainer } from "../../../AppStyles";
+import { appContainer } from "../../../AppStyles";
 
 export const RoutesComponent = () => {
   const location = useLocation();
   return (
-    <div
-      css={
-        location.pathname.includes("signin")
-          ? appContainerWithBackGround
-          : appContainer
-      }
-      className="col-12 row"
-    >
+    <div css={appContainer} className="col-12">
       {!location.pathname.includes("signin") &&
         !location.pathname.includes("register") && (
           <div className="col-lg-2 col-md-4 col-sm-5 row">

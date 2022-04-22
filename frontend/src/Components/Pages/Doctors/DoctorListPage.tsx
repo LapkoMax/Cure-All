@@ -177,7 +177,7 @@ export const DoctorListPage = () => {
           </FormButtonContainer>
         </form>
       </div>
-      <div>
+      <div className="justify-content-around">
         <PageTitle>Список докторов</PageTitle>
         {doctorsLoading ? (
           <div>Загрузка...</div>

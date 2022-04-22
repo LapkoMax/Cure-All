@@ -1,5 +1,5 @@
 export const gray1 = "#383737";
-export const gray2 = "#5c5a5a";
+export const gray2 = "#202020";
 export const gray3 = "#857c81";
 export const gray4 = "#b9b9b9";
 export const gray5 = "#e3e2e2";
