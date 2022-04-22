@@ -62,7 +62,9 @@ export const AppointmentsListPage = () => {
   }, []);
 
   useEffect(() => {
-    setSelectedDate(dates[0]);
+    dates.includes(new Date().toISOString().substring(0, 10))
+      ? setSelectedDate(new Date().toISOString().substring(0, 10))
+      : setSelectedDate(dates[0]);
   }, [dates]);
 
   useEffect(() => {

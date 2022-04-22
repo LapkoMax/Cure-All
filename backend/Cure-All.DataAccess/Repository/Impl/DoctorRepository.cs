@@ -36,6 +36,28 @@ namespace Cure_All.DataAccess.Repository.Impl
                 .FilterDoctors(doctorParameters.MinExperienceYears);
         }
 
+        public async Task<IEnumerable<Doctor>> GetFastSearchedDoctorsAsync(string searchTerm)
+        {
+            var values = searchTerm.Trim().Split(" ");
+
+            var doctorComparer = new DoctorComparer();
+
+            var doctors = new HashSet<Doctor>(doctorComparer);
+
+            foreach(var value in values)
+            {
+                IEnumerable<Doctor> temp = await FindByCondition(doc => doc.User.FirstName.ToLower().Contains(value.ToLower())).ToListAsync();
+                temp = temp.Concat(await FindByCondition(doc => doc.User.LastName.ToLower().Contains(value.ToLower())).ToListAsync());
+                temp = temp.Concat(await FindByCondition(doc => doc.User.Country.ToLower().Contains(value.ToLower())).ToListAsync());
+                temp = temp.Concat(await FindByCondition(doc => doc.User.City.ToLower().Contains(value.ToLower())).ToListAsync());
+                temp = temp.Concat(await FindByCondition(doc => doc.Specialization.Name.ToLower().Contains(value.ToLower())).ToListAsync());
+
+                foreach (var item in temp) doctors.Add(item);
+            }
+
+            return doctors;
+        }
+
         public async Task<Doctor> GetDoctorByDoctorIdAsync(Guid doctorId, bool trackChanges = false)
         {
             return await FindByCondition(doc => doc.Id.Equals(doctorId), trackChanges).SingleOrDefaultAsync();

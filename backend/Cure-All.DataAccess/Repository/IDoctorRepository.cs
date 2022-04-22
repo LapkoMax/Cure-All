@@ -12,6 +12,8 @@ namespace Cure_All.DataAccess.Repository
     {
         Task<IEnumerable<Doctor>> GetAllDoctorsAsync(DoctorParameters doctorParameters, bool trackChanges = false);
 
+        Task<IEnumerable<Doctor>> GetFastSearchedDoctorsAsync(string searchTerm);
+
         Task<Doctor> GetDoctorByDoctorIdAsync(Guid doctorId, bool trackChanges = false);
 
         Task<Doctor> GetDoctorByUserIdAsync(string userId, bool trackChanges = false);

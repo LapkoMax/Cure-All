@@ -38,6 +38,12 @@ namespace Cure_All.Controllers
             return await _mediator.Send(new GetDoctorsCommand { doctorParameters = doctorParameters }, CancellationToken.None);
         }
 
+        [HttpGet("fastSearch/{searchTerm}")]
+        public async Task<IEnumerable<DoctorDto>> GetFastSearchedDoctors(string searchTerm)
+        {
+            return await _mediator.Send(new GetFastSearchedDoctorsCommand { searchTerm = searchTerm }, CancellationToken.None);
+        }
+
         [HttpGet("{doctorId}")]
         public async Task<ActionResult<DoctorDto>> GetDoctor(Guid doctorId)
         {

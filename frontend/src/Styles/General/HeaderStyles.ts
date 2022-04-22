@@ -33,7 +33,7 @@ export const searchInput = css`
   border-radius: 3px;
   color: ${gray2};
   background-color: white;
-  width: 200px;
+  width: 300px;
   height: 30px;
   :focus {
     outline-color: ${gray5};

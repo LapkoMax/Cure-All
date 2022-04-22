@@ -247,6 +247,31 @@ export const getDoctors = async (
   return { data: doctors, responseStatus: 200 };
 };
 
+export const getFastSearchedDoctors = async (
+  searchTerm: string,
+  token?: string,
+): Promise<ResponseDoctors> => {
+  let doctors: DoctorData[] = [];
+  let headers = getHeaders(token);
+
+  const response = await fetch(
+    "http://localhost:5000/api/doctors/fastSearch/" + searchTerm,
+    {
+      mode: "cors",
+      method: "GET",
+      headers: headers,
+    },
+  );
+
+  if (response.status === 401) return { data: doctors, responseStatus: 401 };
+  else if (response.status !== 200)
+    return { data: doctors, responseStatus: response.status };
+
+  doctors = await response.json();
+
+  return { data: doctors, responseStatus: 200 };
+};
+
 export const getDoctor = async (
   token?: string,
   doctorId?: string,

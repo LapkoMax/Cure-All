@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { Fragment, useEffect } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -29,7 +29,7 @@ export const Header = () => {
   const user = useSelector((state: AppState) => state.identity.user);
   const { register, handleSubmit } = useForm<FormData>();
   const [searchParams] = useSearchParams();
-  const searchTerm = searchParams.get("fullNameSearchTerm") || "";
+  const searchTerm = searchParams.get("searchTerm") || "";
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -45,42 +45,54 @@ export const Header = () => {
 
   const submitForm = ({ searchTerm }: FormData) => {
     searchTerm = searchTerm.trim();
-    if (searchTerm !== "") navigate("search?fullNameSearchTerm=" + searchTerm);
+    if (searchTerm !== "") navigate("search?searchTerm=" + searchTerm);
   };
 
   return (
-    <div css={headerContainer} className="d-flex justify-content-around">
+    <div css={headerContainer} className="d-flex justify-content-between">
       <Link
         to="/"
         css={titleAnchor}
-        className={
-          (user === null ? "col-11" : "col-3") +
-          " row d-flex justify-content-start"
-        }
+        className={`${
+          user === null || user?.type === "Doctor" ? "col-8 ms-5" : "col-2"
+        } row d-flex justify-content-${
+          user === null || user?.type === "Doctor" ? "start" : "around"
+        }`}
       >
         Cure-All
       </Link>
       {user !== null && (
-        <Fragment>
-          <form
-            className="col-3 row d-flex justify-content-center"
-            onSubmit={handleSubmit(submitForm)}
+        <div
+          className={`${
+            user?.type === "Patient" ? "col-9" : "col-4"
+          } row justify-content-center`}
+        >
+          {user?.type === "Patient" && (
+            <form
+              className="col-8 row d-flex justify-content-center"
+              onSubmit={handleSubmit(submitForm)}
+            >
+              <input
+                {...register("searchTerm")}
+                type="text"
+                placeholder="Быстрый поиск докторов..."
+                defaultValue={searchTerm}
+                css={searchInput}
+              />
+            </form>
+          )}
+          <div
+            className={
+              (user?.type === "Patient" ? "col-4" : "col-12") +
+              " row d-flex justify-content-end"
+            }
           >
-            <input
-              {...register("searchTerm")}
-              type="text"
-              placeholder="Поиск докторов..."
-              defaultValue={searchTerm}
-              css={searchInput}
-            />
-          </form>
-          <div className="col-3 row d-flex justify-content-end">
             <Link
               to={`profile/${user?.id}`}
               css={helloUserLabel}
               className="col-6 row d-flex justify-content-end"
             >
-              <span className="col-2">
+              <span className="col-2 mx-2">
                 <UserIcon />
               </span>
               {user?.userName}
@@ -96,7 +108,7 @@ export const Header = () => {
               <span className="col-8 row">Выход</span>
             </Link>
           </div>
-        </Fragment>
+        </div>
       )}
     </div>
   );

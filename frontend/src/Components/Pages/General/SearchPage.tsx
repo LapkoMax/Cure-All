@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useSearchParams } from "react-router-dom";
-import { getDoctors } from "../../../Api/DoctorsData";
+import { getDoctors, getFastSearchedDoctors } from "../../../Api/DoctorsData";
 import {
   gettingDoctorsAction,
   gotDoctorsAction,
@@ -15,7 +15,7 @@ import { Page } from "../../General/Page";
 
 export const SearchPage = () => {
   const [searchParams] = useSearchParams();
-  const searchTerm = searchParams.get("fullNameSearchTerm") || "";
+  const searchTerm = searchParams.get("searchTerm") || "";
   const dispatch = useDispatch();
   const location = useLocation();
   const doctors = useSelector((state: AppState) => state.doctors.doctors);
@@ -27,9 +27,7 @@ export const SearchPage = () => {
   useEffect(() => {
     const doSearch = async (fullNameSearchTerm: string) => {
       dispatch(gettingDoctorsAction());
-      const result = await getDoctors(userToken, {
-        fullNameSearchTerm: fullNameSearchTerm,
-      });
+      const result = await getFastSearchedDoctors(searchTerm, userToken);
       if (result.responseStatus === 401)
         dispatch(signOutUserAction(location.pathname + location.search));
       dispatch(gotDoctorsAction(result.data));
