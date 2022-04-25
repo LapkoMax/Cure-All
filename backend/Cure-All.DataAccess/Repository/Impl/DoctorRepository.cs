@@ -46,11 +46,11 @@ namespace Cure_All.DataAccess.Repository.Impl
 
             foreach(var value in values)
             {
-                IEnumerable<Doctor> temp = await FindByCondition(doc => doc.User.FirstName.ToLower().Contains(value.ToLower())).ToListAsync();
-                temp = temp.Concat(await FindByCondition(doc => doc.User.LastName.ToLower().Contains(value.ToLower())).ToListAsync());
-                temp = temp.Concat(await FindByCondition(doc => doc.User.Country.ToLower().Contains(value.ToLower())).ToListAsync());
-                temp = temp.Concat(await FindByCondition(doc => doc.User.City.ToLower().Contains(value.ToLower())).ToListAsync());
-                temp = temp.Concat(await FindByCondition(doc => doc.Specialization.Name.ToLower().Contains(value.ToLower())).ToListAsync());
+                IEnumerable<Doctor> temp = await FindByCondition(doc => doc.User.FirstName.ToLower().Contains(value.ToLower()) 
+                || doc.User.LastName.ToLower().Contains(value.ToLower()) 
+                || doc.User.Country.ToLower().Contains(value.ToLower()) 
+                || doc.User.Country.ToLower().Contains(value.ToLower()) 
+                || doc.Specialization.Name.ToLower().Contains(value.ToLower())).ToListAsync();
 
                 foreach (var item in temp) doctors.Add(item);
             }

@@ -24,7 +24,7 @@ namespace Cure_All.MediatRCommands.PatientCard
 
         public async Task<bool> Handle(DeletePatientCardCommand command, CancellationToken cancellationToken)
         {
-            var card = await _repository.PatientCard.GetPatientCardForPatientAsync(command.patientId);
+            var card = await _repository.PatientCard.GetPatientCardForPatientAsync(command.patientId, true);
 
             if (card == null) return false;
 

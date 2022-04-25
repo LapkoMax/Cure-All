@@ -35,7 +35,7 @@ namespace Cure_All.MediatRCommands.Notification
         {
             var notificationToRead = await _repository.Notification.GetNotificationAsync(command.notificationId, true);
 
-            if (notificationToRead.UserId != _httpContextAccessor.HttpContext.User.FindFirst("id").Value || notificationToRead.ShowFrom > DateTime.UtcNow)
+            if (notificationToRead == null || notificationToRead.UserId != _httpContextAccessor.HttpContext.User.FindFirst("id").Value || notificationToRead.ShowFrom > DateTime.UtcNow)
                 return null;
 
             if (!notificationToRead.Readed)
