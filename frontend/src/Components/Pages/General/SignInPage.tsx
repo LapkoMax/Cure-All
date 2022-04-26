@@ -55,7 +55,7 @@ export const SignInPage = () => {
             </FieldLabel>
             <FieldInput
               id="login"
-              {...register("login", { required: "Login is required!" })}
+              {...register("login", { required: "Логин обязателен!" })}
               type="text"
             />
             {errors.login && <FieldError>{errors.login.message}</FieldError>}
@@ -64,7 +64,7 @@ export const SignInPage = () => {
             <FieldLabel htmlFor="password">Пароль:</FieldLabel>
             <FieldInput
               id="password"
-              {...register("password", { required: "Password is required!" })}
+              {...register("password", { required: "Пароль обязателен!" })}
               type="password"
             />
             {errors.password && (

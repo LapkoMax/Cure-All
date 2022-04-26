@@ -396,7 +396,7 @@ export const RegistrationDoctor = () => {
               valueAsNumber: true,
               required: "Продолжительность приёма обязательна!",
               min: { value: 5, message: "5 минут - минимальное время" },
-              max: { value: 45, message: "45 минут - минимальное время" },
+              max: { value: 45, message: "45 минут - максимальное время" },
             })}
             type="number"
           />
@@ -408,7 +408,9 @@ export const RegistrationDoctor = () => {
           </FieldLabel>
           <FieldInput
             id="workDayStart"
-            {...register("workDayStart")}
+            {...register("workDayStart", {
+              required: "Время начала рабочего дня обязательно!",
+            })}
             type="time"
           />
           <FieldError>{errors.workDayStart?.message}</FieldError>
@@ -417,7 +419,13 @@ export const RegistrationDoctor = () => {
           <FieldLabel htmlFor="workDayEnd">
             Конец вашего рабочего дня:
           </FieldLabel>
-          <FieldInput id="workDayEnd" {...register("workDayEnd")} type="time" />
+          <FieldInput
+            id="workDayEnd"
+            {...register("workDayEnd", {
+              required: "Время конца рабочего дня обязательно!",
+            })}
+            type="time"
+          />
           <FieldError>{errors.workDayEnd?.message}</FieldError>
         </FieldContainer>
         <FieldContainer className="row col-6 d-flex justify-content-center">
@@ -426,7 +434,9 @@ export const RegistrationDoctor = () => {
           </FieldLabel>
           <FieldInput
             id="dinnerStart"
-            {...register("dinnerStart")}
+            {...register("dinnerStart", {
+              required: "Время начала обеденного перерыва обязательно!",
+            })}
             type="time"
           />
           <FieldError>{errors.dinnerStart?.message}</FieldError>
@@ -435,7 +445,13 @@ export const RegistrationDoctor = () => {
           <FieldLabel htmlFor="dinnerEnd">
             Конец вашего обеденного перерыва:
           </FieldLabel>
-          <FieldInput id="dinnerEnd" {...register("dinnerEnd")} type="time" />
+          <FieldInput
+            id="dinnerEnd"
+            {...register("dinnerEnd", {
+              required: "Время конца обеденного перерыва обязательно!",
+            })}
+            type="time"
+          />
           <FieldError>{errors.dinnerEnd?.message}</FieldError>
         </FieldContainer>
         <FieldContainer className="row col-6 d-flex justify-content-center">
@@ -465,7 +481,7 @@ export const RegistrationDoctor = () => {
           <FieldInput
             id="userName"
             {...register("userName", {
-              required: "Имя пользоветеля обязательно!",
+              required: "Имя пользователя обязательно!",
               minLength: {
                 value: 2,
                 message:

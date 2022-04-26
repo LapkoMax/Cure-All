@@ -100,7 +100,7 @@ export const RegistrationPatient = () => {
           <FieldInput
             id="userName"
             {...register("userName", {
-              required: "Имя пользоветеля обязательно!",
+              required: "Имя пользователя обязательно!",
               minLength: {
                 value: 2,
                 message:

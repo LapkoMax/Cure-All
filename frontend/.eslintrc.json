@@ -8,5 +8,8 @@
         "trailingComma": "all"
       }
     ]
+  },
+  "globals": {
+    "cy": true
   }
 }
