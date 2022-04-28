@@ -21,7 +21,7 @@ namespace Cure_All.Installers
     {
         public void InstallServices(IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDefaultIdentity<User>().AddRoles<IdentityRole>().AddEntityFrameworkStores<DataContext>();
+            services.AddDefaultIdentity<User>(opt => { opt.SignIn.RequireConfirmedEmail = true; }).AddRoles<IdentityRole>().AddEntityFrameworkStores<DataContext>();
             services.AddScoped<IIdentityService, IdentityService>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             var jwtSettings = new JWTSettings();

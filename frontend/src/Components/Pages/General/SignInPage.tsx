@@ -74,6 +74,9 @@ export const SignInPage = () => {
           {loginErrors &&
             loginErrors.map((error) => <FieldError>{error}</FieldError>)}
           <FormButtonContainer className="row d-flex justify-content-around">
+            <Link to="/forgotPassword" className="text-center">
+              Забыли пароль?
+            </Link>
             <FormLabel className="col-6 row d-flex justify-content-center">
               Нет аккаунта?
             </FormLabel>

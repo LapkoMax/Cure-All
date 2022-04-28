@@ -165,6 +165,8 @@ export const registerDoctor = async (
   if (result.errors !== undefined)
     return { success: false, errors: result.errors };
 
+  if (result.token === "") return { success: true, token: "" };
+
   return await addUserToAuthResult(doctor.userName, result.token);
 };
 
@@ -187,7 +189,74 @@ export const registerPatient = async (
   if (result.errors !== undefined)
     return { success: false, errors: result.errors };
 
+  if (result.token === "") return { success: true, token: "" };
+
   return await addUserToAuthResult(patient.userName, result.token);
+};
+
+export const confirmUserEmail = async (
+  email: string,
+  token: string,
+): Promise<boolean> => {
+  let headers = getHeaders();
+
+  const response = await fetch(
+    "http://localhost:5000/confirmUserEmail?token=" + token + "&email=" + email,
+    {
+      mode: "cors",
+      method: "GET",
+      headers: headers,
+    },
+  );
+
+  if (response.status === 200) return true;
+
+  return false;
+};
+
+export const resetPasswordRequest = async (email: string): Promise<string> => {
+  let headers = getHeaders();
+
+  const response = await fetch(
+    "http://localhost:5000/resetPasswordRequest?email=" + email,
+    {
+      mode: "cors",
+      method: "GET",
+      headers: headers,
+    },
+  );
+
+  if (response.status === 200) return "";
+
+  let result = await response.json();
+
+  return result;
+};
+
+export const resetPassword = async (
+  email: string,
+  token: string,
+  newPassword: string,
+): Promise<boolean> => {
+  let headers = getHeaders();
+
+  const response = await fetch(
+    "http://localhost:5000/resetPassword?token=" +
+      token +
+      "&email=" +
+      email +
+      "&newPassword=" +
+      newPassword,
+    {
+      mode: "cors",
+      method: "GET",
+      headers: headers,
+    },
+  );
+
+  if (response.status === 200) return true;
+
+  return false;
 };
 
 export const deleteUser = async (

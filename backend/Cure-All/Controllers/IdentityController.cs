@@ -71,7 +71,7 @@ namespace Cure_All.Controllers
             if (!authResult.Success)
                 return BadRequest(new { Errors = authResult.ErrorMessages });
 
-            return Ok(new { Token = authResult.Token });
+            return Ok(new { Token = "" });
         }
 
         [HttpPost("/registerDoctor")]
@@ -97,7 +97,7 @@ namespace Cure_All.Controllers
             foreach (var docDayOff in registrationDto.DoctorDayOffs)
                 docDayOff.DoctorId = newDoctorId;
 
-            return Ok(new { Token = authResult.Token });
+            return Ok(new { Token = "" });
         }
 
         [HttpPost("/registerPatient")]
@@ -124,7 +124,49 @@ namespace Cure_All.Controllers
             if(newPatientCard == null)
                 return BadRequest(new { Errors = new string[] { "Что-то пошло не так!" } });
 
-            return Ok(new { Token = authResult.Token });
+            return Ok(new { Token = "" });
+        }
+
+        [HttpGet("/confirmUserEmail")]
+        public async Task<IActionResult> ConfirmUserEmail([FromQuery] string token, [FromQuery] string email)
+        {
+            var user = await _identityService.GetUserAsync(email);
+
+            if (user == null)
+                return BadRequest("Ошибка!");
+
+            var result = await _identityService.ConfirmUserEmail(user, token);
+
+            if(!result)
+                return BadRequest("Ошибка!");
+
+            return Ok();
+        }
+
+        [HttpGet("/resetPasswordRequest")]
+        public async Task<IActionResult> ResetPasswordRequest([FromQuery] string email)
+        {
+            var result = await _identityService.SendResetPasswordEmail(email);
+
+            if (!result) return BadRequest("Пользователя с такой почтой не найден!");
+
+            return Ok();
+        }
+
+        [HttpGet("/resetPassword")]
+        public async Task<IActionResult> ResetPassword([FromQuery] string token, [FromQuery] string email, [FromQuery] string newPassword)
+        {
+            var user = await _identityService.GetUserAsync(email);
+
+            if (user == null)
+                return BadRequest("Ошибка!");
+
+            var result = await _identityService.ResetPassword(user, token, newPassword);
+
+            if (!result)
+                return BadRequest("Ошибка!");
+
+            return Ok();
         }
 
         [HttpPost("/login")]

@@ -43,8 +43,7 @@ export const RegistrationPatient = () => {
     dispatch(loggingUserAction());
     const result = await registerPatient(data);
     if (result.success) {
-      dispatch(loginedUserAction(result));
-      navigate(returnUrl === "" ? "/" : returnUrl);
+      navigate("/registrationComplete");
     } else setLoginErrors(result.errors);
   };
 

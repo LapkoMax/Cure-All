@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
   CreateDoctorDayOffData,
@@ -7,11 +7,7 @@ import {
   registerDoctor,
   RegisterDoctorForm,
 } from "../../../Api/IdentityData";
-import {
-  loggingUserAction,
-  loginedUserAction,
-} from "../../../Store/ActionCreators/IdentityActionCreators";
-import { AppState } from "../../../Store/Reducers/RootReducer";
+import { loggingUserAction } from "../../../Store/ActionCreators/IdentityActionCreators";
 import {
   FieldCheckBox,
   FieldContainer,
@@ -42,7 +38,6 @@ import {
 
 export const RegistrationDoctor = () => {
   const dispatch = useDispatch();
-  const returnUrl = useSelector((state: AppState) => state.identity.returnUrl);
   const navigate = useNavigate();
   const {
     register,
@@ -89,8 +84,7 @@ export const RegistrationDoctor = () => {
 
     const result = await registerDoctor(data);
     if (result.success) {
-      dispatch(loginedUserAction(result));
-      navigate(returnUrl === "" ? "/" : returnUrl);
+      navigate("/registrationComplete");
     } else setLoginErrors(result.errors);
   };
 
@@ -572,7 +566,7 @@ export const RegistrationDoctor = () => {
           </PrimaryButton>
           <SecondaryButton
             onClick={() => {
-              navigate(returnUrl === "" ? "/" : returnUrl);
+              navigate("/registrationComplete");
             }}
             className="col-4 d-flex justify-content-center"
           >

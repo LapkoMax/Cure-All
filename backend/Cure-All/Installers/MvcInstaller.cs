@@ -1,4 +1,7 @@
 ﻿using Cure_All.BusinessLogic.AutoMapper;
+using Cure_All.BusinessLogic.Options;
+using Cure_All.BusinessLogic.Services;
+using Cure_All.BusinessLogic.Services.Impl;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +19,12 @@ namespace Cure_All.Installers
         {
             services.AddAutoMapper(typeof(MappingProfile));
             services.AddMediatR(Assembly.GetExecutingAssembly());
+
+            var emailOptions = configuration.GetSection("EmailOptions").Get<EmailOptions>();
+            services.AddSingleton(emailOptions);
+
+            services.AddScoped<IEmailService, EmailService>();
+
             services.AddCors();
             services.AddControllers();
         }

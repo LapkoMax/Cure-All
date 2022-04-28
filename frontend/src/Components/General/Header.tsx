@@ -36,7 +36,11 @@ export const Header = () => {
     if (
       user === null &&
       !window.location.href.toString().includes("signin") &&
-      !window.location.href.toString().includes("register")
+      !window.location.href.toString().includes("register") &&
+      !window.location.href.toString().includes("registrationComplete") &&
+      !window.location.href.toString().includes("emailConfirmed") &&
+      !window.location.href.toString().includes("forgotPassword") &&
+      !window.location.href.toString().includes("resetPassword")
     ) {
       navigate("signin");
     }

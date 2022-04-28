@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useSearchParams } from "react-router-dom";
-import { getDoctors, getFastSearchedDoctors } from "../../../Api/DoctorsData";
+import { getFastSearchedDoctors } from "../../../Api/DoctorsData";
 import {
   gettingDoctorsAction,
   gotDoctorsAction,

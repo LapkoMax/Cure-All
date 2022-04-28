@@ -18,6 +18,12 @@ namespace Cure_All.DataAccess.Repository
 
         Task<AuthenticationResultDto> LoginAsync(UserLoginDto loginDto);
 
+        Task<bool> ConfirmUserEmail(User user, string token);
+
+        Task<bool> SendResetPasswordEmail(string email);
+
+        Task<bool> ResetPassword(User user, string token, string password);
+
         Task<IEnumerable<string>> EditUserAsync(UserForEditingDto user);
 
         Task<bool> DeleteUserAsync(User user);

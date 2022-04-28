@@ -91,6 +91,12 @@ export const FieldError = styled.div`
   height: 50px;
 `;
 
+export const FieldSuccess = styled.div`
+  font-size: 14px;
+  color: green;
+  height: 50px;
+`;
+
 export const SubmissionSuccess = styled.div`
   color: green;
 `;

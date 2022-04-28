@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Cure_All.BusinessLogic.Options;
+using Cure_All.BusinessLogic.Services;
 using Cure_All.Models.DTO;
 using Cure_All.Models.Entities;
 using Microsoft.AspNetCore.Identity;
@@ -19,12 +20,14 @@ namespace Cure_All.DataAccess.Repository.Impl
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
         private readonly JWTSettings _jwtSettings;
+        private readonly IEmailService _emailService;
 
-        public IdentityService(UserManager<User> userManager, IMapper mapper, JWTSettings jwtSettings)
+        public IdentityService(UserManager<User> userManager, IMapper mapper, JWTSettings jwtSettings, IEmailService emailService)
         {
             _userManager = userManager;
             _mapper = mapper;
             _jwtSettings = jwtSettings;
+            _emailService = emailService;
         }
 
         public async Task<User> GetUserAsync(string userLogin)
@@ -81,6 +84,13 @@ namespace Cure_All.DataAccess.Repository.Impl
                     };
             }
 
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
+            var confirmationLink = $"http://localhost:3000/emailConfirmed?token={token}&email={newUser.Email}";
+
+            var message = new MessageOptions(new string[] { newUser.Email }, "Письмо подтверждения", confirmationLink);
+
+            await _emailService.SendConfirmEmail(message);
+
             return await GenerateAuthResultForUser(newUser);
         }
 
@@ -102,7 +112,46 @@ namespace Cure_All.DataAccess.Repository.Impl
                     ErrorMessages = new List<string> { "Неверные данные пользователя!" }
                 };
 
+            var emailConfirmed = await _userManager.IsEmailConfirmedAsync(user);
+
+            if(!emailConfirmed)
+                return new AuthenticationResultDto
+                {
+                    ErrorMessages = new List<string> { "Почта не подтверждена! Проверьте наличие новых писем, в том числе в разделе спам!" }
+                };
+
             return await GenerateAuthResultForUser(user);
+        }
+
+        public async Task<bool> ConfirmUserEmail(User user, string token)
+        {
+            if (token.Contains(" ")) token = token.Replace(" ", "+");
+            var result = await _userManager.ConfirmEmailAsync(user, token);
+            return result.Succeeded;
+        }
+
+        public async Task<bool> SendResetPasswordEmail(string email)
+        {
+            var user = await GetUserAsync(email);
+
+            if (user == null)
+                return false;
+
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var confirmationLink = $"http://localhost:3000/resetPassword?token={token}&email={email}";
+
+            var message = new MessageOptions(new string[] { email }, "Смена пароля", confirmationLink);
+
+            await _emailService.SendResetPasswordEmail(message);
+
+            return true;
+        }
+
+        public async Task<bool> ResetPassword(User user, string token, string password)
+        {
+            if (token.Contains(" ")) token = token.Replace(" ", "+");
+            var result = await _userManager.ResetPasswordAsync(user, token, password);
+            return result.Succeeded;
         }
 
         public async Task<IEnumerable<string>> EditUserAsync(UserForEditingDto user)

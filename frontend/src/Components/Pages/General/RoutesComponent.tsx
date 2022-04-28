@@ -19,6 +19,10 @@ import { CreateAppointmentPage } from "../Appointments/CreateAppointmentPage";
 import { NotificationsPage } from "./NotificationsPage";
 import { NotificationPage } from "./NotificationPage";
 import { appContainer } from "../../../AppStyles";
+import { RegistrationCompletePage } from "./RegistrationCompletePage";
+import { EmailConfirmedPage } from "./EmailConfirmedPage";
+import { ForgotPasswordPage } from "./ForgotPasswordPage";
+import { ResetPasswordPage } from "./ResetPasswordPage";
 
 export const RoutesComponent = () => {
   const location = useLocation();
@@ -42,6 +46,13 @@ export const RoutesComponent = () => {
           <Route path="" element={<HomePage />} />
           <Route path="signin" element={<SignInPage />} />
           <Route path="register" element={<RegistrationPage />} />
+          <Route
+            path="/registrationComplete"
+            element={<RegistrationCompletePage />}
+          />
+          <Route path="/forgotPassword" element={<ForgotPasswordPage />} />
+          <Route path="/resetPassword" element={<ResetPasswordPage />} />
+          <Route path="/emailConfirmed" element={<EmailConfirmedPage />} />
           <Route path="search" element={<SearchPage />} />
           <Route path="profile/:userId" element={<ProfilePage />} />
           <Route path="doctors" element={<DoctorListPage />} />
