@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { useEffect } from "react";
+import { confirmAlert } from "react-confirm-alert";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getDoctor } from "../../../Api/DoctorsData";
@@ -14,7 +15,13 @@ import {
   DangerButton,
   FormButtonContainer,
   PrimaryButton,
+  SecondaryButton,
 } from "../../../Styles/Common/Buttons";
+import {
+  confirmAlertContainer,
+  confirmAlertMessage,
+  confirmAlertTitle,
+} from "../../../Styles/Common/OtherComponents";
 import {
   doctorContainer,
   doctorTitle,
@@ -56,11 +63,37 @@ export const DoctorPage = ({ user }: Props) => {
   };
 
   const deleteClickHandler = async () => {
-    let result = await deleteUser(
-      user?.userName === undefined ? "" : user?.userName,
-      userToken === undefined ? "" : userToken,
-    );
-    if (result) dispatch(signOutUserAction("/"));
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div css={confirmAlertContainer}>
+            <h1 css={confirmAlertTitle}>Вы уверены?</h1>
+            <p css={confirmAlertMessage}>Это действие необратимо</p>
+            <FormButtonContainer className="row justify-content-around">
+              <SecondaryButton
+                className="btn btn-primary col-4 row"
+                onClick={onClose}
+              >
+                Нет
+              </SecondaryButton>
+              <DangerButton
+                className="btn btn-primary col-7 row"
+                onClick={async () => {
+                  let result = await deleteUser(
+                    user.userName === undefined ? "" : user.userName,
+                    userToken === undefined ? "" : userToken,
+                  );
+                  if (result) dispatch(signOutUserAction("/"));
+                  onClose();
+                }}
+              >
+                Да, удалить!
+              </DangerButton>
+            </FormButtonContainer>
+          </div>
+        );
+      },
+    });
   };
 
   return (

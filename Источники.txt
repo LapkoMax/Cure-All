@@ -14,3 +14,22 @@
 14. https://tavalik.ru/sql-server-management-studio/
 15. https://blog.skillfactory.ru/glossary/redux/
 16. https://openu.ru/Books/UML/Use_case.asp
+
+New:
+1. https://flexberry.github.io/ru/gbt_mssql.html
+2. https://tavalik.ru/sql-server-management-studio/
+3. https://blog.skillfactory.ru/glossary/redux/
+4. https://ru.theastrologypage.com/n-tier-architecture
+5. https://medium.com/nuances-of-programming/4-типа-архитектуры-программного-обеспечения-917133174724
+6. http://web.spt42.ru/index.php/chto-takoe-bootstrap
+7. https://docs.microsoft.com/ru-ru/dotnet/csharp/tour-of-csharp/
+8. https://timeweb.com/ru/community/articles/chto-takoe-csharp
+9. https://shwanoff.ru/plus-minus-c-sharp/
+10. https://coderlessons.com/tutorials/microsoft-technologies/izuchite-asp-net-core/asp-net-core-obzor
+11. https://docs.microsoft.com/ru-ru/aspnet/overview
+12. https://prog.bobrodobro.ru/63233
+13. https://liquidhub.ru/blogs/blog/chto-takoe-react
+14. https://nuancesprog.ru/p/13297/
+15. https://blog.skillfactory.ru/glossary/typescript/
+16. https://ru.education-wiki.com/3958588-what-is-visual-studio-code
+17. https://openu.ru/Books/UML/Use_case.asp

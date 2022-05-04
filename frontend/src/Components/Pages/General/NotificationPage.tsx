@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { useEffect } from "react";
+import { confirmAlert } from "react-confirm-alert";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { getAppointment } from "../../../Api/AppointmentsData";
@@ -28,7 +29,13 @@ import {
   DangerButton,
   FormButtonContainer,
   PrimaryButton,
+  SecondaryButton,
 } from "../../../Styles/Common/Buttons";
+import {
+  confirmAlertContainer,
+  confirmAlertMessage,
+  confirmAlertTitle,
+} from "../../../Styles/Common/OtherComponents";
 import {
   notificationAppointment,
   notificationContainer,
@@ -111,13 +118,79 @@ export const NotificationPage = () => {
   }, [notification]);
 
   const onAppointmentConfirm = async () => {
-    var result = await confirmNotification(notificationId, userToken);
-    if (result) navigate("/notifications");
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div css={confirmAlertContainer}>
+            <h1 css={confirmAlertTitle}>Вы уверены?</h1>
+            <p css={confirmAlertMessage}>
+              Это посещение запрошено на{" "}
+              {appointment?.startDate.toString().substring(0, 10)}{" "}
+              {appointment?.startTime}
+            </p>
+            <FormButtonContainer className="row justify-content-around">
+              <SecondaryButton
+                className="btn btn-primary col-4 row"
+                onClick={onClose}
+              >
+                Нет
+              </SecondaryButton>
+              <PrimaryButton
+                className="btn btn-primary col-7 row"
+                onClick={async () => {
+                  var result = await confirmNotification(
+                    notificationId,
+                    userToken,
+                  );
+                  if (result) navigate("/notifications");
+                  onClose();
+                }}
+              >
+                Да, подтвердить!
+              </PrimaryButton>
+            </FormButtonContainer>
+          </div>
+        );
+      },
+    });
   };
 
   const onAppointmentReject = async () => {
-    var result = await rejectNotification(notificationId, userToken);
-    if (result) navigate("/notifications");
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div css={confirmAlertContainer}>
+            <h1 css={confirmAlertTitle}>Вы уверены?</h1>
+            <p css={confirmAlertMessage}>
+              Это посещение запрошено на{" "}
+              {appointment?.startDate.toString().substring(0, 10)}{" "}
+              {appointment?.startTime}
+            </p>
+            <FormButtonContainer className="row justify-content-around">
+              <SecondaryButton
+                className="btn btn-primary col-4 row"
+                onClick={onClose}
+              >
+                Нет
+              </SecondaryButton>
+              <DangerButton
+                className="btn btn-primary col-7 row"
+                onClick={async () => {
+                  var result = await rejectNotification(
+                    notificationId,
+                    userToken,
+                  );
+                  if (result) navigate("/notifications");
+                  onClose();
+                }}
+              >
+                Да, отклонить!
+              </DangerButton>
+            </FormButtonContainer>
+          </div>
+        );
+      },
+    });
   };
 
   const onNotificationDelete = async () => {
