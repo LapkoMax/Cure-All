@@ -33,3 +33,6 @@ New:
 15. https://blog.skillfactory.ru/glossary/typescript/
 16. https://ru.education-wiki.com/3958588-what-is-visual-studio-code
 17. https://openu.ru/Books/UML/Use_case.asp
+18. https://docs.microsoft.com/ru-ru/dotnet/architecture/microservices/microservice-ddd-cqrs-patterns/microservice-application-layer-implementation-web-api
+19. https://forproger.ru/article/modulnoe-testirovanie-s-pomoshhyu-xunit-v-aspnet-core-mvc
+20. https://habr.com/ru/post/150859/
