@@ -40,3 +40,5 @@ New:
 22. https://coderlessons.com/tutorials/kachestvo-programmnogo-obespecheniia/ruchnoe-testirovanie/testirovanie-bezopasnosti-2
 23. https://professorweb.ru/my/ASP_NET/identity/level1/1_5.php
 24. Трудовой кодекс Республики Беларусь с обзором изменений, внесенных Законом Республики Беларусь от 20 июня 2007 г. № 272-3-Минск: Амалфея, 2007. - 288 с.
+25. http://www.technopark.by/files/gl10.htm
+26. https://php64.ru/poleznoe/ekonomim-elektrichestvo-kompyutera.php
