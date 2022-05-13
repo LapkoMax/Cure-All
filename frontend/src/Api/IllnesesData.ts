@@ -1,3 +1,5 @@
+import { mainBackendAddress } from "./GeneralData";
+
 export interface IllnessData {
   id: string;
   name: string;
@@ -16,9 +18,9 @@ const getHeaders = (token?: string): Headers => {
 
   headers.append("Content-Type", "application/json");
   headers.append("Accept", "application/json");
-  headers.append("Access-Control-Allow-Origin", "http://localhost:5000");
+  headers.append("Access-Control-Allow-Origin", mainBackendAddress);
   headers.append("Access-Control-Allow-Headers", "true");
-  headers.append("Origin", "http://localhost:5000");
+  headers.append("Origin", mainBackendAddress);
   headers.append("Authorization", "bearer " + token);
 
   return headers;
@@ -27,7 +29,7 @@ const getHeaders = (token?: string): Headers => {
 export const getIllneses = async (): Promise<IllnessData[]> => {
   let headers = getHeaders();
 
-  const response = await fetch("http://localhost:5000/api/illneses", {
+  const response = await fetch(mainBackendAddress + "/api/illneses", {
     mode: "cors",
     method: "GET",
     headers: headers,
@@ -46,7 +48,7 @@ export const createNewIllness = async (
 ): Promise<string[]> => {
   let headers = getHeaders(token);
 
-  const response = await fetch("http://localhost:5000/api/illneses", {
+  const response = await fetch(mainBackendAddress + "/api/illneses", {
     mode: "cors",
     method: "POST",
     body: JSON.stringify(illness),

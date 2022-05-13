@@ -1,3 +1,5 @@
+import { mainBackendAddress } from "./GeneralData";
+
 export interface SpecializationData {
   id: string;
   name: string;
@@ -9,9 +11,9 @@ const getHeaders = (): Headers => {
 
   headers.append("Content-Type", "application/json");
   headers.append("Accept", "application/json");
-  headers.append("Access-Control-Allow-Origin", "http://localhost:5000");
+  headers.append("Access-Control-Allow-Origin", mainBackendAddress);
   headers.append("Access-Control-Allow-Headers", "true");
-  headers.append("Origin", "http://localhost:5000");
+  headers.append("Origin", mainBackendAddress);
 
   return headers;
 };
@@ -19,7 +21,7 @@ const getHeaders = (): Headers => {
 export const getSpecializations = async (): Promise<SpecializationData[]> => {
   let headers = getHeaders();
 
-  const response = await fetch("http://localhost:5000/api/specializations", {
+  const response = await fetch(mainBackendAddress + "/api/specializations", {
     mode: "cors",
     method: "GET",
     headers: headers,

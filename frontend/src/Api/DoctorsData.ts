@@ -1,3 +1,5 @@
+import { mainBackendAddress } from "./GeneralData";
+
 export interface DoctorData {
   id: string;
   userId: string;
@@ -202,9 +204,9 @@ const getHeaders = (token?: string): Headers => {
 
   headers.append("Content-Type", "application/json");
   headers.append("Accept", "application/json");
-  headers.append("Access-Control-Allow-Origin", "http://localhost:5000");
+  headers.append("Access-Control-Allow-Origin", mainBackendAddress);
   headers.append("Access-Control-Allow-Headers", "true");
-  headers.append("Origin", "http://localhost:5000");
+  headers.append("Origin", mainBackendAddress);
   headers.append("Authorization", "bearer " + token);
 
   return headers;
@@ -232,7 +234,7 @@ export const getDoctors = async (
 
   let headers = getHeaders(token);
 
-  const response = await fetch("http://localhost:5000/api/doctors" + query, {
+  const response = await fetch(mainBackendAddress + "/api/doctors" + query, {
     mode: "cors",
     method: "GET",
     headers: headers,
@@ -255,7 +257,7 @@ export const getFastSearchedDoctors = async (
   let headers = getHeaders(token);
 
   const response = await fetch(
-    "http://localhost:5000/api/doctors/fastSearch/" + searchTerm,
+    mainBackendAddress + "/api/doctors/fastSearch/" + searchTerm,
     {
       mode: "cors",
       method: "GET",
@@ -282,7 +284,7 @@ export const getDoctor = async (
 
   let headers = getHeaders(token);
 
-  let response = await fetch("http://localhost:5000/api/doctors/" + doctorId, {
+  let response = await fetch(mainBackendAddress + "/api/doctors/" + doctorId, {
     mode: "cors",
     method: "GET",
     headers: headers,
@@ -291,7 +293,7 @@ export const getDoctor = async (
   if (response.status === 401) return { data: doctor, responseStatus: 401 };
   else if (response.status === 404)
     response = await fetch(
-      "http://localhost:5000/api/doctors/byUser/" + doctorId,
+      mainBackendAddress + "/api/doctors/byUser/" + doctorId,
       {
         mode: "cors",
         method: "GET",
@@ -312,7 +314,8 @@ export const getDoctorAvailableTime = async (
   let headers = getHeaders(token);
 
   let response = await fetch(
-    "http://localhost:5000/api/doctors/" +
+    mainBackendAddress +
+      "/api/doctors/" +
       doctorId +
       "/availableTime?date=" +
       date,
@@ -335,7 +338,7 @@ export const getDoctorAvailableTime = async (
 export const getDoctorAmount = async (token?: string): Promise<number> => {
   let headers = getHeaders(token);
 
-  let response = await fetch("http://localhost:5000/api/doctors/amount", {
+  let response = await fetch(mainBackendAddress + "/api/doctors/amount", {
     mode: "cors",
     method: "GET",
     headers: headers,
@@ -353,7 +356,7 @@ export const editDoctor = async (
   token?: string,
 ): Promise<string[]> => {
   let headers = getHeaders(token);
-  let response = await fetch("http://localhost:5000/api/doctors/" + doctor.id, {
+  let response = await fetch(mainBackendAddress + "/api/doctors/" + doctor.id, {
     mode: "cors",
     method: "PUT",
     body: JSON.stringify(doctor),

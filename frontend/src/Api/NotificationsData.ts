@@ -1,3 +1,5 @@
+import { mainBackendAddress } from "./GeneralData";
+
 export interface NotificationData {
   id: string;
   userId: string;
@@ -21,9 +23,9 @@ const getHeaders = (token?: string): Headers => {
 
   headers.append("Content-Type", "application/json");
   headers.append("Accept", "application/json");
-  headers.append("Access-Control-Allow-Origin", "http://localhost:5000");
+  headers.append("Access-Control-Allow-Origin", mainBackendAddress);
   headers.append("Access-Control-Allow-Headers", "true");
-  headers.append("Origin", "http://localhost:5000");
+  headers.append("Origin", mainBackendAddress);
   headers.append("Authorization", "bearer " + token);
 
   return headers;
@@ -36,7 +38,7 @@ export const getUserUnreadNotificationsAmount = async (
   var headers = getHeaders(token);
 
   const response = await fetch(
-    "http://localhost:5000/api/notifications/" + userId + "/unreaded",
+    mainBackendAddress + "/api/notifications/" + userId + "/unreaded",
     {
       mode: "cors",
       method: "GET",
@@ -58,7 +60,7 @@ export const getUserNotifications = async (
   var headers = getHeaders(token);
 
   const response = await fetch(
-    "http://localhost:5000/api/notifications/forUser/" + userId,
+    mainBackendAddress + "/api/notifications/forUser/" + userId,
     {
       mode: "cors",
       method: "GET",
@@ -80,7 +82,7 @@ export const getNotification = async (
   var headers = getHeaders(token);
 
   const response = await fetch(
-    "http://localhost:5000/api/notifications/" + notificationId,
+    mainBackendAddress + "/api/notifications/" + notificationId,
     {
       mode: "cors",
       method: "GET",
@@ -102,7 +104,8 @@ export const confirmNotification = async (
   var headers = getHeaders(token);
 
   const response = await fetch(
-    "http://localhost:5000/api/notifications/confirmNotification/" +
+    mainBackendAddress +
+      "/api/notifications/confirmNotification/" +
       notificationId,
     {
       mode: "cors",
@@ -122,7 +125,8 @@ export const rejectNotification = async (
   var headers = getHeaders(token);
 
   const response = await fetch(
-    "http://localhost:5000/api/notifications/rejectNotification/" +
+    mainBackendAddress +
+      "/api/notifications/rejectNotification/" +
       notificationId,
     {
       mode: "cors",
@@ -142,7 +146,7 @@ export const deleteNotification = async (
   var headers = getHeaders(token);
 
   const response = await fetch(
-    "http://localhost:5000/api/notifications/" + notificationId,
+    mainBackendAddress + "/api/notifications/" + notificationId,
     {
       mode: "cors",
       method: "DELETE",

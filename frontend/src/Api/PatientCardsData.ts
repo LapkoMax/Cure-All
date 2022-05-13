@@ -1,3 +1,5 @@
+import { mainBackendAddress } from "./GeneralData";
+
 export interface PatientCardData {
   id: string;
   patientId: string;
@@ -16,9 +18,9 @@ const getHeaders = (token?: string): Headers => {
 
   headers.append("Content-Type", "application/json");
   headers.append("Accept", "application/json");
-  headers.append("Access-Control-Allow-Origin", "http://localhost:5000");
+  headers.append("Access-Control-Allow-Origin", mainBackendAddress);
   headers.append("Access-Control-Allow-Headers", "true");
-  headers.append("Origin", "http://localhost:5000");
+  headers.append("Origin", mainBackendAddress);
   headers.append("Authorization", "bearer " + token);
 
   return headers;
@@ -33,7 +35,7 @@ export const getPatientCard = async (
   let headers = getHeaders(token);
 
   const response = await fetch(
-    "http://localhost:5000/api/patientCards/" + patientCardId,
+    mainBackendAddress + "/api/patientCards/" + patientCardId,
     {
       mode: "cors",
       method: "GET",

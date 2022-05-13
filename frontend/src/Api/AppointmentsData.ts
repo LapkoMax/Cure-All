@@ -1,3 +1,5 @@
+import { mainBackendAddress } from "./GeneralData";
+
 export interface AppointmentData {
   id: string;
   patientCardId: string;
@@ -51,9 +53,9 @@ const getHeaders = (token?: string): Headers => {
 
   headers.append("Content-Type", "application/json");
   headers.append("Accept", "application/json");
-  headers.append("Access-Control-Allow-Origin", "http://localhost:5000");
+  headers.append("Access-Control-Allow-Origin", mainBackendAddress);
   headers.append("Access-Control-Allow-Headers", "true");
-  headers.append("Origin", "http://localhost:5000");
+  headers.append("Origin", mainBackendAddress);
   headers.append("Authorization", "bearer " + token);
 
   return headers;
@@ -68,7 +70,7 @@ export const getAllAppointmentsForDoctor = async (
   let headers = getHeaders(token);
 
   const response = await fetch(
-    "http://localhost:5000/api/appointments/all/forDoctor/" + userId,
+    mainBackendAddress + "/api/appointments/all/forDoctor/" + userId,
     {
       mode: "cors",
       method: "GET",
@@ -115,7 +117,7 @@ export const getAppointmentsForDoctor = async (
           .replaceAll(",", "&");
 
   const response = await fetch(
-    "http://localhost:5000/api/appointments/forDoctor/" + userId + query,
+    mainBackendAddress + "/api/appointments/forDoctor/" + userId + query,
     {
       mode: "cors",
       method: "GET",
@@ -142,7 +144,7 @@ export const getAppointmentDatesForDoctor = async (
   let headers = getHeaders(token);
 
   const response = await fetch(
-    "http://localhost:5000/api/appointments/dates/forDoctor/" + userId,
+    mainBackendAddress + "/api/appointments/dates/forDoctor/" + userId,
     {
       mode: "cors",
       method: "GET",
@@ -167,7 +169,7 @@ export const getAllAppointmentsForPatientCard = async (
   let headers = getHeaders(token);
 
   const response = await fetch(
-    "http://localhost:5000/api/appointments/all/forPatient/" + patientCardId,
+    mainBackendAddress + "/api/appointments/all/forPatient/" + patientCardId,
     {
       mode: "cors",
       method: "GET",
@@ -214,7 +216,8 @@ export const getAppointmentsForPatientCard = async (
           .replaceAll(",", "&");
 
   const response = await fetch(
-    "http://localhost:5000/api/appointments/forPatient/" +
+    mainBackendAddress +
+      "/api/appointments/forPatient/" +
       patientCardId +
       query,
     {
@@ -243,7 +246,7 @@ export const getAppointmentDatesForPatientCard = async (
   let headers = getHeaders(token);
 
   const response = await fetch(
-    "http://localhost:5000/api/appointments/dates/forPatient/" + patientCardId,
+    mainBackendAddress + "/api/appointments/dates/forPatient/" + patientCardId,
     {
       mode: "cors",
       method: "GET",
@@ -268,7 +271,7 @@ export const getAppointment = async (
   let headers = getHeaders(token);
 
   const response = await fetch(
-    "http://localhost:5000/api/appointments/" + appointmentId,
+    mainBackendAddress + "/api/appointments/" + appointmentId,
     {
       mode: "cors",
       method: "GET",
@@ -289,7 +292,7 @@ export const getAppointment = async (
 export const getAppointmentAmount = async (token?: string): Promise<number> => {
   let headers = getHeaders(token);
 
-  let response = await fetch("http://localhost:5000/api/appointments/amount", {
+  let response = await fetch(mainBackendAddress + "/api/appointments/amount", {
     mode: "cors",
     method: "GET",
     headers: headers,
@@ -308,7 +311,7 @@ export const getCompletedAppointmentAmount = async (
   let headers = getHeaders(token);
 
   let response = await fetch(
-    "http://localhost:5000/api/appointments/completedAmount",
+    mainBackendAddress + "/api/appointments/completedAmount",
     {
       mode: "cors",
       method: "GET",
@@ -331,7 +334,8 @@ export const ifUserCanEditAppointment = async (
   let headers = getHeaders(token);
 
   const response = await fetch(
-    "http://localhost:5000/api/appointments/" +
+    mainBackendAddress +
+      "/api/appointments/" +
       appointmentId +
       "/canUserChange/" +
       userId,
@@ -362,7 +366,7 @@ export const editAppointment = async (
   let headers = getHeaders(token);
 
   let response = await fetch(
-    "http://localhost:5000/api/appointments/" + appointmentId,
+    mainBackendAddress + "/api/appointments/" + appointmentId,
     {
       mode: "cors",
       method: "PUT",
@@ -384,7 +388,7 @@ export const createAppointment = async (
 ): Promise<string[]> => {
   let headers = getHeaders(token);
 
-  const response = await fetch("http://localhost:5000/api/appointments", {
+  const response = await fetch(mainBackendAddress + "/api/appointments", {
     mode: "cors",
     method: "POST",
     body: JSON.stringify(appointment),
@@ -407,7 +411,7 @@ export const deleteAppointment = async (
   let headers = getHeaders(token);
 
   const response = await fetch(
-    "http://localhost:5000/api/appointments/" + appointmentId,
+    mainBackendAddress + "/api/appointments/" + appointmentId,
     {
       mode: "cors",
       method: "DELETE",

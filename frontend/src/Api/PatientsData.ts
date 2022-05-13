@@ -1,3 +1,5 @@
+import { mainBackendAddress } from "./GeneralData";
+
 export interface PatientData {
   id: string;
   patientCardId: string;
@@ -46,9 +48,9 @@ const getHeaders = (token?: string): Headers => {
 
   headers.append("Content-Type", "application/json");
   headers.append("Accept", "application/json");
-  headers.append("Access-Control-Allow-Origin", "http://localhost:5000");
+  headers.append("Access-Control-Allow-Origin", mainBackendAddress);
   headers.append("Access-Control-Allow-Headers", "true");
-  headers.append("Origin", "http://localhost:5000");
+  headers.append("Origin", mainBackendAddress);
   headers.append("Authorization", "bearer " + token);
 
   return headers;
@@ -65,7 +67,7 @@ export const getPatient = async (
   let headers = getHeaders(token);
 
   let response = await fetch(
-    "http://localhost:5000/api/patients/" + patientId,
+    mainBackendAddress + "/api/patients/" + patientId,
     {
       mode: "cors",
       method: "GET",
@@ -76,7 +78,7 @@ export const getPatient = async (
   if (response.status === 401) return { data: patient, responseStatus: 401 };
   else if (response.status === 404)
     response = await fetch(
-      "http://localhost:5000/api/patients/byUser/" + patientId,
+      mainBackendAddress + "/api/patients/byUser/" + patientId,
       {
         mode: "cors",
         method: "GET",
@@ -92,7 +94,7 @@ export const getPatient = async (
 export const getPatientAmount = async (token?: string): Promise<number> => {
   let headers = getHeaders(token);
 
-  let response = await fetch("http://localhost:5000/api/patients/amount", {
+  let response = await fetch(mainBackendAddress + "/api/patients/amount", {
     mode: "cors",
     method: "GET",
     headers: headers,
@@ -112,7 +114,7 @@ export const editPatient = async (
   let headers = getHeaders(token);
 
   let response = await fetch(
-    "http://localhost:5000/api/patients/" + patient.id,
+    mainBackendAddress + "/api/patients/" + patient.id,
     {
       mode: "cors",
       method: "PUT",

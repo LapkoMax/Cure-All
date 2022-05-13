@@ -1,3 +1,5 @@
+import { mainBackendAddress } from "./GeneralData";
+
 export interface UserData {
   id: string;
   userName: string;
@@ -77,10 +79,10 @@ const getHeaders = (token?: string): Headers => {
 
   headers.append("Content-Type", "application/json");
   headers.append("Accept", "application/json");
-  headers.append("Access-Control-Allow-Origin", "http://localhost:5000");
+  headers.append("Access-Control-Allow-Origin", mainBackendAddress);
   headers.append("Access-Control-Allow-Headers", "true");
   headers.append("Authorization", "bearer " + token);
-  headers.append("Origin", "http://localhost:5000");
+  headers.append("Origin", mainBackendAddress);
 
   return headers;
 };
@@ -92,7 +94,7 @@ const addUserToAuthResult = async (
   let headers = getHeaders(token);
 
   const userResponse = await fetch(
-    "http://localhost:5000/userByLogin?userLogin=" + userName,
+    mainBackendAddress + "/userByLogin?userLogin=" + userName,
     {
       mode: "cors",
       method: "GET",
@@ -111,7 +113,7 @@ const addUserToAuthResult = async (
 export const loginUser = async (user: LoginUserForm): Promise<AuthResult> => {
   let headers = getHeaders();
 
-  const response = await fetch("http://localhost:5000/login", {
+  const response = await fetch(mainBackendAddress + "/login", {
     mode: "cors",
     method: "POST",
     body: JSON.stringify(user),
@@ -132,7 +134,7 @@ export const getUserById = async (
 ): Promise<ResponseUser> => {
   let headers = getHeaders(token);
 
-  const userResponse = await fetch("http://localhost:5000/userById/" + userId, {
+  const userResponse = await fetch(mainBackendAddress + "/userById/" + userId, {
     mode: "cors",
     method: "GET",
     headers: headers,
@@ -153,7 +155,7 @@ export const registerDoctor = async (
 
   let headers = getHeaders();
 
-  const response = await fetch("http://localhost:5000/registerDoctor", {
+  const response = await fetch(mainBackendAddress + "/registerDoctor", {
     mode: "cors",
     method: "POST",
     body: JSON.stringify(doctor),
@@ -177,7 +179,7 @@ export const registerPatient = async (
 
   let headers = getHeaders();
 
-  const response = await fetch("http://localhost:5000/registerPatient", {
+  const response = await fetch(mainBackendAddress + "/registerPatient", {
     mode: "cors",
     method: "POST",
     body: JSON.stringify(patient),
@@ -201,7 +203,7 @@ export const confirmUserEmail = async (
   let headers = getHeaders();
 
   const response = await fetch(
-    "http://localhost:5000/confirmUserEmail?token=" + token + "&email=" + email,
+    mainBackendAddress + "/confirmUserEmail?token=" + token + "&email=" + email,
     {
       mode: "cors",
       method: "GET",
@@ -218,7 +220,7 @@ export const resetPasswordRequest = async (email: string): Promise<string> => {
   let headers = getHeaders();
 
   const response = await fetch(
-    "http://localhost:5000/resetPasswordRequest?email=" + email,
+    mainBackendAddress + "/resetPasswordRequest?email=" + email,
     {
       mode: "cors",
       method: "GET",
@@ -241,7 +243,8 @@ export const resetPassword = async (
   let headers = getHeaders();
 
   const response = await fetch(
-    "http://localhost:5000/resetPassword?token=" +
+    mainBackendAddress +
+      "/resetPassword?token=" +
       token +
       "&email=" +
       email +
@@ -265,7 +268,7 @@ export const deleteUser = async (
 ): Promise<boolean> => {
   let headers = getHeaders(token);
 
-  const response = await fetch("http://localhost:5000/" + userName, {
+  const response = await fetch(mainBackendAddress + "/" + userName, {
     mode: "cors",
     method: "DELETE",
     headers: headers,
