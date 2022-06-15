@@ -26,7 +26,7 @@ namespace Cure_All.MediatRCommands.Patient
 
         public async Task<bool> Handle(DeletePatientCommand command, CancellationToken cancellationToken)
         {
-            var patient = command.patientId != null ? await _repository.Patient.GetPatientByPatientIdAsync((Guid)command.patientId) : await _repository.Patient.GetPatientByUserIdAsync(command.userId);
+            var patient = command.patientId != null ? await _repository.Patient.GetPatientByPatientIdAsync((Guid)command.patientId, true) : await _repository.Patient.GetPatientByUserIdAsync(command.userId, true);
 
             _repository.Patient.DeletePatient(patient);
 
